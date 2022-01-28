@@ -12,6 +12,7 @@ const NavBar: React.FC = () => {
             src={"/vic-logo.svg"}
             layout='fill'
             objectFit='contain'
+            alt='VUW Logo'
           />
         </a>
       </Link>
