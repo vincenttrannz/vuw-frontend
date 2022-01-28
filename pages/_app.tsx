@@ -15,21 +15,12 @@ export const GlobalContext = createContext({});
 function VicApp({ Component, pageProps }: AppProps) {
   const { global } = pageProps;
   console.log("App global data:", global);
-  const GlobalSeoData = getStrapiData(global).SeoData;
-  const GlobalShareImageSeo = getStrapiData(global).SeoData.ShareImage;
   return (
     <>
       {/* META SEO DATA - START */}
       <HeadData
-        title={GlobalSeoData.MetaTitle}
-        description={GlobalSeoData.MetaDescription}
-        image={getStrapiMedia(GlobalShareImageSeo)}
-      >
-        <link
-          rel="shortcut icon"
-          href={getStrapiMedia(global.data.attributes.Favicon)}
-        />
-      </HeadData>
+        favicon={getStrapiMedia(global.data.attributes.Favicon)}
+      />
       {/* META SEO DATA - END */}
       <GlobalContext.Provider value={global}>
         <NavBar/>
@@ -50,10 +41,7 @@ VicApp.getInitialProps = async (ctx: any) => {
   const appProps = await App.getInitialProps(ctx);
   // Fetch global site settings from Strapi
   const query = qs.stringify({
-    populate: [
-      "Favicon",
-      "SeoData.ShareImage"
-    ]
+    populate: "*"
   }, {
     encodeValuesOnly: true,
   });

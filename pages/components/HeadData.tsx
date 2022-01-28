@@ -6,6 +6,7 @@ interface Props {
   quote?: string;
   title?: string;
   image?: string;
+  favicon?: string;
   description?: string;
   hashtag?: string;
 }
@@ -14,6 +15,7 @@ const HeadData: React.FC<Props> = ({
   quote,
   title,
   image,
+  favicon,
   description,
   hashtag,
 }) => {
@@ -25,6 +27,10 @@ const HeadData: React.FC<Props> = ({
   return (
     <Head>
       <title>{title}</title>
+      <link
+        rel="shortcut icon"
+        href={favicon}
+      />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="csrf_token" content="" />
