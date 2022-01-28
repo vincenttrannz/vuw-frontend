@@ -6,3 +6,8 @@ export function getStrapiMedia(media:any | {}) {
     : media.data.attributes.url;
   return imageUrl;
 }
+
+export function getStrapiData(data:any | {}) {
+  const value = data.data.attributes;
+  return value; 
+}

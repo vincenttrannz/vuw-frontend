@@ -1,26 +1,36 @@
 import "../stylesheet/master.scss";
 import App from "next/app";
 import Head from "next/head";
-import HeadData from "./components/HeadData";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
 import { fetchAPI } from "../lib/api";
-import { getStrapiMedia } from "../lib/media";
+import qs from 'qs';
+import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import NavBar from "./components/NavBar";
+import HeadData from "./components/HeadData";
 
 // Store Strapi Global object in context
 export const GlobalContext = createContext({});
 
 function VicApp({ Component, pageProps }: AppProps) {
   const { global } = pageProps;
+  console.log("App global data:", global);
+  const GlobalSeoData = getStrapiData(global).SeoData;
+  const GlobalShareImageSeo = getStrapiData(global).SeoData.ShareImage;
   return (
     <>
-      <Head>
+      {/* META SEO DATA - START */}
+      <HeadData
+        title={GlobalSeoData.MetaTitle}
+        description={GlobalSeoData.MetaDescription}
+        image={getStrapiMedia(GlobalShareImageSeo)}
+      >
         <link
           rel="shortcut icon"
           href={getStrapiMedia(global.data.attributes.Favicon)}
         />
-      </Head>
+      </HeadData>
+      {/* META SEO DATA - END */}
       <GlobalContext.Provider value={global}>
         <NavBar/>
         <div className="main">
@@ -39,9 +49,17 @@ VicApp.getInitialProps = async (ctx: any) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx);
   // Fetch global site settings from Strapi
-  const global = await fetchAPI("/api/global?populate=*");
+  const query = qs.stringify({
+    populate: [
+      "Favicon",
+      "SeoData.ShareImage"
+    ]
+  }, {
+    encodeValuesOnly: true,
+  });
+  const global = await fetchAPI(`/api/global?${query}`);
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global } };
+  return { ...appProps, pageProps: { global }};
 };
 
 export default VicApp;
