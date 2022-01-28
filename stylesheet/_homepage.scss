@@ -1,0 +1,14 @@
+/*===============================
+=            Homepage           =
+=================================*/
+
+.hero-section {
+  min-height: clamp(480px, 40vw, 1024px);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+}
+
+/*=====  End of Homepage ======*/

@@ -1,0 +1,15 @@
+/*============================
+=            MASTER          =
+==============================*/
+
+/**
+ * Import all the required SCSS here to compile into single css
+ **/
+
+@import 
+'./variables', 
+"./homepage", 
+"./base",
+"./components/twoColumnsBlock",
+"./components/navBar"
+;

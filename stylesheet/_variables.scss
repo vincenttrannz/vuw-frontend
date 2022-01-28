@@ -1,0 +1,90 @@
+/*=====================================
+=            VARIABLES SCSS           =
+=======================================*/
+$black: #030303;
+$vic-green: #005137;
+
+$theme-colors: (
+  'info': tomato,
+  'danger': teal,
+  'primary': $vic-green,
+);
+
+// scss-docs-start grid-breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 767px,
+  lg: 992px,
+  xl: 1199px,
+  xxl: 1399px,
+  xxxl: 1600px,
+) !default;
+// scss-docs-end grid-breakpoints
+
+// scss-docs-start container-max-widths
+$container-max-widths: (
+  xs: 1560px,
+  // md: 720px,
+  // lg: 960px,
+  // xl: 1140px,
+  // xxl: 1320px,
+  // xxxl: 1560px,
+) !default;
+// scss-docs-end container-max-widths
+
+// Customise bootstrap variable
+$container-padding-x: 1rem;
+$spacer: 2rem;
+$container-padding-x: 4rem;
+
+// 1. Box Shadow
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+$box-shadow-sm: 0 0.25rem 0.5rem rgba($black, 0.175);
+$box-shadow-md: 0 0.5rem 1.5rem rgba($black, 0.175) !important;
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
+$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075);
+
+// 2. Gutters
+$grid-gutter-width: 1.5rem;
+$gutters: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 2,
+);
+
+// 3. Spacing Configuration
+$spacers: (
+  0: 0,
+  1: (
+    $spacer * 0.25,
+  ),
+  2: (
+    $spacer * 0.5,
+  ),
+  3: $spacer,
+  4: (
+    $spacer * 1.5,
+  ),
+  5: (
+    $spacer * 2,
+  ),
+  6: (
+    $spacer * 3,
+  ),
+  7: (
+    $spacer * 4,
+  ),
+  8: (
+    $spacer * 5,
+  ),
+  9: (
+    $spacer * 6,
+  ),
+);
+
+/* import bootstrap to set changes */
+@import '~bootstrap/scss/bootstrap';

@@ -1,0 +1,22 @@
+/*===============================
+=            NavBar             =
+=================================*/
+
+.navbar {
+  min-height: 80px;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  &__logo {
+    position: relative;
+    width: clamp(120px, 10vw, 240px);
+    height: clamp(30px, 4vw, 60px);
+  }
+  &__link-container {
+    display: flex;
+    align-items: center;
+    a {
+      margin-right: 1rem;
+    }
+  }
+}
