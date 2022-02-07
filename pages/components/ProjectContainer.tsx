@@ -14,7 +14,7 @@ const ProjectContainer: React.FC<any> = ({projects}) => {
       <div className='projectContainer__portfolios-wrapper'>
         {
           projectsData.map((project:any) => {
-            console.log(project);
+            // console.log(project);
             const ProjectThumbnail = getStrapiMedia(project.attributes.ProjectThumbnail); 
             const ProjectTitle = project.attributes.ProjectTitle;
             const ProjectSlug = project.attributes.Slug;
