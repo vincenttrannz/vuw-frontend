@@ -1,0 +1,30 @@
+/*===============================
+=        PROJECT CONTAINER      =
+=================================*/
+
+.projectContainer {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 0.25fr 0.75fr;
+  gap: 2rem;
+  &__details-wrapper {
+    grid-column: 1;
+  }
+  &__portfolios-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+  &__portfolio {
+    position: relative;
+    .image-container {
+      img {
+        width: 100%;
+      }
+    }
+    .details-container {
+      
+    }
+  }
+}

@@ -24,7 +24,8 @@ $grid-breakpoints: (
 
 // scss-docs-start container-max-widths
 $container-max-widths: (
-  xs: 1560px,
+  xs: 95vw
+  // xs: clamp(767px, 90vw, 1560px),
   // md: 720px,
   // lg: 960px,
   // xl: 1140px,
@@ -34,9 +35,8 @@ $container-max-widths: (
 // scss-docs-end container-max-widths
 
 // Customise bootstrap variable
-$container-padding-x: 1rem;
 $spacer: 2rem;
-$container-padding-x: 4rem;
+$container-padding-x: 2rem;
 
 // 1. Box Shadow
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.15);

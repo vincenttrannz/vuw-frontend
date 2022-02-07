@@ -1,14 +1,16 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetStaticProps } from 'next'
 import qs from 'qs';
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
 import { FacebookShareButton, FacebookIcon } from "react-share";
 import TwoColumnsBlock from './components/TwoColumnsBlock';
+import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
 
-const Home: NextPage<any> = ({homepage}) => {
+const Home: NextPage<any> = ({homepage, projects}) => {
   console.log("Homepage data:", homepage);
+
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
@@ -41,21 +43,22 @@ const Home: NextPage<any> = ({homepage}) => {
         </Container>
       </div>
       <TwoColumnsBlock>
-        <div className='mx-2'>
+        <div className='me-2'>
           <h2>{quickIntroTitle}</h2>
           <h4>{quickIntroTeReo}</h4>
         </div>
-        <div className='mx-2'>
+        <div className='ms-2'>
           <p>{quickIntroText}</p>
         </div>
       </TwoColumnsBlock>
+      <ProjectContainer projects={projects}/>
     </>
   )
 };
 
-export async function getStaticProps() {
+export const getStaticProps:GetStaticProps = async (ctx) => {
   // Run API calls in parallel
-  const query = qs.stringify({
+  const HomepageQuery = qs.stringify({
     populate: [
       'hero_banner',
       'SeoData.ShareImage',
@@ -63,12 +66,22 @@ export async function getStaticProps() {
   }, {
     encodeValuesOnly: true,
   });
-  const [homepage] = await Promise.all([
-    fetchAPI(`/api/homepage?${query}`)
+
+  const projectQuery = qs.stringify({
+    populate: [
+      "ProjectThumbnail"
+    ]
+  }, {
+    encodeValuesOnly: true,
+  })
+
+  const [homepage, projects] = await Promise.all([
+    fetchAPI(`/api/homepage?${HomepageQuery}`),
+    fetchAPI(`/api/projects?${projectQuery}`)
   ]);
 
   return {
-    props: { homepage },
+    props: { homepage, projects },
     revalidate: 1,
   };
 }
