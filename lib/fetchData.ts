@@ -7,6 +7,13 @@ export function getStrapiMedia(media:any | {}) {
   return imageUrl;
 }
 
+export function getSingleStrapiMedia(media:any | {}) {
+  const imageUrl = media.attributes.url.startsWith("/")
+    ? getStrapiURL(media.attributes.url)
+    : media.attributes.url;
+  return imageUrl;
+}
+
 export function getStrapiData(data:any | {}) {
   const value = data.data.attributes;
   return value; 

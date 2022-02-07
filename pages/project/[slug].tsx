@@ -1,12 +1,27 @@
 import type { NextPage, GetStaticProps } from 'next';
+import qs from 'qs';
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
-import qs from 'qs';
+import Slider from "react-slick";
 import { fetchAPI } from "../../lib/api";
-import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
+import { getStrapiMedia, getSingleStrapiMedia, getStrapiData } from "../../lib/fetchData";
 
 const project: NextPage<any> = ({project}) => {
   const projectData = project.data[0].attributes;
+  const sliderSettings = {
+    dots: true,
+    dotsClass: "desktop-slick slick-dots slick-thumb",
+    focusOnSelect: false,
+    autoplay: true,
+    autoplaySpeed: 8000,
+    draggable: true,
+    infinite: true,
+    speed: 500,
+    arrows: true,
+    adaptiveHeight: true,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   console.log(projectData);
   return (
     <>
@@ -18,12 +33,20 @@ const project: NextPage<any> = ({project}) => {
       <Container>
         <h2>{projectData.ProjectTitle}</h2>
         {
-          (projectData.Project3D) ?
+          // If the project is 3D project
+          (projectData.Project3D) &&
           <div className='iframe-container'>
             <iframe title="Student Project" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-trackin="true" execution-while-out-of-viewport="true" execution-while-not-rendered="true" web-share="true" src={projectData.Project3DLink}></iframe>
           </div>
-          :
-          <p>No 3D project</p>
+        }
+        {
+          // If the project just contain images
+          (projectData.ImagesCarousel) && 
+          <Slider {...sliderSettings}>
+            {
+              projectData.ProjectImages.data.map((project:any, i:number) => <img key={i} src={getSingleStrapiMedia(project)}></img>)
+            }
+          </Slider>
         }
       </Container>
     </>
@@ -47,7 +70,7 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: ["*", "SeoData.ShareImage"]
+    populate: ["*", "SeoData.ShareImage", "ProjectImages"]
   }, {
     encodeValuesOnly: true,
   })
