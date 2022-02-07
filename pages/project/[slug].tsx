@@ -3,22 +3,30 @@ import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import qs from 'qs';
 import { fetchAPI } from "../../lib/api";
+import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 
 const project: NextPage<any> = ({project}) => {
   const projectData = project.data[0].attributes;
   console.log(projectData);
   return (
-    <Container>
-      <h2>{projectData.ProjectTitle}</h2>
-      {
-        (projectData.Project3D) ?
-        <div className='iframe-container'>
-          <iframe title="Student Project" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-trackin="true" execution-while-out-of-viewport="true" execution-while-not-rendered="true" web-share="true" src={projectData.Project3DLink}></iframe>
-        </div>
-        :
-        <p>No 3D project</p>
-      }
-    </Container>
+    <>
+      <HeadData
+        title={projectData.ProjectTitle}
+        description={projectData.SeoData.MetaDescription}
+        image={getStrapiMedia(projectData.SeoData.ShareImage)}
+      />
+      <Container>
+        <h2>{projectData.ProjectTitle}</h2>
+        {
+          (projectData.Project3D) ?
+          <div className='iframe-container'>
+            <iframe title="Student Project" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-trackin="true" execution-while-out-of-viewport="true" execution-while-not-rendered="true" web-share="true" src={projectData.Project3DLink}></iframe>
+          </div>
+          :
+          <p>No 3D project</p>
+        }
+      </Container>
+    </>
   );
 }
 
@@ -39,7 +47,7 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: "*"
+    populate: ["*", "SeoData.ShareImage"]
   }, {
     encodeValuesOnly: true,
   })
