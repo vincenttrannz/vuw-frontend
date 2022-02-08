@@ -1,13 +1,33 @@
 import type { NextPage, GetStaticProps } from 'next';
+import React, { useState } from 'react';
 import qs from 'qs';
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import Slider from "react-slick";
+import { pdfjs, Document, Page } from 'react-pdf';
 import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia, getSingleStrapiMedia, getStrapiData } from "../../lib/fetchData";
 
 const project: NextPage<any> = ({project}) => {
   const projectData = project.data[0].attributes;
+
+  // React-pdf appendancies
+  pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
+  const [numPages, setNumPages] = useState<(number)>();
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }:any) {
+    setNumPages(numPages);
+  }
+
+  const goToNextPage = () => {
+    if(numPages && pageNumber < numPages) setPageNumber(pageNumber+1)
+  };
+  const goToPrevPage = () => {
+    if(pageNumber > 1) setPageNumber(pageNumber-1)
+  };
+
+  // Configure settings for React Slick
   const sliderSettings = {
     dots: true,
     dotsClass: "desktop-slick slick-dots slick-thumb",
@@ -40,6 +60,23 @@ const project: NextPage<any> = ({project}) => {
           </div>
         }
         {
+          // If the project is PDF
+          (projectData.ProjectPDF) &&
+          <div>
+            <Document
+              file={getStrapiMedia(projectData.ProjectPDFLink)}
+              onLoadSuccess={onDocumentLoadSuccess}
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <p>Page {pageNumber} of {numPages}</p>
+            <div>
+              <button onClick={goToNextPage}>Next</button>
+              <button onClick={goToPrevPage}>Prev</button>
+            </div>
+          </div>
+        }
+        {
           // If the project just contain images
           (projectData.ImagesCarousel) && 
           <Slider {...sliderSettings}>
@@ -47,6 +84,14 @@ const project: NextPage<any> = ({project}) => {
               projectData.ProjectImages.data.map((project:any, i:number) => <img key={i} src={getSingleStrapiMedia(project)}></img>)
             }
           </Slider>
+        }
+        {
+          // If the project is Code base
+          <div>
+            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowTransparency allowFullScreen>
+              See the Pen <a target="_blank" href={projectData.ProjectCodeLink}/> on <a href="https://codepen.io">CodePen</a>.
+            </iframe>
+          </div>
         }
       </Container>
     </>
@@ -70,7 +115,7 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: ["*", "SeoData.ShareImage", "ProjectImages"]
+    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink"]
   }, {
     encodeValuesOnly: true,
   })
