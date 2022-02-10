@@ -8,9 +8,8 @@ import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
 import ProjectPDF from '../components/ProjectPDF';
 
-const Project: NextPage<any> = ({project}) => {
-  const projectData = project.data[0].attributes;
-
+const project: NextPage<any> = ({project}) => {
+const projectData = project.data[0].attributes;
   // Configure settings for React Slick
   const sliderSettings = {
     dots: true,
@@ -26,7 +25,7 @@ const Project: NextPage<any> = ({project}) => {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-  
+
   console.log(projectData);
   return (
     <>
@@ -98,4 +97,4 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
   }
 };
 
-export default Project;
+export default project;
