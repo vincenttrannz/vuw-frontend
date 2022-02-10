@@ -81,16 +81,14 @@ const project: NextPage<any> = ({project}) => {
           (projectData.ImagesCarousel) && 
           <Slider {...sliderSettings}>
             {
-              projectData.ProjectImages.data.map((project:any, i:number) => <img key={i} src={getSingleStrapiMedia(project)}></img>)
+              projectData.ProjectImages.data.map((project:any, i:number) => <img alt={`${projectData.ProjectTitle} - image ${i}`} key={i} src={getSingleStrapiMedia(project)}></img>)
             }
           </Slider>
         }
         {
           // If the project is Code base
           <div>
-            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowTransparency allowFullScreen>
-              See the Pen <a target="_blank" href={projectData.ProjectCodeLink}/> on <a href="https://codepen.io">CodePen</a>.
-            </iframe>
+            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowTransparency allowFullScreen></iframe>
           </div>
         }
       </Container>
