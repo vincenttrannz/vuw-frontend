@@ -8,7 +8,7 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia, getSingleStrapiMedia, getStrapiData } from "../../lib/fetchData";
 
-const project: NextPage<any> = ({project}) => {
+const Project: NextPage<any> = ({project}) => {
   const projectData = project.data[0].attributes;
 
   // React-pdf appendancies
@@ -125,4 +125,4 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
   }
 };
 
-export default project;
+export default Project;
