@@ -88,7 +88,7 @@ const Project: NextPage<any> = ({project}) => {
         {
           // If the project is Code base
           <div>
-            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowTransparency allowFullScreen></iframe>
+            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowFullScreen></iframe>
           </div>
         }
       </Container>

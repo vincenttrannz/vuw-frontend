@@ -20,7 +20,7 @@ const ProjectContainer: React.FC<any> = ({projects}) => {
             const ProjectSlug = project.attributes.Slug;
             return (
               <div className='projectContainer__portfolio' key={project.id}>
-                <Link as={`/project/${ProjectSlug}`} href="/project/[project]">
+                <Link as={`/project/${ProjectSlug}`} href="/project/[slug]">
                   <a>
                     <div className='image-container'>
                       <img src={ProjectThumbnail} alt="project thumbanil" />
