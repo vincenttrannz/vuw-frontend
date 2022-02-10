@@ -25,7 +25,7 @@ const projectData = project.data[0].attributes;
     slidesToShow: 1,
     slidesToScroll: 1
   };
-
+  // Checking the data
   console.log(projectData);
   return (
     <>
