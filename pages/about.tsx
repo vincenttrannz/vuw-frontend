@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import qs from 'qs';
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
@@ -28,19 +27,17 @@ const About: NextPage<any> = ({about}) => {
 
 export async function getStaticProps() {
   // Run API calls in parallel
-  const query = qs.stringify({
+  const query = {
     populate: [
       "SeoData.ShareImage"
     ],
-  }, {
-    encodeValuesOnly: true,
-  });
-  const [about] = await Promise.all([
-    fetchAPI(`/api/about?${query}`)
+  };
+  const [aboutRes] = await Promise.all([
+    fetchAPI("/about", query)
   ]);
 
   return {
-    props: { about },
+    props: { about: aboutRes.data },
     revalidate: 1,
   };
 }

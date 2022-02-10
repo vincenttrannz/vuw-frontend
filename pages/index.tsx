@@ -1,5 +1,4 @@
 import type { NextPage, GetStaticProps } from 'next'
-import qs from 'qs';
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
@@ -10,7 +9,6 @@ import HeadData from "./components/HeadData";
 
 const Home: NextPage<any> = ({homepage, projects}) => {
   console.log("Homepage data:", homepage);
-
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
@@ -56,32 +54,31 @@ const Home: NextPage<any> = ({homepage, projects}) => {
   )
 };
 
-export const getStaticProps:GetStaticProps = async (ctx) => {
+export async function getStaticProps() {
   // Run API calls in parallel
-  const HomepageQuery = qs.stringify({
+  const HomepageQuery = {
     populate: [
       'hero_banner',
       'SeoData.ShareImage',
     ],
-  }, {
-    encodeValuesOnly: true,
-  });
+  };
 
-  const projectQuery = qs.stringify({
+  const projectQuery = {
     populate: [
       "ProjectThumbnail"
     ]
-  }, {
-    encodeValuesOnly: true,
-  })
+  };
 
-  const [homepage, projects] = await Promise.all([
-    fetchAPI(`/api/homepage?${HomepageQuery}`),
-    fetchAPI(`/api/projects?${projectQuery}`)
+  const [homepageRes, projectsRes] = await Promise.all([
+    fetchAPI("/homepage", HomepageQuery),
+    fetchAPI("/projects", projectQuery)
   ]);
 
   return {
-    props: { homepage, projects },
+    props: { 
+      homepage: homepageRes.data, 
+      projects: projectsRes.data 
+    },
     revalidate: 1,
   };
 }

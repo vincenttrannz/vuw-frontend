@@ -5,7 +5,7 @@ import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import {Container} from 'react-bootstrap';
 
 const ProjectContainer: React.FC<any> = ({projects}) => { 
-  const projectsData = projects.data;
+  console.log("Projects data:", projects);
   return (
     <Container className='projectContainer'>
       <div className='projectContainer__details-wrapper'>
@@ -13,8 +13,7 @@ const ProjectContainer: React.FC<any> = ({projects}) => {
       </div>
       <div className='projectContainer__portfolios-wrapper'>
         {
-          projectsData.map((project:any) => {
-            // console.log(project);
+          projects.map((project:any) => {
             const ProjectThumbnail = getStrapiMedia(project.attributes.ProjectThumbnail); 
             const ProjectTitle = project.attributes.ProjectTitle;
             const ProjectSlug = project.attributes.Slug;

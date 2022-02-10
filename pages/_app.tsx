@@ -1,10 +1,8 @@
 import "../stylesheet/master.scss";
 import App from "next/app";
-import Head from "next/head";
 import type { AppProps } from "next/app";
 import { createContext } from "react";
 import { fetchAPI } from "../lib/api";
-import qs from 'qs';
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import NavBar from "./components/NavBar";
 import HeadData from "./components/HeadData";
@@ -19,10 +17,10 @@ function VicApp({ Component, pageProps }: AppProps) {
     <>
       {/* META SEO DATA - START */}
       <HeadData
-        favicon={getStrapiMedia(global.data.attributes.Favicon)}
+        favicon={getStrapiMedia(global.attributes.Favicon)}
       />
       {/* META SEO DATA - END */}
-      <GlobalContext.Provider value={global}>
+      <GlobalContext.Provider value={global.attributes}>
         <NavBar/>
         <div className="main">
           <Component {...pageProps} />
@@ -40,14 +38,10 @@ VicApp.getInitialProps = async (ctx: any) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx);
   // Fetch global site settings from Strapi
-  const query = qs.stringify({
-    populate: "*"
-  }, {
-    encodeValuesOnly: true,
-  });
-  const global = await fetchAPI(`/api/global?${query}`);
+  const query = {populate: "*"};
+  const globalRes = await fetchAPI("/global", query);
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global }};
+  return { ...appProps, pageProps: { global: globalRes.data }};
 };
 
 export default VicApp;

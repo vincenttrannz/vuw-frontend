@@ -1,6 +1,5 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type { NextPage } from 'next';
 import React from 'react';
-import qs from 'qs';
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import Slider from "react-slick";
@@ -8,8 +7,8 @@ import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
 import ProjectPDF from '../components/ProjectPDF';
 
-const project: NextPage<any> = ({project}) => {
-const projectData = project.data[0].attributes;
+const Project: NextPage<any> = ({project}) => {
+const projectData = project.attributes;
   // Configure settings for React Slick
   const sliderSettings = {
     dots: true,
@@ -69,7 +68,7 @@ const projectData = project.data[0].attributes;
 }
 
 export async function getStaticPaths() {
-  const projects = await fetchAPI("/api/projects");
+  const projects = await fetchAPI("/projects", {fields: ["slug"]});
   return {
     paths: projects.data.map((project:any) => ({
       params: {
@@ -80,21 +79,19 @@ export async function getStaticPaths() {
   };
 };
 
-export const getStaticProps:GetStaticProps = async ({params}) => {
-  const projectQuery = qs.stringify({
+export async function getStaticProps({params}:any) {
+  const projectQuery = {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
     populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink"]
-  }, {
-    encodeValuesOnly: true,
-  })
-  const project = await fetchAPI(`/api/projects?${projectQuery}`);
+  };
+  const projectsRes = await fetchAPI("/projects", projectQuery);
 
   return {
-    props: { project },
+    props: { project: projectsRes.data[0] },
     revalidate: 1,
   }
 };
 
-export default project;
+export default Project;

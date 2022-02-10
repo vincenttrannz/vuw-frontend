@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // basePath: "http://localhost:3000/"
+  images: {
+    loader: "default",
+    domains: ["localhost"],
+  },
 }
 
 module.exports = nextConfig
