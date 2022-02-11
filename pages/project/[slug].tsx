@@ -4,10 +4,15 @@ import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import Slider from "react-slick";
 import { fetchAPI } from "../../lib/api";
+import { Project } from '../../compilers/type'
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
 import ProjectPDF from '../components/ProjectPDF';
 
-const Project: NextPage<any> = ({project}) => {
+type ProjectProps = {
+  project: Project;
+}
+
+const Project: NextPage<ProjectProps> = ({project}) => {
 const projectData = project.attributes;
   // Configure settings for React Slick
   const sliderSettings = {
@@ -75,7 +80,7 @@ export async function getStaticPaths() {
         slug: project.attributes.Slug
       },
     })),
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 

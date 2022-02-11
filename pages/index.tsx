@@ -6,8 +6,14 @@ import { FacebookShareButton, FacebookIcon } from "react-share";
 import TwoColumnsBlock from './components/TwoColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
+import {Project, Homepage} from '../compilers/type'
 
-const Home: NextPage<any> = ({homepage, projects}) => {
+type HomepageProps = {
+  homepage: Homepage;
+  projects: Project;
+};
+
+const Home: NextPage<HomepageProps> = ({homepage, projects}) => {
   console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;

@@ -2,9 +2,14 @@ import type { NextPage } from 'next'
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
+import { About } from '../compilers/type'
 import HeadData from "./components/HeadData";
 
-const About: NextPage<any> = ({about}) => {
+type AboutpageProps = {
+  about: About;
+}
+
+const About: NextPage<AboutpageProps> = ({about}) => {
   console.log("About Page data:", about);
   const AboutSeoData = getStrapiData(about).SeoData;
   const AboutShareImageSeo = getStrapiData(about).SeoData.ShareImage;

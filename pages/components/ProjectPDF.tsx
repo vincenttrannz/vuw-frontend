@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
+import { Project } from '../../compilers/type'
 import { getStrapiMedia } from "../../lib/fetchData";
 
-export default function ProjectPDF({projectData}: any) {
+type ProjectDataProps = {
+  projectData: Project["attributes"];
+}
+
+export default function ProjectPDF({projectData}:ProjectDataProps) {
   // React-pdf appendancies
   pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
   const [numPages, setNumPages] = useState<number>();
