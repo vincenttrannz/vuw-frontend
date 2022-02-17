@@ -6,11 +6,11 @@ import { FacebookShareButton, FacebookIcon } from "react-share";
 import TwoColumnsBlock from './components/TwoColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
-import {Project, Homepage} from '../compilers/type'
+import {Projects, Homepage} from '../compilers/type'
 
 type HomepageProps = {
   homepage: Homepage;
-  projects: Project;
+  projects: Projects;
 };
 
 const Home: NextPage<HomepageProps> = ({homepage, projects}) => {

@@ -28,11 +28,7 @@ export type Project = {
   };
 };
 
-export type Projects = {
-  data: [
-    Project
-  ]
-}
+export type Projects = [Project]
 
 // Homepage type
 export type Homepage = {
