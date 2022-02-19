@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
+import AllProjects from './AllProjects';
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
-import { Projects } from '../../compilers/type'
-import {Container} from 'react-bootstrap';
+import { Projects, Schools } from '../../compilers/type'
+import { Container } from 'react-bootstrap';
 
 type ProjectsProps = {
   projects: Projects
+  schoolData: Schools
 }
 
-const ProjectContainer: React.FC<ProjectsProps> = ({projects}) => { 
+const ProjectContainer: React.FC<ProjectsProps> = ({projects, schoolData}) => { 
   console.log("Projects data:", projects);
+  console.log("School data", schoolData);
+
   const options = {
     categories: [
       'CourseName'
@@ -26,58 +30,52 @@ const ProjectContainer: React.FC<ProjectsProps> = ({projects}) => {
     categories: null
   });
 
-  useEffect(() => {
-    let chosenPreset = [];
-    for(let i = 0; i < options.categories.length; i++) {
-			chosenPreset.push('all');
-		};
-    SetDefaultState({
-      listOfPosts: posts,
-			chosen: chosenPreset,
-			categories: options.categories
+  const ProjectYearCollection = Array.from(new Set(projects.map(project => new Date(project.attributes.ProjectDate).getFullYear()))).sort();
+  const SchoolCollection = Array.from(schoolData.map(school => school.attributes.SchoolName));
+  // const EachSchoolMajor = Array.from()
+  const EachSchoolMajor = Array.from(
+    schoolData.map(data => {
+      const SchoolName = data.attributes.SchoolName;
+      let SchoolMajors:any = []; 
+      data.attributes.majors.data.forEach(major => {
+        SchoolMajors.push(major.attributes.MajorName);
+      });
+      return SchoolMajors
     })
-  }, [])
-
-  const ProjectCoursesName = Array.from(new Set(projects.map(project => project.attributes.CourseName)));
+  )
+  console.log(EachSchoolMajor);
   return (
     <Container className='projectContainer'>
       <div className='projectContainer__details-wrapper'>
         <h2>Details</h2>
-        <div>
+        <h4>School</h4>
+        <ul>
           {
-            ProjectCoursesName.map((name, i) =>  {
+            SchoolCollection.map((name, i) =>  {
               return (
                 <li key={i}>
-                  <a href="#">{name}</a>
+                  <a data-filter={name} href="#">{name.replace("_", " ")}</a>
                 </li>
               )
             })
           }
-        </div>
+        </ul>
+        <h4>Major</h4>
+        
+        <h4>Year</h4>
+        <ul>
+          {
+            ProjectYearCollection.map((year, i) =>  {
+              return (
+                <li key={i}>
+                  <a href="#">{year}</a>
+                </li>
+              )
+            })
+          }
+        </ul>
       </div>
-      <div className='projectContainer__portfolios-wrapper'>
-        {
-          projects.map((project:any) => {
-            const ProjectThumbnail = getStrapiMedia(project.attributes.ProjectThumbnail); 
-            const ProjectTitle = project.attributes.ProjectTitle;
-            const ProjectSlug = project.attributes.Slug;
-            return (
-              <div className='projectContainer__portfolio' key={project.id}>
-                <Link href={`/project/${ProjectSlug}`}>
-                  <a>
-                    <div className='image-container'>
-                      <img src={ProjectThumbnail} alt="project thumbanil" />
-                    </div>
-                    <div className='details-container'>
-                      <h5>{ProjectTitle}</h5>
-                    </div>
-                  </a>
-                </Link>
-              </div>
-            )
-          })
-        }
-      </div>
+      <AllProjects projects={projects}/>
     </Container>
   );
 };

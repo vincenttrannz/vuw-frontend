@@ -15,7 +15,7 @@ export type Project = {
     publishedAt: Date;
     ImagesCarousel: boolean;
     ProjectImages: {
-      data: [ImagesDataType]
+      data: [ImagesDataType];
     };
     Project3D: boolean;
     Project3DLink: string;
@@ -28,7 +28,35 @@ export type Project = {
   };
 };
 
-export type Projects = [Project]
+export type Projects = [Project];
+
+export type School = {
+  id: number;
+  attributes: {
+    SchoolName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    majors: {
+      data: [Major];
+    };
+    projects: {
+      data: [Project];
+    };
+  };
+};
+
+export type Major = {
+  id: number;
+  attributes: {
+    MajorName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type Schools = [School]
 
 // Homepage type
 export type Homepage = {

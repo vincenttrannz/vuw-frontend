@@ -89,7 +89,7 @@ export async function getStaticProps({params}:any) {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink"]
+    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink", "student", "level", "major", "school"]
   };
   const projectsRes = await fetchAPI("/projects", projectQuery);
 

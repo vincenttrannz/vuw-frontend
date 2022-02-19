@@ -11,9 +11,10 @@ import {Projects, Homepage} from '../compilers/type'
 type HomepageProps = {
   homepage: Homepage;
   projects: Projects;
+  school: any;
 };
 
-const Home: NextPage<HomepageProps> = ({homepage, projects}) => {
+const Home: NextPage<HomepageProps> = ({homepage, projects, school}) => {
   console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
@@ -55,7 +56,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects}) => {
           <p>{quickIntroText}</p>
         </div>
       </TwoColumnsBlock>
-      <ProjectContainer projects={projects}/>
+      <ProjectContainer projects={projects} schoolData={school}/>
     </>
   )
 };
@@ -69,21 +70,31 @@ export async function getStaticProps() {
     ],
   };
 
+  const schoolQuery = {
+    populate: "*"
+  }
+
   const projectQuery = {
     populate: [
-      "ProjectThumbnail"
+      "*",
+      "ProjectThumbnail",
+      "school",
+      "major",
+      "level"
     ]
   };
 
-  const [homepageRes, projectsRes] = await Promise.all([
+  const [homepageRes, projectsRes, schoolRes] = await Promise.all([
     fetchAPI("/homepage", HomepageQuery),
-    fetchAPI("/projects", projectQuery)
+    fetchAPI("/projects", projectQuery),
+    fetchAPI("/schools", schoolQuery)
   ]);
 
   return {
     props: { 
       homepage: homepageRes.data, 
-      projects: projectsRes.data 
+      projects: projectsRes.data,
+      school: schoolRes.data
     },
     revalidate: 1,
   };
