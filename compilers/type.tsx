@@ -30,6 +30,7 @@ export type Project = {
 
 export type Projects = [Project];
 
+// School Type
 export type School = {
   id: number;
   attributes: {
@@ -56,7 +57,21 @@ export type Major = {
   };
 };
 
-export type Schools = [School]
+export type Schools = [School];
+
+// Level study type
+export type Level = {
+  id: number;
+  attributes: {
+    StudyLevel: string;
+    createdAt: Date;
+    projects: Projects;
+    publishedAt: Date;
+    updatedAt: Date;
+  }
+}
+
+export type Levels = [Level];
 
 // Homepage type
 export type Homepage = {

@@ -6,15 +6,16 @@ import { FacebookShareButton, FacebookIcon } from "react-share";
 import TwoColumnsBlock from './components/TwoColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
-import {Projects, Homepage} from '../compilers/type'
+import {Projects, Homepage, Schools, Levels} from '../compilers/type'
 
 type HomepageProps = {
   homepage: Homepage;
   projects: Projects;
-  school: any;
+  level: Levels,
+  school: Schools;
 };
 
-const Home: NextPage<HomepageProps> = ({homepage, projects, school}) => {
+const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
   console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
@@ -56,7 +57,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school}) => {
           <p>{quickIntroText}</p>
         </div>
       </TwoColumnsBlock>
-      <ProjectContainer projects={projects} schoolData={school}/>
+      <ProjectContainer projects={projects} schoolData={school} levelData={level}/>
     </>
   )
 };
@@ -72,6 +73,10 @@ export async function getStaticProps() {
 
   const schoolQuery = {
     populate: "*"
+  };
+
+  const levelQuery = {
+    populate: "*"
   }
 
   const projectQuery = {
@@ -84,17 +89,19 @@ export async function getStaticProps() {
     ]
   };
 
-  const [homepageRes, projectsRes, schoolRes] = await Promise.all([
+  const [homepageRes, projectsRes, schoolRes, levelRes] = await Promise.all([
     fetchAPI("/homepage", HomepageQuery),
     fetchAPI("/projects", projectQuery),
-    fetchAPI("/schools", schoolQuery)
+    fetchAPI("/schools", schoolQuery),
+    fetchAPI("/levels", levelQuery)
   ]);
 
   return {
     props: { 
       homepage: homepageRes.data, 
       projects: projectsRes.data,
-      school: schoolRes.data
+      school: schoolRes.data,
+      level: levelRes.data
     },
     revalidate: 1,
   };
