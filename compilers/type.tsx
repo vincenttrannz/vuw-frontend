@@ -25,6 +25,10 @@ export type Project = {
     ProjectCodeLink: string;
     ProjectThumbnail: ImagesDataType;
     SeoData: SeoDataType;
+    level: Level;
+    school: School;
+    major: Major;
+    student: Student;
   };
 };
 
@@ -68,10 +72,25 @@ export type Level = {
     projects: Projects;
     publishedAt: Date;
     updatedAt: Date;
-  }
-}
+  };
+};
 
 export type Levels = [Level];
+
+// Student type
+export type Student = {
+  data: {
+    id: number;
+    attributes: null | {
+      StudentName: string;
+      StudentShortDetail: string;
+      StudentRichDetail: string;
+      createdAt: Date;
+      updatedAt: Date;
+      publishedAt: Date;
+    };
+  }
+};
 
 // Homepage type
 export type Homepage = {
@@ -80,7 +99,8 @@ export type Homepage = {
     Hero_title: string;
     quick_intro_title: string;
     Quick_intro_te_reo: string;
-    Quick_intro_text_field: string;
+    Quick_intro_text_column_one: string;
+    Quick_intro_text_column_two: string;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;

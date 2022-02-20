@@ -5,39 +5,46 @@
  * This base stylesheet use for setup some fundamental style
  */
 
+//  ========== //
 //  FONT STYLE
+//  ========== //
 * {
   font-family: "Inter", sans-serif;
 }
 
-h1 {
+h1, .h1 {
   font-size: clamp(57px, 6vw, 64px);
   font-weight: bold;
 }
 
-h2 {
+h2, .h2 {
   font-size: clamp(47px, 5vw, 52px);
   font-weight: 900;
 }
 
-h3 {
+h3, .h3 {
   font-size: clamp(36px, 4vw, 40px);
   font-weight: bold;
 }
 
-h4 {
+h4, .h4 {
   font-size: clamp(22px, 3vw, 24px);
   font-weight: bold;
 }
 
-h5 {
+h5, .h5 {
   font-size: clamp(16px, 2vw, 18px);
   font-weight: 500;
 }
 
-h6 {
+h6, .h6 {
   font-size: clamp(14px, 1.5vw, 16px);
   font-weight: bold;
+}
+
+.subtitle {
+  font-size: clamp(36px, 6vw, 40px);
+  font-weight: 500;
 }
 
 p {
@@ -50,6 +57,21 @@ p {
   font-weight: normal;
   &.bold {
     font-weight: bold !important;
+  }
+}
+
+//  ========== //
+//  LOGO 
+//  ========== //
+
+.vic-logo-container {
+  display: flex;
+  position: relative;
+  width: clamp(155px, 15vw, 195px);
+  height: 45px;
+  .vic-logo {
+    width: 100%;
+    height: 100%;
   }
 }
 

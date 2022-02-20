@@ -3,16 +3,13 @@
 =================================*/
 
 .navbar {
-  min-height: 80px;
+  height: 80px;
   position: fixed;
+  display: flex;
+  align-content: center;
   top: 0;
   background-color: #fff;
   z-index: 99;
-  &__logo {
-    position: relative;
-    width: clamp(120px, 10vw, 240px);
-    height: clamp(30px, 4vw, 60px);
-  }
   &__link-container {
     display: flex;
     align-items: center;

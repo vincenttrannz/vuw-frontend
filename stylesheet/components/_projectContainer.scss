@@ -3,6 +3,9 @@
 =================================*/
 
 .projectContainer {
+  background: $vic-gray;
+  padding-top: 50px;
+  padding-bottom: 50px;
   position: relative;
   display: grid;
   width: 100%;
@@ -24,7 +27,8 @@
       }
     }
     .details-container {
-      
+      padding: 20px;
+      background: #fff;
     }
   }
 }

@@ -3,6 +3,8 @@
 =======================================*/
 $black: #030303;
 $vic-green: #005137;
+$vic-smoke: #252525;
+$vic-gray: #EEEEEE;
 
 $theme-colors: (
   'info': tomato,
@@ -24,7 +26,7 @@ $grid-breakpoints: (
 
 // scss-docs-start container-max-widths
 $container-max-widths: (
-  xs: clamp(572px, 95vw, 95vw)
+  xs: 100vw
   // xs: clamp(767px, 90vw, 1560px),
   // md: 720px,
   // lg: 960px,
@@ -36,7 +38,7 @@ $container-max-widths: (
 
 // Customise bootstrap variable
 $spacer: 2rem;
-$container-padding-x: 2rem;
+$container-padding-x: clamp(2rem, 2.5vw, 2.5vw);
 
 // 1. Box Shadow
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.15);

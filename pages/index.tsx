@@ -3,7 +3,9 @@ import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
 import { FacebookShareButton, FacebookIcon } from "react-share";
-import TwoColumnsBlock from './components/TwoColumnsBlock';
+import ReactMarkdown from "react-markdown";
+import TwoColumnsBlock from './layout/TwoColumnsBlock';
+import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
 import {Projects, Homepage, Schools, Levels} from '../compilers/type'
@@ -23,7 +25,8 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
   const heroTitle = getStrapiData(homepage).Hero_title;
   const quickIntroTitle = getStrapiData(homepage).quick_intro_title;
   const quickIntroTeReo = getStrapiData(homepage).Quick_intro_te_reo;
-  const quickIntroText = getStrapiData(homepage).Quick_intro_text_field;
+  const quickIntroTextColOne = getStrapiData(homepage).Quick_intro_text_column_one;
+  const quickIntroTextColTwo = getStrapiData(homepage).Quick_intro_text_column_two;
   return (
     <>
       <HeadData
@@ -44,19 +47,27 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
           backgroundImage: `url(${getStrapiMedia(heroBanner)})`
         }}
       >
-        <Container>
-          <h1>{heroTitle}</h1>
+        <div className="hero-section__overlay"></div>
+        <Container className='hero-section__title-box-container'>
+          <div className='hero-section__title-box'>
+            <span className="subtitle">Wellington Faculty of</span>
+            <h1>{heroTitle}</h1>
+            <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>
+          </div>
         </Container>
       </div>
-      <TwoColumnsBlock>
-        <div className='me-2'>
-          <h2>{quickIntroTitle}</h2>
-          <h4>{quickIntroTeReo}</h4>
+      <ThreeColumnsBlock className="px-7">
+        <div>
+          <h3>{quickIntroTitle}</h3>
+          <h5>{quickIntroTeReo}</h5>
         </div>
-        <div className='ms-2'>
-          <p>{quickIntroText}</p>
+        <div>
+          <p>{quickIntroTextColOne}</p>
         </div>
-      </TwoColumnsBlock>
+        <div>
+          <p>{quickIntroTextColTwo}</p>
+        </div>
+      </ThreeColumnsBlock>
       <ProjectContainer projects={projects} schoolData={school} levelData={level}/>
     </>
   )
@@ -83,6 +94,7 @@ export async function getStaticProps() {
     populate: [
       "*",
       "ProjectThumbnail",
+      "student",
       "school",
       "major",
       "level"

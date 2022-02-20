@@ -1,0 +1,21 @@
+/*==============================
+=            Footer            =
+================================*/
+
+.footer {
+  width: 100%;
+  display: grid;
+  gap: 5%;
+  justify-items: start;
+  padding-top: clamp(30px, 15vw, 90px);
+  padding-bottom: clamp(16px, 5vw, 30px);
+  grid-template-columns: 30% 30% 10% 10%;
+  &__column {
+    display: grid;
+    align-self: baseline;
+    grid-template-rows: 1fr 1fr;
+    :first-child {
+      align-self: end;
+    }
+  }
+}

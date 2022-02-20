@@ -3,12 +3,36 @@
 =================================*/
 
 .hero-section {
-  min-height: clamp(480px, 40vw, 1024px);
+  position: relative;
+  min-height: clamp(480px, 50vw, 1024px);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 35%;
+    background: linear-gradient(90deg, white 0%, white 45%, #ffffffe6 70%, #ffffff00 100%);
+  }
+  &__title-box-container {
+    z-index: 2;
+  }
+  &__title-box {
+    padding: clamp(30px, 5vw, 60px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    background: $vic-smoke;
+    color: #fff;
+    width: clamp(200px, 100%, 750px);
+    & * {
+      margin: 0;
+    }
+  }
 }
 
 /*=====  End of Homepage ======*/

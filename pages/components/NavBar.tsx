@@ -1,33 +1,32 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import VicLogo from '../../public/vic-logo.svg'
 import {Container, Button} from 'react-bootstrap';
 
 const NavBar: React.FC = () => {
   return (
-    <Container fluid className='navbar shadow-sm py-1'>
+    <Container fluid className='navbar shadow-sm'>
       <Link href="/">
-        <a className='navbar__logo'>
+        <a className='vic-logo-container'>
           <VicLogo className="vic-logo"/>
         </a>
       </Link>
       <div className='navbar__link-container'>
+        <Link href="/">
+          <a>Student Work</a>
+        </Link>
         <Link href="/about">
           <a>About</a>
         </Link>
         <Link href="/">
-          <a>Student Work</a>
-        </Link>
-        <Link href="/">
           <a>Events</a>
         </Link>
-        <Link href="/">
-          <a>Contact</a>
+        <Link href="https://www.wgtn.ac.nz/">
+          <a target="_blank">Contact</a>
         </Link>
-        <Button onClick={() => window.open("https://www.wgtn.ac.nz/", "_blank")} className='px-3'>
-          Enroll
-        </Button>
+        <Link href="https://www.wgtn.ac.nz/">
+          <a target="_blank">Enroll</a>
+        </Link>
       </div>
     </Container>
   );

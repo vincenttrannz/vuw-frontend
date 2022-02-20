@@ -5,6 +5,7 @@ import { createContext } from "react";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import NavBar from "./components/NavBar";
+import Footer from './components/Footer'
 import HeadData from "./components/HeadData";
 
 // Store Strapi Global object in context
@@ -25,6 +26,7 @@ function VicApp({ Component, pageProps }: AppProps) {
         <div className="main">
           <Component {...pageProps} />
         </div>
+        <Footer/>
       </GlobalContext.Provider>
     </>
   );
