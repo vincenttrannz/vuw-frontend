@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import VicLogo from '../../public/vic-logo.svg'
 import {Container, Button} from 'react-bootstrap';
 
 const NavBar: React.FC = () => {
@@ -8,12 +9,7 @@ const NavBar: React.FC = () => {
     <Container fluid className='navbar shadow-sm py-1'>
       <Link href="/">
         <a className='navbar__logo'>
-          <Image 
-            src={"/vic-logo.svg"}
-            layout='fill'
-            objectFit='contain'
-            alt='VUW Logo'
-          />
+          <VicLogo className="vic-logo"/>
         </a>
       </Link>
       <div className='navbar__link-container'>
