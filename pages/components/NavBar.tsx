@@ -13,19 +13,19 @@ const NavBar: React.FC = () => {
       </Link>
       <div className='navbar__link-container'>
         <Link href="/">
-          <a>Student Work</a>
+          <a className='p2'>Student Work</a>
         </Link>
         <Link href="/about">
-          <a>About</a>
+          <a className='p2'>About</a>
         </Link>
         <Link href="/">
-          <a>Events</a>
+          <a className='p2'>Events</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
-          <a target="_blank">Contact</a>
+          <a className='p2' target="_blank">Contact</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
-          <a target="_blank">Enroll</a>
+          <a className='p2' target="_blank">Enroll</a>
         </Link>
       </div>
     </Container>

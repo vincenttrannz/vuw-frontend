@@ -8,9 +8,20 @@
 //  ========== //
 //  FONT STYLE
 //  ========== //
+
+// Removed margin on some default element
 * {
   font-family: "Inter", sans-serif;
 }
+
+html {
+  font-size: 15px;
+}
+
+p, address {
+  margin: 0;
+}
+
 
 h1, .h1 {
   font-size: clamp(57px, 6vw, 64px);
@@ -52,11 +63,16 @@ p {
   font-weight: normal;
 }
 
+a {
+  color: $vic-smoke;
+  text-decoration: none;
+}
+
 .p2 {
   font-size: clamp(12px, 1vw, 14px);
   font-weight: normal;
   &.bold {
-    font-weight: bold !important;
+    font-weight: 600 !important;
   }
 }
 

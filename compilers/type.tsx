@@ -25,10 +25,18 @@ export type Project = {
     ProjectCodeLink: string;
     ProjectThumbnail: ImagesDataType;
     SeoData: SeoDataType;
-    level: Level;
-    school: School;
-    major: Major;
-    student: Student;
+    level: {
+      data: Level
+    };
+    school: {
+      data: School
+    };
+    major: {
+      data: Major
+    };
+    student: {
+      data: Student
+    };
   };
 };
 
@@ -79,17 +87,15 @@ export type Levels = [Level];
 
 // Student type
 export type Student = {
-  data: {
-    id: number;
-    attributes: null | {
-      StudentName: string;
-      StudentShortDetail: string;
-      StudentRichDetail: string;
-      createdAt: Date;
-      updatedAt: Date;
-      publishedAt: Date;
-    };
-  }
+  id: number;
+  attributes: null | {
+    StudentName: string;
+    StudentShortDetail: string;
+    StudentRichDetail: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
 };
 
 // Homepage type

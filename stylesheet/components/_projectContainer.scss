@@ -9,17 +9,21 @@
   position: relative;
   display: grid;
   width: 100%;
-  grid-template-columns: 0.25fr 0.75fr;
-  gap: 2rem;
+  grid-template-columns: 25% 70%;
+  gap: 5%;
   &__details-wrapper {
-    grid-column: 1;
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 1fr;
+    align-content: flex-start;
   }
   &__portfolios-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 31.5% 31.5% 31.5%;
     gap: 2rem;
   }
   &__portfolio {
+    background: #fff;
     position: relative;
     .image-container {
       img {
@@ -28,6 +32,37 @@
     }
     .details-container {
       padding: 20px;
+      background: #fff;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 30px;
+      &__categories {
+        display: grid;
+        align-items: center;
+        gap: 10px;
+        grid-template-rows: auto auto;
+      }
+      &__multiple {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 5px 15px;
+      }
+    }
+  }
+
+  /**
+   * Categories list
+   */
+  .categories-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    &__category {
+      padding: 5px 15px;
       background: #fff;
     }
   }
