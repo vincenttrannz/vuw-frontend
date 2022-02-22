@@ -1,6 +1,7 @@
 import React, { useRef, forwardRef } from "react";
 import Link from 'next/link'
 import { Projects, Project } from "../../compilers/type";
+import TextDivider from './TextDivider';
 import { getStrapiMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
@@ -46,6 +47,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
               <div className="details-container">
                 <div className="details-container__title-name">
                   <h6>{ProjectTitle}</h6>
+                  <TextDivider prime={false}/>
                   <p>By {ProjectStudent}</p>
                 </div>
                 <div className="details-container__categories">

@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from "react";
+import React, { useState, useRef, forwardRef, MouseEvent } from "react";
 import AllProjects from "./AllProjects";
 import { InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
@@ -23,6 +23,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("Level data:", levelData);
 
   const ProjectCard = useRef<any>(null);
+  const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
+  const ProjectMajorLinkList = useRef<HTMLUListElement>(null);
 
   const options = {
     categories: ["CourseName"],
@@ -63,6 +65,20 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       return SchoolMajors;
     })
   );
+
+  const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const SelectedFilter = event.currentTarget.getAttribute("data-filter");
+    const ProjectLinkContainer = Array.from(ProjectMajorLinkList.current?.children as Array);
+    ProjectLinkContainer!.forEach((element:HTMLLIElement | any) => {
+      const ProjectMajorLink:HTMLAnchorElement | any = Array.from(element?.children)[0];
+      if(SelectedFilter == ProjectMajorLink.getAttribute("data-school")) {
+        ProjectMajorLink.parentNode.classList.add("disable");
+      } else {
+        ProjectMajorLink.parentNode.classList.remove("disable");
+      }
+    });
+  }
+
   return (
     <Container className="projectContainer">
       <div className="projectContainer__details-wrapper">
@@ -93,7 +109,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {SchoolCollection.map((name: string, i: number) => {
               return (
                 <li className="categories-container__category" key={i}>
-                  <a className="p2 bold" data-filter={name.replace(/ /g, "_")} href="#">
+                  <a type="button" onClick={handleSchoolMajorClick} className="p2 bold" ref={ProjectSchoolLink} data-filter={name.replace(/ /g, "_")}>
                     {name}
                   </a>
                 </li>
@@ -104,7 +120,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="categories-wrapper">
           <h6>Major</h6>
           <TextDivider prime={false}/>
-          <ul className="categories-container">
+          <ul ref={ProjectMajorLinkList} className="categories-container">
             {EachSchoolMajor.map(
               (
                 majors: [
@@ -117,7 +133,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 majors.map((major, i: number) => {
                   return (
                     <li className="categories-container__category" key={i}>
-                      <a className="p2 bold" data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")} href="#">
+                      <a type="button" className="p2 bold" data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")}>
                         {major.major}
                       </a>
                     </li>
@@ -133,7 +149,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {ProjectYearCollection.map((year:number, i:number) => {
               return (
                 <li className="categories-container__category" key={i}>
-                  <a className="p2 bold" data-filter={year} href="#">{year}</a>
+                  <a type="button" className="p2 bold" data-filter={year}>{year}</a>
                 </li>
               );
             })}
@@ -146,7 +162,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {LevelCollection.map((level:string, i:number) => {
               return (
                 <li className="categories-container__category" key={i}>
-                  <a className="p2 bold" data-filter={level.replace(/ /g, "_")} href="#">{level}</a>
+                  <a type="button" className="p2 bold" data-filter={level.replace(/ /g, "_")}>{level}</a>
                 </li>
               );
             })}
