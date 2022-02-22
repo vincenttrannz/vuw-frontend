@@ -22,13 +22,19 @@
     z-index: 2;
   }
   &__title-box {
-    padding: clamp(30px, 5vw, 60px);
+    padding: clamp(30px, calc(2vw + 2vh), 60px);
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     background: $vic-smoke;
     color: #fff;
-    width: clamp(200px, 100%, 750px);
+    width: clamp(500px, calc(22vw + 25vh), 665px);
+    h1 {
+      font-size: clamp(45px, calc(2vw + 2vh), 60px) !important;
+    }
+    .subtitle {
+      font-size: clamp(26px, calc(1vw + 1vh), 32px) !important;
+    }
     & * {
       margin: 0;
     }
