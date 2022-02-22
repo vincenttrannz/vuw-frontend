@@ -63,6 +63,7 @@ export type Major = {
   id: number;
   attributes: {
     MajorName: string;
+    MajorTeReo: string;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;

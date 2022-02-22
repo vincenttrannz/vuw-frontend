@@ -2,7 +2,10 @@ import type { NextPage, GetStaticProps } from 'next'
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import { Container } from "react-bootstrap";
-import { FacebookShareButton, FacebookIcon } from "react-share";
+import { FacebookShareButton } from "react-share";
+import InstaIcon from '../public/insta-logo.svg'
+import FacebookIcon from '../public/fb-logo.svg'
+import TextDivider from './components/TextDivider';
 import ReactMarkdown from "react-markdown";
 import TwoColumnsBlock from './layout/TwoColumnsBlock';
 import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
@@ -34,14 +37,16 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
         description={HomepageSeoData.MetaDescription}
         image={getStrapiMedia(HomepageShareImageSeo)}
       />
-      {/* <FacebookShareButton
-        url="https://vic-design.herokuapp.com/"
-        quote="Homepage of VUW Project"
-        hashtag="#helloVUW"
-      >
-        <FacebookIcon size={36} />
-      </FacebookShareButton>
-      <Link href={`/about`}>About page</Link> */}
+      <div className='side-share-container shadow-sm'>
+        <FacebookShareButton
+          url="https://vuw-frontend.vercel.app/"
+          quote="Homepage of VUW Project"
+          hashtag="#helloVUW"
+        >
+          <FacebookIcon/>
+        </FacebookShareButton>
+        <InstaIcon/>
+      </div>
       <div className='hero-section py-5'
         style={{
           backgroundImage: `url(${getStrapiMedia(heroBanner)})`
@@ -57,8 +62,9 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
         </Container>
       </div>
       <ThreeColumnsBlock className="px-7">
-        <div>
+        <div className="textblock-with-divider">
           <h3>{quickIntroTitle}</h3>
+          <TextDivider prime/>
           <h5>{quickIntroTeReo}</h5>
         </div>
         <div>

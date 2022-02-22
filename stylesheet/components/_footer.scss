@@ -21,6 +21,17 @@
     :first-child {
       align-self: end;
     }
+    * {
+      width: fit-content;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3px;
+    }
   }
   &__copyright {
     grid-column: span 4;

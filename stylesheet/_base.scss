@@ -3,6 +3,7 @@
 =================================*/
 /**
  * This base stylesheet use for setup some fundamental style
+ * or sharing component between pages
  */
 
 //  ========== //
@@ -70,7 +71,7 @@ a {
 
 .p2 {
   font-size: clamp(12px, 1vw, 14px);
-  font-weight: normal;
+  font-weight: 400;
   &.bold {
     font-weight: 600 !important;
   }
@@ -93,4 +94,53 @@ a {
 
 .main {
   margin-top: 80px;
+}
+
+//  ==================== //
+//  SIDE SHARE CONTAINER
+//  ==================== //
+
+.side-share-container {
+  display: grid;
+  z-index: 9;
+  position: fixed;
+  right: 0;
+  top: 45%;
+  background: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 47px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  padding: 15px;
+  gap: 15px;
+  * {
+    width: fit-content;
+  }
+}
+
+//  ============ //
+//  TEXT DIVIDER
+//  ============ //
+
+.text-divider {
+  height: 2px;
+  background: $vic-teal;
+  &.prime {
+    width: 70px;
+  }
+  &.secondary {
+    width: 35px;
+  }
+}
+
+//  ======================= //
+//  TEXT BLOCK WITH DIVIDER
+//  ======================= //
+.textblock-with-divider {
+  * { margin: 0; }
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
 }

@@ -2,6 +2,7 @@ import React, { useState, useRef, forwardRef } from "react";
 import AllProjects from "./AllProjects";
 import { InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
+import TextDivider from './TextDivider';
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Schools, Levels } from "../../compilers/type";
 import { Container } from "react-bootstrap";
@@ -85,8 +86,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             </div>
           </InputGroup>
         </div>
-        <div>
-          <h5>School</h5>
+        <div className="categories-wrapper">
+          <h6>School</h6>
+          <TextDivider prime={false}/>
           <ul className="categories-container">
             {SchoolCollection.map((name: string, i: number) => {
               return (
@@ -99,8 +101,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             })}
           </ul>
         </div>
-        <div>
-          <h5>Major</h5>
+        <div className="categories-wrapper">
+          <h6>Major</h6>
+          <TextDivider prime={false}/>
           <ul className="categories-container">
             {EachSchoolMajor.map(
               (
@@ -123,8 +126,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             )}
           </ul>
         </div>
-        <div>
-          <h5>Year</h5>
+        <div className="categories-wrapper">
+          <h6>Year</h6>
+          <TextDivider prime={false}/>
           <ul className="categories-container">
             {ProjectYearCollection.map((year:number, i:number) => {
               return (
@@ -135,8 +139,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             })}
           </ul>
         </div>
-        <div>
-          <h5>Level</h5>
+        <div className="categories-wrapper">
+          <h6>Level</h6>
+          <TextDivider prime={false}/>
           <ul className="categories-container">
             {LevelCollection.map((level:string, i:number) => {
               return (

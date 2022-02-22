@@ -27,15 +27,21 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectTitle = project.attributes.ProjectTitle;
         const ProjectSlug = project.attributes.Slug;
         const ProjectStudent = project.attributes.student.data?.attributes?.StudentName;
-        const ProjectSchool = project.attributes.school.data?.attributes?.SchoolName.replace(/_+/g, " ");
+        const ProjectSchool = project.attributes.school.data?.attributes?.SchoolName;
         const ProjectLevel = project.attributes.level.data?.attributes?.StudyLevel;
         const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
-        const ProjectMajor = project.attributes.major.data?.attributes?.MajorName.replace(/_+/g, " ");
+        const ProjectMajor = project.attributes.major.data?.attributes?.MajorName;
+        const ProjectMajorTeReo = project.attributes.major.data?.attributes?.MajorTeReo;
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
-            <a className="projectContainer__portfolio" key={project.id}>
+            <a className="projectContainer__portfolio shadow-sm" key={project.id}>
               <div className="image-container">
-                <img src={ProjectThumbnail} alt="project thumbanil" />
+                <img src={ProjectThumbnail} alt="project thumbanil"/>
+                <div className="img-overlay">
+                  <div className="img-overlay__textbox">
+                    <span className="p2">Explore</span>
+                  </div>
+                </div>
               </div>
               <div className="details-container">
                 <div className="details-container__title-name">
@@ -49,7 +55,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                     {ProjectYear !== undefined  && CategorySplit(ProjectYear)}
                   </div>
                   <div className="p2 details-container__major">
-                    <span>{ProjectMajor}</span>
+                    <span>{ProjectMajor} - {ProjectMajorTeReo}</span>
                   </div>
                   <div className="filter-container d-none">
                     <p data-find-school={ProjectSchool.replace(/ /g, "_")}>{ProjectSchool.replace(/ /g, "_")}</p>

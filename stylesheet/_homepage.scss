@@ -4,7 +4,7 @@
 
 .hero-section {
   position: relative;
-  min-height: clamp(480px, 50vw, 1024px);
+  min-height: calc(clamp(720px, 100vh, 100vh) - 80px);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

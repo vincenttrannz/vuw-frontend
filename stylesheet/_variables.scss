@@ -2,14 +2,15 @@
 =            VARIABLES SCSS           =
 =======================================*/
 $black: #030303;
-$vic-green: #005137;
+$vic-teal: #3EC2B4;
 $vic-smoke: #252525;
 $vic-gray: #EEEEEE;
+$vic-offwhite: #FFFEFC;
 
 $theme-colors: (
   'info': tomato,
   'danger': teal,
-  'primary': $vic-green,
+  'primary': $vic-teal,
 );
 
 // scss-docs-start grid-breakpoints
