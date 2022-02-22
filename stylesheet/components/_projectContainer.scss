@@ -27,7 +27,7 @@
     position: relative;
     transition: all ease 0.2s;
     display: grid;
-    grid-template-rows: 0.6fr 0.4fr;
+    grid-template-rows: 0fr 0.4fr;
     .image-container {
       position: relative;
       img {
@@ -112,10 +112,12 @@
       flex-wrap: wrap;
       gap: 15px;
       &__category {
+        transition: all ease 0.1s;
         padding: 5px 15px;
         background: #fff;
         &.disable {
-          background: #333;
+          opacity: 0.5;
+          pointer-events: none;
         }
       }
     }

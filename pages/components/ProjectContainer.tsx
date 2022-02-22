@@ -22,9 +22,10 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("School data", schoolData);
   console.log("Level data:", levelData);
 
-  const ProjectCard = useRef<any>(null);
   const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
+  const ProjectMajorLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLinkList = useRef<HTMLUListElement>(null);
+  const ProjectSchoolLinkList = useRef<HTMLUListElement>(null);
 
   const options = {
     categories: ["CourseName"],
@@ -67,12 +68,13 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   );
 
   const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    const SelectedFilter = event.currentTarget.getAttribute("data-filter");
-    const ProjectLinkContainer = Array.from(ProjectMajorLinkList.current?.children as Array);
-    ProjectLinkContainer!.forEach((element:HTMLLIElement | any) => {
+    const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
+    const ProjectMajorLinkContainer = Array.from(ProjectMajorLinkList.current?.children as Array);
+    // Handle click on school filter
+    ProjectMajorLinkContainer.forEach((element:HTMLLIElement | any) => {
       const ProjectMajorLink:HTMLAnchorElement | any = Array.from(element?.children)[0];
-      if(SelectedFilter == ProjectMajorLink.getAttribute("data-school")) {
-        ProjectMajorLink.parentNode.classList.add("disable");
+      if(SelectedSchoolFilter !== ProjectMajorLink.getAttribute("data-school") && event.currentTarget.getAttribute("data-is-school")) {
+        ProjectMajorLink.parentNode.classList.toggle("disable");
       } else {
         ProjectMajorLink.parentNode.classList.remove("disable");
       }
@@ -105,11 +107,11 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="categories-wrapper">
           <h6>School</h6>
           <TextDivider prime={false}/>
-          <ul className="categories-container">
+          <ul ref={ProjectSchoolLinkList} className="categories-container">
             {SchoolCollection.map((name: string, i: number) => {
               return (
                 <li className="categories-container__category" key={i}>
-                  <a type="button" onClick={handleSchoolMajorClick} className="p2 bold" ref={ProjectSchoolLink} data-filter={name.replace(/ /g, "_")}>
+                  <a type="button" onClick={handleSchoolMajorClick} className="p2 bold" ref={ProjectSchoolLink} data-filter={name.replace(/ /g, "_")} data-is-school={true}>
                     {name}
                   </a>
                 </li>
@@ -133,7 +135,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 majors.map((major, i: number) => {
                   return (
                     <li className="categories-container__category" key={i}>
-                      <a type="button" className="p2 bold" data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")}>
+                      <a type="button" onClick={handleSchoolMajorClick} className="p2 bold" ref={ProjectMajorLink} data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")}>
                         {major.major}
                       </a>
                     </li>
