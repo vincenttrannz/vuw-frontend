@@ -13,6 +13,13 @@ $theme-colors: (
   'primary': $vic-teal,
 );
 
+// Project breakpoints
+$small-mobile-screen-size: 576px;
+$mobile-screen-size: 767px;
+$small-tablet-screen-size: 991px;
+$tablet-screen-size: 1199px;
+$large-screen-size: 1399px;
+
 // scss-docs-start grid-breakpoints
 $grid-breakpoints: (
   xs: 0,

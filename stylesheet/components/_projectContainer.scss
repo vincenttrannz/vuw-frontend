@@ -123,3 +123,27 @@
     }
   }
 }
+
+@media (max-width: $tablet-screen-size) {
+  .projectContainer {
+    &__portfolios-wrapper {
+      grid-template-columns: calc((100% / 2) - 1rem) calc((100% / 2) - 1rem);
+      gap: 2rem;
+    }
+  }
+}
+
+@media (max-width: $small-tablet-screen-size) {
+  .projectContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: $mobile-screen-size) {
+  .projectContainer {
+    &__portfolios-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+}

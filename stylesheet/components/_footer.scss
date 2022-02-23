@@ -16,7 +16,7 @@
   &__column {
     display: grid;
     align-self: baseline;
-    gap: 20px;
+    gap: 15px;
     grid-template-rows: 1fr 1fr;
     :first-child {
       align-self: end;
@@ -35,5 +35,26 @@
   }
   &__copyright {
     grid-column: span 4;
+  }
+}
+
+@media (max-width: $tablet-screen-size) {
+  .footer {
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(4, auto);
+    gap: 25px;
+    &__column {
+      grid-template-rows: auto;
+      &:first-child {
+        grid-column: span 2;
+      }  
+    }
+    address {
+      grid-column: span 2;
+      grid-template-columns: 1fr;
+    }
+    &__copyright {
+      grid-column: span 2;
+    }
   }
 }

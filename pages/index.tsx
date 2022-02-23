@@ -61,7 +61,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
           </div>
         </Container>
       </div>
-      <ThreeColumnsBlock className="px-7">
+      <ThreeColumnsBlock className="px-sm-3 px-xl-7">
         <div className="textblock-with-divider">
           <h3>{quickIntroTitle}</h3>
           <TextDivider prime/>

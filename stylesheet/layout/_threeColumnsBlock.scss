@@ -10,3 +10,26 @@
   grid-template-columns: auto auto auto;
   gap: 80px;
 }
+
+@media (max-width: $large-screen-size) {
+  .threeColumnsBlock {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    gap: 30px;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    .textblock-with-divider {
+      grid-column: span 2;
+    }
+  }
+}
+
+@media (max-width: $mobile-screen-size) {
+  .threeColumnsBlock {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    .textblock-with-divider {
+      grid-column: span 1;
+    }
+  }
+}
