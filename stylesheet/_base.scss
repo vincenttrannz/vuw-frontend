@@ -96,7 +96,7 @@ a {
   width: clamp(155px, 15vw, 195px);
   height: 45px;
   .vic-logo {
-    width: 100%;
+    width: auto;
     height: 100%;
   }
 }
@@ -125,7 +125,7 @@ a {
   padding: 15px;
   gap: 15px;
   * {
-    width: fit-content;
+    width: auto;
   }
 }
 

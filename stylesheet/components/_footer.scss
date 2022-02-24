@@ -45,7 +45,7 @@
   .footer {
     grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(3, auto);
-    gap: 50px 25px;
+    gap: 50px;
     &__column {
       grid-template-rows: auto;
     }
