@@ -17,4 +17,19 @@
       margin-right: 1rem;
     }
   }
+
+  .hamburger-container {
+    display: none;
+  }
+}
+
+@media (max-width: $mobile-screen-size) {
+  .navbar {
+    &__link-container {
+      display: none;
+    }
+  }
+  .hamburger-container {
+    display: block !important;
+  }
 }

@@ -41,4 +41,25 @@
   }
 }
 
+@media (max-width: $mobile-screen-size) {
+  .hero-section {
+    background-position: top;
+    background-size: 110% 70%;
+    padding-bottom: 0 !important;
+    min-height: clamp(360px, 25vh, 50vh);
+    &__overlay {
+      display: none;
+    }
+    &__title-box {
+      width: 100%;
+      h1 {
+        font-size: clamp(32px, calc(2vw + 2vh), 45px) !important;
+      }
+      .subtitle {
+        font-size: clamp(16px, calc(1vw + 1vh), 26px) !important;
+      }
+    }
+  }
+}
+
 /*=====  End of Homepage ======*/

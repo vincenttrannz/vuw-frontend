@@ -61,7 +61,7 @@ export default function Footer({}: Props) {
         </ul>
       </div>
       <div className="footer__copyright">
-        <span>All rights reserved. © 2022 VUW</span> <span className="ms-4"><a href="#">Privacy Policy</a></span>
+        <span>All rights reserved. © 2022 VUW</span> <span><a href="#">Privacy Policy</a></span>
       </div>
     </Container>
   );

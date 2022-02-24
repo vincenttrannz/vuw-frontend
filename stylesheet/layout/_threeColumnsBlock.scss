@@ -26,6 +26,8 @@
 
 @media (max-width: $mobile-screen-size) {
   .threeColumnsBlock {
+    padding-top: 15px;
+    padding-bottom: 50px;
     grid-template-columns: auto;
     grid-template-rows: auto;
     .textblock-with-divider {
