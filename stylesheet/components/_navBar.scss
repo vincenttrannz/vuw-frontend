@@ -16,6 +16,9 @@
     a {
       margin-right: 1rem;
     }
+    &__shares {
+      display: none;
+    }
   }
 
   .hamburger-container {
@@ -25,18 +28,25 @@
 
 @media (max-width: $mobile-screen-size) {
   .navbar {
-    &__link-container {
+    &__link-container { 
       position: absolute;
       background: #fff;
       top: 80px;
       left: 0;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 30px;
       padding: 15px 0 30px 0;
       justify-items: center;
       box-shadow: 0 0.5rem 1rem rgb(3 3 3 / 15%) !important;
+      &__shares {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 30px;
+      }
     }
   }
   .hamburger-container {
