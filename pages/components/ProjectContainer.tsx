@@ -67,19 +67,20 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     })
   );
 
-  // const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
-  //   const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
-  //   const ProjectMajorLinkContainer = Array.from(ProjectMajorLinkList.current?.children as Array);
-  //   // Handle click on school filter
-  //   ProjectMajorLinkContainer.forEach((element:HTMLLIElement | any) => {
-  //     const ProjectMajorLink:HTMLAnchorElement | any = Array.from(element?.children)[0];
-  //     if(SelectedSchoolFilter !== ProjectMajorLink.getAttribute("data-school") && event.currentTarget.getAttribute("data-is-school")) {
-  //       ProjectMajorLink.parentNode.classList.toggle("disable");
-  //     } else {
-  //       ProjectMajorLink.parentNode.classList.remove("disable");
-  //     }
-  //   });
-  // }
+  const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
+    const ProjectMajorLinkContainer = (ProjectMajorLinkList.current) && Array.from(ProjectMajorLinkList.current?.children);
+    if(ProjectMajorLinkContainer){
+      ProjectMajorLinkContainer.forEach((element:HTMLLIElement | any) => {
+        const ProjectMajorLink:HTMLAnchorElement | any = Array.from(element?.children)[0];
+        if(SelectedSchoolFilter !== ProjectMajorLink.getAttribute("data-school") && event.currentTarget.getAttribute("data-is-school")) {
+          ProjectMajorLink.parentNode.classList.toggle("disable");
+        } else {
+          ProjectMajorLink.parentNode.classList.remove("disable");
+        }
+      });
+    }
+  }
 
   return (
     <Container className="projectContainer">
@@ -111,7 +112,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {SchoolCollection.map((name: string, i: number) => {
               return (
                 <li className="categories-container__category" key={i}>
-                  <a type="button" className="p2 bold" ref={ProjectSchoolLink} data-filter={name.replace(/ /g, "_")} data-is-school={true}>
+                  <a onClick={handleSchoolMajorClick} type="button" className="p2 bold" ref={ProjectSchoolLink} data-filter={name.replace(/ /g, "_")} data-is-school={true}>
                     {name}
                   </a>
                 </li>
@@ -135,7 +136,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 majors.map((major, i: number) => {
                   return (
                     <li className="categories-container__category" key={i}>
-                      <a type="button" className="p2 bold" ref={ProjectMajorLink} data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")}>
+                      <a onClick={handleSchoolMajorClick} type="button" className="p2 bold" ref={ProjectMajorLink} data-filter={major.major.replace(/ /g, "_")} data-school={major.school.replace(/ /g, "_")}>
                         {major.major}
                       </a>
                     </li>

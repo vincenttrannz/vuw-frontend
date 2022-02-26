@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import $ from 'jquery';
 import Link from "next/link";
 import VicLogo from "../../public/vic-logo.svg";
-import { toggle, hide, show } from 'slidetoggle';
 import { Container, Button } from "react-bootstrap";
 import InstaIcon from '../../public/insta-logo.svg';
 import FacebookIcon from '../../public/fb-logo.svg';
@@ -10,46 +10,10 @@ const NavBar: React.FC = () => {
   const hamburger = useRef<HTMLButtonElement>(null);
   const MenuContainer = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if(window.innerWidth < 767){
-      hide(MenuContainer.current!, {
-        miliseconds: 0
-      })
-    }
-    window.addEventListener("resize", () => {
-      if(window.innerWidth < 767){
-        hide(MenuContainer.current!, {
-          miliseconds: 0
-        })
-        hamburger.current?.classList.remove("is-active");
-      } else {
-        show(MenuContainer.current!, {
-          miliseconds: 0
-        })
-        hamburger.current?.classList.remove("is-active");
-      }
-    })
-  }, [])
-
-  const clickHamburger = () => {
-    hamburger.current?.classList.toggle("is-active");
-    MenuContainer.current?.classList.remove("inactive");
-    toggle(MenuContainer.current!, {
-      miliseconds: 300,
-      transitionFunction: 'ease-in',
-      elementDisplayStyle: 'flex' 
-    });
-  };
-
-  return (
-    <Container fluid className="navbar shadow-sm">
-      <Link href="/">
-        <a className="vic-logo-container">
-          <VicLogo className="vic-logo" />
-        </a>
-      </Link>
-      <div ref={MenuContainer} className="navbar__link-container">
-        <Link href="/">
+  const MenuList = () => {
+    return (
+      <>
+       <Link href="/">
           <a className="p2">Student Work</a>
         </Link>
         <Link href="/about">
@@ -70,12 +34,31 @@ const NavBar: React.FC = () => {
         </Link>
         <div className="navbar__link-container__shares">
           <Link href="#">
-            <a><FacebookIcon/></a>
+            <a id="fb-icon"><FacebookIcon/></a>
           </Link>
           <Link href="#">
-            <a><InstaIcon/></a>
+            <a id="insta-icon"><InstaIcon/></a>
           </Link>
         </div>
+      </>
+    )
+  }
+
+  const clickHamburger = () => {
+    hamburger.current?.classList.toggle("is-active");
+    MenuContainer.current?.classList.remove("inactive");
+    $(MenuContainer.current!).slideToggle(300, 'swing');
+  };
+
+  return (
+    <Container fluid className="navbar shadow-sm">
+      <Link href="/">
+        <a className="vic-logo-container">
+          <VicLogo className="vic-logo" />
+        </a>
+      </Link>
+      <div ref={MenuContainer} className="navbar__link-container">
+          {MenuList()}
       </div>
       <div className="hamburger-container">
         <button

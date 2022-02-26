@@ -11,7 +11,7 @@
   background-color: #fff;
   z-index: 99;
   &__link-container {
-    display: flex;
+    height: auto;
     align-items: center;
     a {
       margin-right: 1rem;
@@ -26,20 +26,39 @@
   }
 }
 
+@media (min-width: $mobile-screen-size) {
+  .navbar {
+    &__link-container {
+      display: flex !important;
+    }
+  }
+}
+
 @media (max-width: $mobile-screen-size) {
   .navbar {
-    &__link-container { 
+    &__link-container {
+      display: none;
       position: absolute;
       background: #fff;
       top: 80px;
       left: 0;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      padding: 15px 0 30px 0;
+      padding: 15px 0;
       justify-items: center;
-      box-shadow: 0 0.5rem 1rem rgb(3 3 3 / 15%) !important;
+      box-shadow: 0 1rem 1rem #03030315 !important;
+      a {
+        display: block;
+        text-align: center;
+        height: 45px;
+        line-height: 45px;
+        margin: 0;
+        &#fb-icon {
+          justify-self: flex-end;
+        }
+        &#insta-icon {
+          justify-self: flex-start;
+        }
+      }
       &__shares {
         display: grid;
         grid-template-columns: 1fr 1fr;
