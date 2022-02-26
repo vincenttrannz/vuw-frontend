@@ -154,13 +154,118 @@ a {
   gap: 15px;
 }
 
+//  ====== //
+//  BUTTON
+//  ====== //
+.btn {
+  &.btn-vic {
+    border: 2px solid $vic-smoke;
+    padding: 15px 30px;
+    border-radius: 0px;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    // FOR PREV BUTTON
+    &.prev-btn {
+      .btn-text {
+        transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
+      }
+      &:hover {
+        .btn-text {
+          transform: translateX(-5px);
+        }
+      }
+    }
+    // FOR NEXT BUTTON
+    &.next-btn {
+      .btn-text {
+        transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
+      }
+      &:hover {
+        .btn-text {
+          transform: translateX(5px);
+        }
+      }
+    }
+  }
+}
 
+//  ====== //
+//  ARROW
+//  ====== //
+.the-arrow {
+  position: relative;
+  display: inline-block;
+  background: $vic-smoke;
+  opacity: 1;
+  height: 2px;
+  width: 20px;
+  transition: ease all .2s;
+  &.rotate {
+    transform: rotate(180deg);
+  }
+}
+
+.btn-vic .the-arrow:after, .btn-vic .the-arrow:before {
+  top: 0;
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+}
+
+.the-arrow:before {
+  top: -3px;
+  right: 0px;
+  -webkit-transform: rotate(40deg);
+  transform: rotate(40deg);
+}
+
+.the-arrow:after {
+  top: 3px;
+  right: 0;
+  -webkit-transform: rotate(-40deg);
+  transform: rotate(-40deg);
+}
+
+.the-arrow:after, .the-arrow:before {
+  opacity: 1;
+  content: "";
+  position: absolute;
+  background: $vic-smoke;
+  height: 2px;
+  width: 8px;
+  right: -1px;
+  margin-right: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: ease all .2s;
+}
+
+.btn-vic:hover .the-arrow {
+  height: 2px;
+  opacity: 1;
+  width: 20px;
+  top: 0px !important;
+}
+
+.btn-vic:hover .the-arrow:before {
+  height: 2px;
+  top: -2.5px;
+  -webkit-transform: rotate(40deg);
+  transform: rotate(40deg);
+}
+
+.btn-vic:hover .the-arrow:after {
+  height: 2px;
+  top: 2.5px;
+  -webkit-transform: rotate(-40deg);
+  transform: rotate(-40deg);
+}
 
 //  ========== //
 //  RESPONSIVE
 //  ========== //
 
-@media (max-width: $mobile-screen-size) {
+@media (max-width: $tablet-screen-size) {
   .side-share-container {
     display: none;
   }

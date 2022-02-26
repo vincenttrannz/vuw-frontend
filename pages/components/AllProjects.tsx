@@ -19,7 +19,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
     )
   }
   return (
-    <div className="projectContainer__portfolios-wrapper">
+    <>
       {projects.map((project:Project, i:number) => {
         console.log("Each project:", project);
         const ProjectThumbnail = getStrapiMedia(
@@ -71,6 +71,6 @@ export default function AllProjects({ projects }: ProjectsProps) {
           </Link>
         );
       })}
-    </div>
+    </>
   );
 }

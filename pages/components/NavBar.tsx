@@ -14,23 +14,19 @@ const NavBar: React.FC = () => {
     return (
       <>
        <Link href="/">
-          <a className="p2">Student Work</a>
+          <a onClick={clickHrefLink} className="p2">Student Work</a>
         </Link>
         <Link href="/about">
-          <a className="p2">About</a>
+          <a onClick={clickHrefLink} className="p2">About</a>
         </Link>
         <Link href="/">
-          <a className="p2">Events</a>
+          <a onClick={clickHrefLink} className="p2">Events</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
-          <a className="p2" target="_blank">
-            Contact
-          </a>
+          <a onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
-          <a className="p2" target="_blank">
-            Enroll
-          </a>
+          <a onClick={clickHrefLink} className="p2" target="_blank">Enroll</a>
         </Link>
         <div className="navbar__link-container__shares">
           <Link href="#">
@@ -44,10 +40,17 @@ const NavBar: React.FC = () => {
     )
   }
 
+  const clickHrefLink = () => {
+    if (window.innerWidth < 767) {
+      hamburger.current?.classList.remove("is-active");
+      $(MenuContainer.current!).slideUp();
+    }
+  }
+
   const clickHamburger = () => {
     hamburger.current?.classList.toggle("is-active");
     MenuContainer.current?.classList.remove("inactive");
-    $(MenuContainer.current!).slideToggle(300, 'swing');
+    $(MenuContainer.current!).slideToggle();
   };
 
   return (
@@ -58,7 +61,7 @@ const NavBar: React.FC = () => {
         </a>
       </Link>
       <div ref={MenuContainer} className="navbar__link-container">
-          {MenuList()}
+        {MenuList()}
       </div>
       <div className="hamburger-container">
         <button

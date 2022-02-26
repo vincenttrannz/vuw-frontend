@@ -1,45 +1,34 @@
-import React, { useState, useRef, forwardRef, MouseEvent } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import AllProjects from "./AllProjects";
 import { InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from './TextDivider';
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Schools, Levels } from "../../compilers/type";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 type ProjectsProps = {
   projects: Projects;
   schoolData: Schools;
   levelData: Levels;
+  currentPage: number
 };
 
 const ProjectContainer: React.FC<ProjectsProps> = ({
   projects,
   schoolData,
   levelData,
+  currentPage
 }) => {
   console.log("Projects data:", projects);
   console.log("School data", schoolData);
   console.log("Level data:", levelData);
 
+  const [paginatedMedia, setPaginatedMedia] = useState<Projects>();
   const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLinkList = useRef<HTMLUListElement>(null);
   const ProjectSchoolLinkList = useRef<HTMLUListElement>(null);
-
-  const options = {
-    categories: ["CourseName"],
-    postsPerPage: 12,
-    activeClass: "active",
-  };
-
-  const [DefaultState, SetDefaultState] = useState({
-    listOfPosts: null,
-    currentPageId: 1,
-    chosen: null,
-    categories: null,
-  });
-
   const ProjectYearCollection = Array.from(
     new Set(
       projects.map((project) =>
@@ -67,6 +56,13 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     })
   );
 
+  const getPageCount = () => {
+    if (projects && projects.length) {
+      return Math.ceil(projects.length / 6);
+    }
+    return 1;
+  };
+
   const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
     const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
     const ProjectMajorLinkContainer = (ProjectMajorLinkList.current) && Array.from(ProjectMajorLinkList.current?.children);
@@ -84,6 +80,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   return (
     <Container className="projectContainer">
+      {/* PROJECT DETAILS WRAPPER */}
       <div className="projectContainer__details-wrapper">
         <div className="bg-white rounded">
           <InputGroup>
@@ -172,7 +169,14 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           </ul>
         </div>
       </div>
-      <AllProjects projects={projects}/>
+      {/* PROJECT PORTFOLIOS WRAPPER */}
+      <div className="projectContainer__portfolios-wrapper">
+        <AllProjects projects={projects}/>
+        <div className="projectContainer__next-prev-container">
+          <Button className="prev-btn" variant="vic"><span className="the-arrow rotate"></span> <span className="btn-text">Previous</span></Button>
+          <Button className="next-btn" variant="vic"><span className="btn-text">Next</span> <span className="the-arrow"></span></Button>
+        </div>
+      </div>
     </Container>
   );
 };

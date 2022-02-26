@@ -22,6 +22,11 @@
     grid-template-columns: calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem);
     gap: 2rem;
   }
+  &__next-prev-container {
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+  }
   &__portfolio {
     background: #fff;
     position: relative;
@@ -130,6 +135,9 @@
       grid-template-columns: calc((100% / 2) - 1rem) calc((100% / 2) - 1rem);
       gap: 2rem;
     }
+    &__next-prev-container {
+      grid-column: span 2;
+    }
   }
 }
 
@@ -144,6 +152,9 @@
   .projectContainer {
     &__portfolios-wrapper {
       grid-template-columns: 1fr;
+    }
+    &__next-prev-container {
+      grid-column: span 1;
     }
   }
 }
