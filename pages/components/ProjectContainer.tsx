@@ -11,7 +11,7 @@ type ProjectsProps = {
   projects: Projects;
   schoolData: Schools;
   levelData: Levels;
-  currentPage: number
+  currentPage?: number
 };
 
 const ProjectContainer: React.FC<ProjectsProps> = ({
