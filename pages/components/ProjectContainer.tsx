@@ -24,6 +24,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("School data", schoolData);
   console.log("Level data:", levelData);
 
+  
+
   const [paginatedMedia, setPaginatedMedia] = useState<Projects>();
   const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLink = useRef<HTMLAnchorElement>(null);

@@ -74,12 +74,16 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
           <p>{quickIntroTextColTwo}</p>
         </div>
       </ThreeColumnsBlock>
-      <ProjectContainer projects={projects} schoolData={school} levelData={level}/>
+      <ProjectContainer projects={projects.sort(() => 0.5 - Math.random())} schoolData={school} levelData={level}/>
     </>
   )
 };
 
 export async function getStaticProps() {
+  // function getRandomInt(max) {
+  //   return Math.floor(Math.random() * Math.floor(max));
+  // }
+
   // Run API calls in parallel
   const HomepageQuery = {
     populate: [
