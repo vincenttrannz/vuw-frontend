@@ -6,8 +6,6 @@ import { FacebookShareButton } from "react-share";
 import InstaIcon from '../public/insta-logo.svg'
 import FacebookIcon from '../public/fb-logo.svg'
 import TextDivider from './components/TextDivider';
-import ReactMarkdown from "react-markdown";
-import TwoColumnsBlock from './layout/TwoColumnsBlock';
 import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
@@ -21,7 +19,7 @@ type HomepageProps = {
 };
 
 const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
-  console.log("Homepage data:", homepage);
+  // console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
@@ -74,7 +72,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
           <p>{quickIntroTextColTwo}</p>
         </div>
       </ThreeColumnsBlock>
-      <ProjectContainer projects={projects.sort(() => 0.5 - Math.random())} schoolData={school} levelData={level}/>
+      <ProjectContainer projects={projects} schoolData={school} levelData={level}/>
     </>
   )
 };
@@ -121,7 +119,7 @@ export async function getStaticProps() {
   return {
     props: { 
       homepage: homepageRes.data, 
-      projects: projectsRes.data,
+      projects: projectsRes.data.sort(() => 0.5 - Math.random()),
       school: schoolRes.data,
       level: levelRes.data
     },

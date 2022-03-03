@@ -164,6 +164,7 @@ a {
     border-radius: 0px;
     display: flex;
     gap: 25px;
+    height: fit-content;
     align-items: center;
     // FOR PREV BUTTON
     &.prev-btn {

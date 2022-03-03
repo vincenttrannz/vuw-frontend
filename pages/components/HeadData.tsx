@@ -3,6 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router'
 
 interface Props {
+  sitename?: string;
   quote?: string;
   title?: string;
   image?: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const HeadData: React.FC<Props> = ({
+  sitename,
   quote,
   title,
   image,
@@ -23,7 +25,6 @@ const HeadData: React.FC<Props> = ({
   const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
   const location = useRouter();
   const currentUrl = origin + location.pathname;
-  // console.log(currentUrl);
   return (
     <Head>
       <title>{title}</title>
@@ -57,7 +58,7 @@ const HeadData: React.FC<Props> = ({
       <meta property="og:image" content={image} />
       <meta content="image/*" property="og:image:type" />
       <meta property="og:url" content={currentUrl} />
-      <meta property="og:site_name" content="Victoria University of Wellington - Design and Artchitecture" />
+      <meta property="og:site_name" content={sitename}/>
       <meta property="og:description" content={description} />
       {/* <!-- React Slick Carousel --> */}
       <link
