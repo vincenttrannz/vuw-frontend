@@ -2,6 +2,7 @@ import React, { useRef, forwardRef } from "react";
 import Link from 'next/link'
 import { Projects, Project } from "../../compilers/type";
 import TextDivider from './TextDivider';
+import AwardRibbon from '../../public/award-ribbon.svg'
 import { getStrapiMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
@@ -13,8 +14,8 @@ type ProjectsProps = {
 export default function AllProjects({ projects }: ProjectsProps) {
   const CategorySplit = (category:string) => {
     return (
-      <div>
-        <span>{category}</span><span className="ms-2">|</span>
+      <div className="category-block">
+        <span className="tags">{category}</span>
       </div>
     )
   }
@@ -33,6 +34,8 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
         const ProjectMajor = project.attributes.major.data?.attributes?.MajorName;
         const ProjectMajorTeReo = project.attributes.major.data?.attributes?.MajorTeReo;
+        const ProjectStudentAward = project.attributes.student.data.attributes?.award.data?.attributes.AwardName;
+        const ProjectAward = project.attributes.award.data?.attributes?.AwardName;
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm" key={project.id}>
@@ -45,10 +48,17 @@ export default function AllProjects({ projects }: ProjectsProps) {
                 </div>
               </div>
               <div className="details-container">
+                {
+                  (ProjectAward !== undefined || ProjectStudentAward !== undefined) &&
+                  <div className="details-container__award-ribbon">
+                    <AwardRibbon/>
+                  </div>
+                }
                 <div className="details-container__title-name">
                   <h6>{ProjectTitle}</h6>
                   <TextDivider prime={false}/>
                   <p>By {ProjectStudent}</p>
+                  <p className="p2">{ProjectMajor} - {ProjectMajorTeReo}</p>
                 </div>
                 <div className="details-container__categories">
                   <div className="p2 details-container__multiple">
@@ -56,14 +66,24 @@ export default function AllProjects({ projects }: ProjectsProps) {
                     {ProjectLevel !== undefined  && CategorySplit(ProjectLevel)}
                     {ProjectYear !== undefined  && CategorySplit(ProjectYear)}
                   </div>
-                  <div className="p2 details-container__major">
-                    <span>{ProjectMajor} - {ProjectMajorTeReo}</span>
-                  </div>
                   <div className="filter-container d-none">
                     <p data-find-school={ProjectSchool.replace(/ /g, "_")}>{ProjectSchool.replace(/ /g, "_")}</p>
                     <p data-find-major={ProjectMajor.replace(/ /g, "_")}>{ProjectMajor.replace(/ /g, "_")}</p>
                     <p data-find-year={ProjectYear}>{ProjectYear}</p>
                     <p data-find-level={ProjectLevel.replace(/ /g, "_")}>{ProjectLevel.replace(/ /g, "_")}</p>
+                    <p data-find-award={
+                      (ProjectAward !== undefined) ? 
+                      ProjectAward.replace(/ /g, "_") :
+                      (ProjectStudentAward !== undefined) ?
+                      ProjectStudentAward.replace(/ /g, "_") : ""
+                    }>
+                      {
+                        (ProjectAward !== undefined) ? 
+                        ProjectAward :
+                        (ProjectStudentAward !== undefined) ?
+                        ProjectStudentAward : ""
+                      }
+                    </p>
                   </div>
                 </div>
               </div>

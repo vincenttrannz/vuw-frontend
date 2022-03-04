@@ -4,29 +4,33 @@ import { InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./TextDivider";
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
-import { Projects, Schools, Levels } from "../../compilers/type";
+import { Projects, Schools, Levels, Awards } from "../../compilers/type";
 import { Container, Button } from "react-bootstrap";
 
 type ProjectsProps = {
   projects: Projects;
   schoolData: Schools;
   levelData: Levels;
+  awardData: Awards;
 };
 
 const ProjectContainer: React.FC<ProjectsProps> = ({
   projects,
   schoolData,
   levelData,
+  awardData,
 }) => {
-  // console.log("Projects data:", projects);
-  // console.log("School data", schoolData);
-  // console.log("Level data:", levelData);
+  console.log("Projects data:", projects);
+  console.log("School data", schoolData);
+  console.log("Level data:", levelData);
+  console.log("Award data:", awardData);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] =
     useState<Projects>(projects);
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
+  const ProjectContainerDiv = useRef<HTMLDivElement>(null);
   const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLink = useRef<HTMLAnchorElement>(null);
   const ProjectMajorLinkList = useRef<HTMLUListElement>(null);
@@ -43,6 +47,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   );
   const LevelCollection = Array.from(
     levelData.map((level) => level.attributes.StudyLevel)
+  );
+  const AwardCollection = Array.from(
+    awardData.map((award) => award.attributes.AwardName)
   );
   const EachSchoolMajor = Array.from(
     schoolData.map((data) => {
@@ -92,12 +99,17 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       : PrevBtn.current?.removeAttribute("disabled");
   }, [paginatedProjects, currentPage]);
 
+  const scrollToRef = (ref: any) =>
+    window.scrollTo(0, ref.current?.offsetTop - 75);
+
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
+    scrollToRef(ProjectContainerDiv);
   };
 
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
+    scrollToRef(ProjectContainerDiv);
   };
 
   const getPageCount = () => {
@@ -108,11 +120,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   };
 
   const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    const SelectedSchoolFilter =
-      event.currentTarget.getAttribute("data-filter");
-    const ProjectMajorLinkContainer =
-      ProjectMajorLinkList.current &&
-      Array.from(ProjectMajorLinkList.current?.children);
+    const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
+    const ProjectMajorLinkContainer = ProjectMajorLinkList.current && Array.from(ProjectMajorLinkList.current?.children);
     if (ProjectMajorLinkContainer) {
       ProjectMajorLinkContainer.forEach((element: HTMLLIElement | any) => {
         const ProjectMajorLink: HTMLAnchorElement | any = Array.from(
@@ -123,16 +132,16 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             ProjectMajorLink.getAttribute("data-school") &&
           event.currentTarget.getAttribute("data-is-school")
         ) {
-          ProjectMajorLink.parentNode.classList.toggle("disable");
+          ProjectMajorLink.classList.toggle("disable");
         } else {
-          ProjectMajorLink.parentNode.classList.remove("disable");
+          ProjectMajorLink.classList.remove("disable");
         }
       });
     }
   };
 
   return (
-    <Container className="projectContainer">
+    <Container ref={ProjectContainerDiv} className="projectContainer">
       {/* PROJECT DETAILS WRAPPER */}
       <div className="projectContainer__details-wrapper">
         <div className="bg-white rounded">
@@ -161,11 +170,11 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <ul ref={ProjectSchoolLinkList} className="categories-container">
             {SchoolCollection.map((name: string, i: number) => {
               return (
-                <li className="categories-container__category" key={i}>
+                <li key={i}>
                   <a
                     onClick={handleSchoolMajorClick}
                     type="button"
-                    className="p2 bold"
+                    className="p2 bold categories-container__category"
                     ref={ProjectSchoolLink}
                     data-filter={name.replace(/ /g, "_")}
                     data-is-school={true}
@@ -192,11 +201,11 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               ) =>
                 majors.map((major, i: number) => {
                   return (
-                    <li className="categories-container__category" key={i}>
+                    <li key={i}>
                       <a
                         onClick={handleSchoolMajorClick}
                         type="button"
-                        className="p2 bold"
+                        className="p2 bold categories-container__category"
                         ref={ProjectMajorLink}
                         data-filter={major.major.replace(/ /g, "_")}
                         data-school={major.school.replace(/ /g, "_")}
@@ -215,8 +224,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <ul className="categories-container">
             {ProjectYearCollection.map((year: number, i: number) => {
               return (
-                <li className="categories-container__category" key={i}>
-                  <a type="button" className="p2 bold" data-filter={year}>
+                <li key={i}>
+                  <a type="button" className="p2 bold categories-container__category" data-filter={year}>
                     {year}
                   </a>
                 </li>
@@ -230,16 +239,35 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <ul className="categories-container">
             {LevelCollection.map((level: string, i: number) => {
               return (
-                <li className="categories-container__category" key={i}>
+                <li key={i}>
                   <a
                     type="button"
-                    className="p2 bold"
+                    className="p2 bold categories-container__category"
                     data-filter={level.replace(/ /g, "_")}
                   >
                     {level}
                   </a>
                 </li>
               );
+            })}
+          </ul>
+        </div>
+        <div className="categories-wrapper">
+          <h6>Awards</h6>
+          <TextDivider prime={false} />
+          <ul className="categories-container">
+            {AwardCollection.map((award: string, i: number) => {
+              return (
+                <li key={i}>
+                  <a 
+                    type="button"
+                    className="p2 bold categories-container__category"
+                    data-filter={award.replace(/ /g, "_")}
+                  >
+                    {award}
+                  </a>
+                </li>
+              )
             })}
           </ul>
         </div>

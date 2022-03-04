@@ -26,17 +26,20 @@ export type Project = {
     ProjectThumbnail: ImagesDataType;
     SeoData: SeoDataType;
     level: {
-      data: Level
+      data: Level;
     };
     school: {
-      data: School
+      data: School;
     };
     major: {
-      data: Major
+      data: Major;
     };
     student: {
-      data: Student
+      data: Student;
     };
+    award: {
+      data: Award;
+    }
   };
 };
 
@@ -86,6 +89,19 @@ export type Level = {
 
 export type Levels = Level[];
 
+// Award type
+export type Award = {
+  id: number;
+  attributes: {
+    AwardName: string;
+    createdAt: Date;
+    publishedAt: Date;
+    updatedAt: Date;
+  };
+};
+
+export type Awards = Award[];
+
 // Student type
 export type Student = {
   id: number;
@@ -93,6 +109,9 @@ export type Student = {
     StudentName: string;
     StudentShortDetail: string;
     StudentRichDetail: string;
+    award: {
+      data: Award
+    };
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;

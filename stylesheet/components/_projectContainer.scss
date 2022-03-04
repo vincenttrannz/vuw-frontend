@@ -19,6 +19,7 @@
   }
   &__portfolios-wrapper {
     display: grid;
+    grid-template-rows: 1fr 1fr auto;
     grid-template-columns: calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem);
     gap: 2rem;
   }
@@ -32,7 +33,7 @@
     position: relative;
     transition: all ease 0.2s;
     display: grid;
-    grid-template-rows: 0fr 0.4fr;
+    grid-template-rows: 0.6fr auto;
     .image-container {
       position: relative;
       img {
@@ -62,12 +63,17 @@
       }
     }
     .details-container {
+      position: relative;
       padding: 20px;
       background: #fff;
       display: grid;
       grid-template-rows: auto auto;
       gap: 30px;
       align-content: space-between;
+      &__award-ribbon {
+        position: absolute;
+        right: 20px;
+      }
       &__title-name {
         * {margin: 0;}
         h6 {
@@ -76,18 +82,22 @@
         p {
           margin-top: 10px;
         }
-      }
-      &__categories {
-        display: grid;
-        align-items: center;
-        gap: 10px;
-        grid-template-rows: auto auto;
+        .p2 {
+          margin-top: 5px;
+        }
       }
       &__multiple {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        gap: 5px 15px;
+        gap: 10px 15px;
+        .category-block {
+          display: flex;
+          justify-content: center;
+          border: 1px solid $vic-grey;
+          padding: 5px 10px;
+          color: $vic-grey;
+        }
       }
     }
     &:hover {
@@ -123,6 +133,10 @@
         &.disable {
           opacity: 0.5;
           pointer-events: none;
+        }
+        &:hover, &.active {
+          background: $vic-teal;
+          color: #fff;
         }
       }
     }

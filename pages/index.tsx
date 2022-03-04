@@ -9,17 +9,19 @@ import TextDivider from './components/TextDivider';
 import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
-import {Projects, Homepage, Schools, Levels} from '../compilers/type'
+import {Projects, Homepage, Schools, Levels, Awards} from '../compilers/type'
 
 type HomepageProps = {
   homepage: Homepage;
   projects: Projects;
-  level: Levels,
-  school: Schools;
+  levels: Levels,
+  schools: Schools;
+  awards: Awards;
 };
 
-const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
-  // console.log("Homepage data:", homepage);
+const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awards}) => {
+  console.log("Homepage data:", homepage);
+  
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
@@ -72,7 +74,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, school, level}) => {
           <p>{quickIntroTextColTwo}</p>
         </div>
       </ThreeColumnsBlock>
-      <ProjectContainer projects={projects} schoolData={school} levelData={level}/>
+      <ProjectContainer projects={projects} schoolData={schools} levelData={levels} awardData={awards}/>
     </>
   )
 };
@@ -98,30 +100,37 @@ export async function getStaticProps() {
     populate: "*"
   }
 
+  const awardQuery = {
+    populate: "*"
+  }
+
   const projectQuery = {
     populate: [
       "*",
       "ProjectThumbnail",
-      "student",
+      "student.award",
       "school",
       "major",
-      "level"
+      "level",
+      "award"
     ]
   };
 
-  const [homepageRes, projectsRes, schoolRes, levelRes] = await Promise.all([
+  const [homepageRes, projectsRes, schoolRes, levelRes, awardRes] = await Promise.all([
     fetchAPI("/homepage", HomepageQuery),
     fetchAPI("/projects", projectQuery),
     fetchAPI("/schools", schoolQuery),
-    fetchAPI("/levels", levelQuery)
+    fetchAPI("/levels", levelQuery),
+    fetchAPI("/awards", awardQuery)
   ]);
 
   return {
     props: { 
       homepage: homepageRes.data, 
       projects: projectsRes.data.sort(() => 0.5 - Math.random()),
-      school: schoolRes.data,
-      level: levelRes.data
+      schools: schoolRes.data,
+      levels: levelRes.data,
+      awards: awardRes.data
     },
     revalidate: 1,
   };
