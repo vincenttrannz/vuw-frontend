@@ -17,6 +17,10 @@
     grid-template-columns: 1fr;
     align-content: flex-start;
   }
+  &__categories {
+    gap: 25px;
+    grid-template-columns: 1fr;
+  }
   &__portfolios-wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr auto;

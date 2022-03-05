@@ -5,7 +5,7 @@ import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./TextDivider";
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Schools, Levels, Awards } from "../../compilers/type";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Accordion } from "react-bootstrap";
 
 type ProjectsProps = {
   projects: Projects;
@@ -31,14 +31,10 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
-  const ProjectSchoolLink = useRef<HTMLAnchorElement>(null);
-  const ProjectMajorLink = useRef<HTMLAnchorElement>(null);
-  const ProjectMajorLinkList = useRef<HTMLUListElement>(null);
-  const ProjectSchoolLinkList = useRef<HTMLUListElement>(null);
   const ProjectYearCollection = Array.from(
     new Set(
       projects.map((project) =>
-        new Date(project.attributes.ProjectDate).getFullYear()
+        new Date(project.attributes.ProjectDate).getFullYear().toString()
       )
     )
   ).sort();
@@ -64,6 +60,78 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       return SchoolMajors;
     })
   );
+
+  const getSchoolFilterList = (isDesktop: boolean) => {
+    return (
+      <div id="school-filter" className={`${isDesktop ? "categories-container" : ""}`}>
+        {SchoolCollection.map((name: string, i: number) => {
+          return (
+            <a
+              key={i}
+              onClick={handleFilterClick}
+              type="button"
+              className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+              data-filter={name.replace(/ /g, "_")}
+              data-is-school={true}
+            >
+              {name}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+
+  const getMajorFilterList = (isDesktop: boolean) => {
+    return (
+      <div id="major-filter" className={`${isDesktop ? "categories-container" : ""}`}>
+        {EachSchoolMajor.map(
+          (
+            majors: [
+              {
+                school: string;
+                major: string;
+              }
+            ]
+          ) =>
+            majors.map((major, i: number) => {
+              return (
+                <a
+                  key={i}
+                  onClick={handleFilterClick}
+                  type="button"
+                  className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+                  data-filter={major.major.replace(/ /g, "_")}
+                  data-school={major.school.replace(/ /g, "_")}
+                >
+                  {major.major}
+                </a>
+              );
+            })
+        )}
+      </div>
+    )
+  }
+
+  const getOtherFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string) => {
+    return (
+      <div id={filterName} className={`${isDesktop ? "categories-container" : ""}`}>
+        {dataFilter.map((filter: string, i: number) => {
+          return (
+            <a
+              key={i}
+              onClick={handleFilterClick}
+              type="button"
+              className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+              data-filter={filter.replace(/ /g, "_")}
+            >
+              {filter}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
 
   // Logic for paginated projects
   useEffect(() => {
@@ -119,26 +187,26 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     return 1;
   };
 
-  const handleSchoolMajorClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    const SelectedSchoolFilter = event.currentTarget.getAttribute("data-filter");
-    const ProjectMajorLinkContainer = ProjectMajorLinkList.current && Array.from(ProjectMajorLinkList.current?.children);
-    if (ProjectMajorLinkContainer) {
-      ProjectMajorLinkContainer.forEach((element: HTMLLIElement | any) => {
-        const ProjectMajorLink: HTMLAnchorElement | any = Array.from(
-          element?.children
-        )[0];
-        if (
-          SelectedSchoolFilter !==
-            ProjectMajorLink.getAttribute("data-school") &&
-          event.currentTarget.getAttribute("data-is-school")
-        ) {
-          ProjectMajorLink.classList.toggle("disable");
-        } else {
-          ProjectMajorLink.classList.remove("disable");
-        }
-      });
-    }
-  };
+  const handleFilterClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    const SelectedFilter = event.currentTarget.getAttribute("data-filter");
+    const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
+    const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));
+    console.log("Selected filter:", SelectedFilter);
+
+    AllCategoriesChoice.forEach(elem => {
+      elem.classList.remove("active");
+    })
+    event.currentTarget.classList.add("active");
+
+    // Handling the disable of the Major filter when clicked on School filter
+    ProjectMajorLink.forEach(elem => {
+      if(SelectedFilter !== elem.getAttribute("data-school") && event.currentTarget.getAttribute("data-is-school")) {
+        elem.classList.toggle("disable");
+      } else {
+        elem.classList.remove("disable");
+      }
+    })
+  }
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
@@ -164,112 +232,54 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             </div>
           </InputGroup>
         </div>
-        <div className="categories-wrapper">
-          <h6>School</h6>
-          <TextDivider prime={false} />
-          <ul ref={ProjectSchoolLinkList} className="categories-container">
-            {SchoolCollection.map((name: string, i: number) => {
-              return (
-                <li key={i}>
-                  <a
-                    onClick={handleSchoolMajorClick}
-                    type="button"
-                    className="p2 bold categories-container__category"
-                    ref={ProjectSchoolLink}
-                    data-filter={name.replace(/ /g, "_")}
-                    data-is-school={true}
-                  >
-                    {name}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+        {/* Categories wrapper - Display block style only on tablet and above */}
+        <div className="d-sm-none d-md-grid projectContainer__categories">
+          <div className="categories-wrapper">
+            <h6>School</h6>
+            <TextDivider prime={false} />
+            {getSchoolFilterList(true)}
+          </div>
+          <div className="categories-wrapper">
+            <h6>Major</h6>
+            <TextDivider prime={false} />
+            {getMajorFilterList(true)}
+          </div>
+          <div className="categories-wrapper">
+            <h6>Year</h6>
+            <TextDivider prime={false} />
+            {getOtherFilterList(true, ProjectYearCollection, "year-filter")}
+          </div>
+          <div className="categories-wrapper">
+            <h6>Level</h6>
+            <TextDivider prime={false} />
+            {getOtherFilterList(true, LevelCollection, "level-filter")}
+          </div>
+          <div className="categories-wrapper">
+            <h6>Awards</h6>
+            <TextDivider prime={false} />
+            {getOtherFilterList(true, AwardCollection, "award-filter")}
+          </div>
         </div>
-        <div className="categories-wrapper">
-          <h6>Major</h6>
-          <TextDivider prime={false} />
-          <ul ref={ProjectMajorLinkList} className="categories-container">
-            {EachSchoolMajor.map(
-              (
-                majors: [
-                  {
-                    school: string;
-                    major: string;
-                  }
-                ]
-              ) =>
-                majors.map((major, i: number) => {
-                  return (
-                    <li key={i}>
-                      <a
-                        onClick={handleSchoolMajorClick}
-                        type="button"
-                        className="p2 bold categories-container__category"
-                        ref={ProjectMajorLink}
-                        data-filter={major.major.replace(/ /g, "_")}
-                        data-school={major.school.replace(/ /g, "_")}
-                      >
-                        {major.major}
-                      </a>
-                    </li>
-                  );
-                })
-            )}
-          </ul>
-        </div>
-        <div className="categories-wrapper">
-          <h6>Year</h6>
-          <TextDivider prime={false} />
-          <ul className="categories-container">
-            {ProjectYearCollection.map((year: number, i: number) => {
-              return (
-                <li key={i}>
-                  <a type="button" className="p2 bold categories-container__category" data-filter={year}>
-                    {year}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="categories-wrapper">
-          <h6>Level</h6>
-          <TextDivider prime={false} />
-          <ul className="categories-container">
-            {LevelCollection.map((level: string, i: number) => {
-              return (
-                <li key={i}>
-                  <a
-                    type="button"
-                    className="p2 bold categories-container__category"
-                    data-filter={level.replace(/ /g, "_")}
-                  >
-                    {level}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="categories-wrapper">
-          <h6>Awards</h6>
-          <TextDivider prime={false} />
-          <ul className="categories-container">
-            {AwardCollection.map((award: string, i: number) => {
-              return (
-                <li key={i}>
-                  <a 
-                    type="button"
-                    className="p2 bold categories-container__category"
-                    data-filter={award.replace(/ /g, "_")}
-                  >
-                    {award}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+        {/* Categories wrapper - Display accordion style on mobile */}
+        <div className="d-sm-block d-md-none projectContainer__categories">
+          <Accordion defaultActiveKey={['0']} alwaysOpen>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <h6>School</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getSchoolFilterList(false)}
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>
+                <h6>Major</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getMajorFilterList(false)}
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </div>
       {/* PROJECT PORTFOLIOS WRAPPER */}
