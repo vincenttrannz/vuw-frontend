@@ -191,6 +191,29 @@ a {
   }
 }
 
+//  ========= //
+//  ACCORDION
+//  ========= //
+.accordion {
+  &.categories-wrapper {
+    .accordion-item {
+      background-color: transparent;
+      border: none;
+    }
+    .accordion-button {
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: none;
+      color: initial;
+      filter: grayscale(1);
+    }
+    .accordion-body {
+      padding: 0;
+    }
+  }
+}
+
+
 //  ====== //
 //  ARROW
 //  ====== //

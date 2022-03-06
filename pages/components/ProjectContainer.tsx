@@ -25,6 +25,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("Level data:", levelData);
   console.log("Award data:", awardData);
 
+  let FilterArray = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] =
     useState<Projects>(projects);
@@ -63,14 +64,14 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   const getSchoolFilterList = (isDesktop: boolean) => {
     return (
-      <div id="school-filter" className={`${isDesktop ? "categories-container" : ""}`}>
+      <div id="school-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {SchoolCollection.map((name: string, i: number) => {
           return (
             <a
               key={i}
               onClick={handleFilterClick}
               type="button"
-              className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+              className={`p2 bold categories-container__category`}
               data-filter={name.replace(/ /g, "_")}
               data-is-school={true}
             >
@@ -84,7 +85,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   const getMajorFilterList = (isDesktop: boolean) => {
     return (
-      <div id="major-filter" className={`${isDesktop ? "categories-container" : ""}`}>
+      <div id="major-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {EachSchoolMajor.map(
           (
             majors: [
@@ -100,7 +101,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                   key={i}
                   onClick={handleFilterClick}
                   type="button"
-                  className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+                  className={`p2 bold categories-container__category`}
                   data-filter={major.major.replace(/ /g, "_")}
                   data-school={major.school.replace(/ /g, "_")}
                 >
@@ -115,14 +116,14 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   const getOtherFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string) => {
     return (
-      <div id={filterName} className={`${isDesktop ? "categories-container" : ""}`}>
+      <div id={filterName} className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {dataFilter.map((filter: string, i: number) => {
           return (
             <a
               key={i}
               onClick={handleFilterClick}
               type="button"
-              className={`p2 bold ${isDesktop ? "categories-container__category" : ""}`}
+              className={`p2 bold categories-container__category`}
               data-filter={filter.replace(/ /g, "_")}
             >
               {filter}
@@ -191,21 +192,52 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
     const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));
-    console.log("Selected filter:", SelectedFilter);
+    let PreFilterArray:any[] = new Array;
 
-    AllCategoriesChoice.forEach(elem => {
-      elem.classList.remove("active");
-    })
-    event.currentTarget.classList.add("active");
+    // Handling the active state for the filter button that user has selected
+    if(event.currentTarget.className.includes("active")){
+      event.currentTarget.classList.remove("active");
+    } else {
+      AllCategoriesChoice.forEach(category => {
+        const CategoryContainerId = category.parentElement?.id;
+        if(CategoryContainerId == event.currentTarget.parentElement?.id){
+          category.classList.remove("active");
+        }
+        if(event.currentTarget.parentElement?.id == "school-filter" && category.parentElement?.id == "major-filter"){
+          category.classList.remove("active");
+        }
+      })
+      event.currentTarget.classList.toggle("active");
+    }
 
     // Handling the disable of the Major filter when clicked on School filter
     ProjectMajorLink.forEach(elem => {
       if(SelectedFilter !== elem.getAttribute("data-school") && event.currentTarget.getAttribute("data-is-school")) {
         elem.classList.toggle("disable");
       } else {
-        elem.classList.remove("disable");
+        if(
+          event.currentTarget.parentElement?.id == "major-filter" ||
+          event.currentTarget.parentElement?.id == "year-filter" ||
+          event.currentTarget.parentElement?.id == "level-filter" ||
+          event.currentTarget.parentElement?.id == "award-filter"
+        ){
+          return
+        } else {
+          elem.classList.remove("disable");
+        }
       }
     })
+
+    // Setup filter array that user has selected
+    AllCategoriesChoice.forEach(category => {
+      if(category.className.includes("active")){
+        PreFilterArray.push(category.getAttribute("data-filter"))
+        FilterArray = Array.from(new Set(PreFilterArray));
+      } else {
+        PreFilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter"))
+      }
+    })
+    console.log(FilterArray);
   }
 
   return (
@@ -233,7 +265,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           </InputGroup>
         </div>
         {/* Categories wrapper - Display block style only on tablet and above */}
-        <div className="d-sm-none d-md-grid projectContainer__categories">
+        <div className="projectContainer__categories-desktop">
           <div className="categories-wrapper">
             <h6>School</h6>
             <TextDivider prime={false} />
@@ -261,22 +293,51 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
-        <div className="d-sm-block d-md-none projectContainer__categories">
-          <Accordion defaultActiveKey={['0']} alwaysOpen>
+        <div className="projectContainer__categories-mobile">
+          <Accordion className="categories-wrapper" defaultActiveKey={['0']} alwaysOpen>
+            {/* SCHOOL */}
             <Accordion.Item eventKey="0">
               <Accordion.Header>
-                <h6>School</h6>
+                <h6 className="m-0">School</h6>
               </Accordion.Header>
               <Accordion.Body>
                 {getSchoolFilterList(false)}
               </Accordion.Body>
             </Accordion.Item>
+            {/* MAJOR */}
             <Accordion.Item eventKey="1">
               <Accordion.Header>
-                <h6>Major</h6>
+                <h6 className="m-0">Major</h6>
               </Accordion.Header>
               <Accordion.Body>
                 {getMajorFilterList(false)}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* YEAR */}
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>
+                <h6 className="m-0">Year</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getOtherFilterList(false, ProjectYearCollection, "year-filter")}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* LEVEL */}
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>
+                <h6 className="m-0">Level</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getOtherFilterList(false, LevelCollection, "level-filter")}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* AWARDS */}
+            <Accordion.Item eventKey="4">
+              <Accordion.Header>
+                <h6 className="m-0">Awards</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getOtherFilterList(false, AwardCollection, "award-filter")}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
