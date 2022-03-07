@@ -23,7 +23,7 @@ const About: NextPage<AboutpageProps> = ({about}) => {
         image={getStrapiMedia(AboutShareImageSeo)}
       />
       <Container>
-        <h1>{AboutTitle}</h1>
+        <h1>About Us</h1>
         <p>{AboutShortDescription}</p>
       </Container>
     </>

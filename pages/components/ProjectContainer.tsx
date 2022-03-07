@@ -4,7 +4,7 @@ import { InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./TextDivider";
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
-import { Projects, Schools, Levels, Awards } from "../../compilers/type";
+import { Projects, Project, Schools, Levels, Awards } from "../../compilers/type";
 import { Container, Button, Accordion } from "react-bootstrap";
 
 type ProjectsProps = {
@@ -26,6 +26,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("Award data:", awardData);
 
   let FilterArray = new Array;
+  let FilterProjects = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] =
     useState<Projects>(projects);
@@ -46,7 +47,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     levelData.map((level) => level.attributes.StudyLevel)
   );
   const AwardCollection = Array.from(
-    awardData.map((award) => award.attributes.AwardName)
+    new Set (awardData.map((award) => award.attributes.AwardType))
   );
   const EachSchoolMajor = Array.from(
     schoolData.map((data) => {
@@ -126,7 +127,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               className={`p2 bold categories-container__category`}
               data-filter={filter.replace(/ /g, "_")}
             >
-              {filter}
+              {filter.replace(/_/g, " ")}
             </a>
           );
         })}
@@ -231,13 +232,35 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     // Setup filter array that user has selected
     AllCategoriesChoice.forEach(category => {
       if(category.className.includes("active")){
-        PreFilterArray.push(category.getAttribute("data-filter"))
+        PreFilterArray.push(
+          ((category.getAttribute("data-filter") == "Excellence_Award") || (category.getAttribute("data-filter")) == "Industry_Award") ?
+          category.getAttribute("data-filter") :
+          category.getAttribute("data-filter")?.toString().replace(/_/g, " ")
+        )
         FilterArray = Array.from(new Set(PreFilterArray));
       } else {
-        PreFilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter"))
+        FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
       }
     })
     console.log(FilterArray);
+
+    // Filtering logic
+    FilterProjects = projects.filter((project: Project) => {
+      const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
+      const ProjectMajor = project.attributes.major.data.attributes.MajorName;
+      const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
+      const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
+      const ProjectAward = project.attributes.award.data?.attributes.AwardType;
+      // Step by Step logic
+      if (FilterArray.includes(ProjectSchool && ProjectMajor)) {
+        console.log("School and Major");
+        return project
+      } else if (FilterArray.includes(ProjectSchool) && !FilterArray.includes(ProjectMajor)) {
+        console.log("School");
+        return project
+      }
+    })
+    console.log(FilterProjects);
   }
 
   return (

@@ -94,6 +94,18 @@ export type Award = {
   id: number;
   attributes: {
     AwardName: string;
+    AwardType: string;
+    CompanyLink: string;
+    CompanyLogo: {
+      data: ImagesDataType;
+    }
+    CompanyName: string;
+    projects: {
+      data: Projects;
+    }
+    students: {
+      data: Students;
+    }
     createdAt: Date;
     publishedAt: Date;
     updatedAt: Date;
@@ -117,6 +129,8 @@ export type Student = {
     publishedAt: Date;
   };
 };
+
+export type Students = Student[];
 
 // Homepage type
 export type Homepage = {

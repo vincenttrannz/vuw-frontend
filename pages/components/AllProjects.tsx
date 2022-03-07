@@ -34,8 +34,8 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
         const ProjectMajor = project.attributes.major.data?.attributes?.MajorName;
         const ProjectMajorTeReo = project.attributes.major.data?.attributes?.MajorTeReo;
-        const ProjectStudentAward = project.attributes.student.data.attributes?.award.data?.attributes.AwardName;
-        const ProjectAward = project.attributes.award.data?.attributes?.AwardName;
+        const ProjectStudentAward = project.attributes.student.data.attributes?.award.data?.attributes.AwardType;
+        const ProjectAward = project.attributes.award.data?.attributes?.AwardType;
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm" key={project.id}>

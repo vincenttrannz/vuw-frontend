@@ -56,7 +56,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
         <Container className='hero-section__title-box-container'>
           <div className='hero-section__title-box'>
             <span className="subtitle">Wellington Faculty of</span>
-            <h1>{heroTitle}</h1>
+            <h1>Architecture and Design Innovation</h1>
             <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>
           </div>
         </Container>
