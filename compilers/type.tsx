@@ -153,8 +153,14 @@ export type Homepage = {
 export type About = {
   id: number;
   attributes: {
-    AboutTitle: string;
+    AboutHeroBanner: ImagesDataType;
     AboutShortDescription: string;
+    AboutPageInfoBlock: TwoColumnsBlock;
+    ArchitectureSchool: TwoColumnsBlock;
+    DesignSchool: TwoColumnsBlock;
+    FirstContentGreyBlock: GreyContentBlock;
+    SecondContentGreyBlock: GreyContentBlock;
+    ThirdContentGreyBlock: GreyContentBlock;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;
@@ -169,6 +175,20 @@ type SeoDataType = {
   MetaDescription: string;
   ShareImage: ImagesDataType;
 };
+
+type TwoColumnsBlock = {
+  id: number;
+  BlockImage: ImagesDataType;
+  BlockParagraph: string;
+  BlockTitle: string;
+}
+
+type GreyContentBlock = {
+  id: number;
+  BlockTitle: string;
+  BlockRichText: string;
+  BlockButtonLink: string;
+}
 
 type ImagesDataType = {
   data: {
