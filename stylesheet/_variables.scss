@@ -5,6 +5,7 @@ $black: #030303;
 $vic-teal: #3EC2B4;
 $vic-smoke: #252525;
 $vic-grey: #555555;
+$vic-grey-block: #f7f7f7;
 $vic-soft-grey: #777777;
 $vic-gray: #EEEEEE;
 $vic-offwhite: #FFFEFC;
@@ -48,7 +49,7 @@ $container-max-widths: (
 
 // Customise bootstrap variable
 $spacer: 2rem;
-$container-padding-x: clamp(1.5rem, 2.5vw, 2.5vw);
+$container-padding-x: clamp(1rem, 2.5vw, 2rem);
 $input-btn-focus-width: 0;
 // 1. Box Shadow
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.15);

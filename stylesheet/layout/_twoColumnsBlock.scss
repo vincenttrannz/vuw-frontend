@@ -5,6 +5,60 @@
 .twoColumnsBlock {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  margin: 60px 0;
   gap: 3rem;
+  &.grey-block {
+    background-color: $vic-grey-block;
+  }
+}
+
+.school-video-container {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: $small-tablet-screen-size) {
+  .twoColumnsBlock {
+    &.right-img-text-block {
+      padding-right: 0;
+      .text-container {
+        padding-left: 7rem;
+        padding-top: 4rem;
+        p {
+          padding-left: 4rem;
+        }
+      }
+    }
+    &.left-img-text-block {
+      padding-left: 0;
+      .text-container {
+        padding-left: 4rem;
+        padding-top: 4rem;
+        p {
+          padding-left: 4rem;
+        }
+      }
+    }
+    &.grey-block {
+      padding-left: 8rem;
+      padding-right: 8rem;
+    }
+  }
+  .school-video-container {
+    iframe {
+      padding-left: 6rem;
+      padding-right: 6rem;
+    }
+  }
+}
+
+@media (max-width: $small-tablet-screen-size) {
+  .twoColumnsBlock {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    &.right-img-text-block {
+      .text-container {
+        grid-row-start: 2;
+      }
+    }
+  }
 }

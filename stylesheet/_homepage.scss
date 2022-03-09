@@ -51,6 +51,12 @@
   }
 }
 
+@media (max-width: $small-tablet-screen-size) {
+  .hero-section {
+    min-height: 480px;
+  }
+}
+
 @media (max-width: $mobile-screen-size) {
   .hero-section {
     background-position: top;
@@ -67,6 +73,23 @@
       }
       .subtitle {
         font-size: clamp(16px, calc(1vw + 1vh), 26px) !important;
+      }
+      &.otherSide {
+        float: left;
+        width: fit-content;
+        margin-right: 0;
+      }
+    }
+    &.otherSide {
+      background-size: cover;
+      align-items: flex-end;
+      .hero-section__overlay {
+        display: initial;
+        left: 0;
+        top: 275px;
+        height: 100px;
+        width: 100%;
+        background: linear-gradient(0deg, white 0%, white 45%, #ffffffe6 70%, #ffffff00 100%);
       }
     }
   }
