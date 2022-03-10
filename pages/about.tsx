@@ -15,7 +15,7 @@ type AboutpageProps = {
 };
 
 const About: NextPage<AboutpageProps> = ({ about }) => {
-  console.log("About Page data:", about);
+  // console.log("About Page data:", about);
   // About page main dependancies
   const AboutSeoData = getStrapiData(about).SeoData;
   const AboutShareImageSeo = getStrapiData(about).SeoData.ShareImage;

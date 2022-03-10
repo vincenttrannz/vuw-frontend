@@ -30,7 +30,7 @@ const projectData = project.attributes;
     slidesToScroll: 1
   };
   // Checking the data
-  console.log(projectData);
+  // console.log(projectData);
   return (
     <>
       <HeadData

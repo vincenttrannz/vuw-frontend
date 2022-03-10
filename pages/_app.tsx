@@ -13,7 +13,7 @@ export const GlobalContext = createContext({});
 
 function VicApp({ Component, pageProps }: AppProps) {
   const { global } = pageProps;
-  console.log("App global data:", global);
+  // console.log("App global data:", global);
   return (
     <>
       {/* META SEO DATA - START */}

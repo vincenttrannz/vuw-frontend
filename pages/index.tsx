@@ -20,8 +20,7 @@ type HomepageProps = {
 };
 
 const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awards}) => {
-  console.log("Homepage data:", homepage);
-  
+  // console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
