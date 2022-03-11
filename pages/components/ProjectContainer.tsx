@@ -242,25 +242,27 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
       }
     })
-    console.log(FilterArray);
+    // console.log("Filter keys are:", FilterArray);
 
     // Filtering logic
-    FilterProjects = projects.filter((project: Project) => {
+    FilterProjects = projects.filter((project: Project, index: number) => {
       const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
       const ProjectMajor = project.attributes.major.data.attributes.MajorName;
       const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
       const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
       const ProjectAward = project.attributes.award.data?.attributes.AwardType;
+      const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
       // Step by Step logic
-      if (FilterArray.includes(ProjectSchool && ProjectMajor)) {
-        console.log("School and Major");
-        return project
-      } else if (FilterArray.includes(ProjectSchool) && !FilterArray.includes(ProjectMajor)) {
-        console.log("School");
-        return project
+      const ProjectFilterArrayElment = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => {
+        return element !== undefined;
+      });
+      // console.log(`Project ${index}`, ProjectFilterArrayElment);
+      if(FilterArray.every(el => ProjectFilterArrayElment.includes(el))) {
+        // console.log(project);
+        return project;
       }
     })
-    console.log(FilterProjects);
+    setPaginatedProjects(FilterProjects);
   }
 
   return (
