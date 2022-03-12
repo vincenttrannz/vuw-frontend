@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import AllProjects from "./AllProjects";
-import { InputGroup, FormControl } from "react-bootstrap";
+import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
-import TextDivider from "./TextDivider";
+import TextDivider from "./views/TextDivider";
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Project, Schools, Levels, Awards } from "../../compilers/type";
-import { Container, Button, Accordion } from "react-bootstrap";
+import { getFilterList } from '../functions/getFilterList';
 
 type ProjectsProps = {
   projects: Projects;
@@ -111,26 +111,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               );
             })
         )}
-      </div>
-    )
-  }
-
-  const getOtherFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string) => {
-    return (
-      <div id={filterName} className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
-        {dataFilter.map((filter: string, i: number) => {
-          return (
-            <a
-              key={i}
-              onClick={handleFilterClick}
-              type="button"
-              className={`p2 bold categories-container__category`}
-              data-filter={filter.replace(/ /g, "_")}
-            >
-              {filter.replace(/_/g, " ")}
-            </a>
-          );
-        })}
       </div>
     )
   }
@@ -304,17 +284,17 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <div className="categories-wrapper">
             <h6>Year</h6>
             <TextDivider prime={false} />
-            {getOtherFilterList(true, ProjectYearCollection, "year-filter")}
+            {getFilterList(true, ProjectYearCollection, "year-filter", handleFilterClick)}
           </div>
           <div className="categories-wrapper">
             <h6>Level</h6>
             <TextDivider prime={false} />
-            {getOtherFilterList(true, LevelCollection, "level-filter")}
+            {getFilterList(true, LevelCollection, "level-filter", handleFilterClick)}
           </div>
           <div className="categories-wrapper">
             <h6>Awards</h6>
             <TextDivider prime={false} />
-            {getOtherFilterList(true, AwardCollection, "award-filter")}
+            {getFilterList(true, AwardCollection, "award-filter", handleFilterClick)}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
@@ -344,7 +324,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Year</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getOtherFilterList(false, ProjectYearCollection, "year-filter")}
+                {getFilterList(false, ProjectYearCollection, "year-filter", handleFilterClick)}
               </Accordion.Body>
             </Accordion.Item>
             {/* LEVEL */}
@@ -353,7 +333,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Level</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getOtherFilterList(false, LevelCollection, "level-filter")}
+                {getFilterList(false, LevelCollection, "level-filter", handleFilterClick)}
               </Accordion.Body>
             </Accordion.Item>
             {/* AWARDS */}
@@ -362,7 +342,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Awards</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getOtherFilterList(false, AwardCollection, "award-filter")}
+                {getFilterList(false, AwardCollection, "award-filter", handleFilterClick)}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

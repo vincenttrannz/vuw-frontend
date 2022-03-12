@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import PageHeroBanner from './components/views/PageHeroBanner'
 import Link from "next/link";
 import { About } from "../compilers/type";
 import HeadData from "./components/HeadData";
-import TextDivider from "./components/TextDivider";
+import TextDivider from "./components/views/TextDivider";
 import TwoColumnsBlock from "./layout/TwoColumnsBlock";
-import ImgCaption from "./components/ImgCaption";
+import ImgCaption from "./components/views/ImgCaption";
 import ReactMarkdown from "react-markdown";
 
 type AboutpageProps = {
@@ -80,19 +81,11 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         description={AboutSeoData.MetaDescription}
         image={getStrapiMedia(AboutShareImageSeo)}
       />
-      <div
-        className="hero-section otherSide"
-        style={{
-          backgroundImage: `url(${AboutHeroBanner})`,
-        }}
-      >
-        <div className="hero-section__overlay otherSide"></div>
-        <Container className="hero-section__title-box-container">
-          <div className="hero-section__title-box otherSide">
-            <h1>About us</h1>
-          </div>
-        </Container>
-      </div>
+      <PageHeroBanner
+        OtherSide={true}
+        HeroBanner={AboutHeroBanner}
+        HeroTitle="About us"
+      />
       <ImgCaption className="mx-2" caption={AboutHeroCaption} />
       {/* About Page General Info Block */}
       <TwoColumnsBlock className="right-img-text-block">

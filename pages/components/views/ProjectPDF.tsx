@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
-import { Project } from '../../compilers/type'
-import { getStrapiMedia } from "../../lib/fetchData";
+import { Project } from '../../../compilers/type'
+import { getStrapiMedia } from "../../../lib/fetchData";
 
 type ProjectDataProps = {
   projectData: Project["attributes"];

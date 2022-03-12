@@ -39,7 +39,7 @@ export type Project = {
     };
     award: {
       data: Award;
-    }
+    };
   };
 };
 
@@ -98,14 +98,14 @@ export type Award = {
     CompanyLink: string;
     CompanyLogo: {
       data: ImagesDataType;
-    }
+    };
     CompanyName: string;
     projects: {
       data: Projects;
-    }
+    };
     students: {
       data: Students;
-    }
+    };
     createdAt: Date;
     publishedAt: Date;
     updatedAt: Date;
@@ -122,7 +122,7 @@ export type Student = {
     StudentShortDetail: string;
     StudentRichDetail: string;
     award: {
-      data: Award
+      data: Award;
     };
     createdAt: Date;
     updatedAt: Date;
@@ -131,6 +131,47 @@ export type Student = {
 };
 
 export type Students = Student[];
+
+// Event type
+export type Event = {
+  id: number;
+  attributes: {
+    EventName: string;
+    EventShortDescription: string;
+    EventLocation: string;
+    EventPrice: string;
+    EventPriceType: string;
+    EventType: string;
+    EventImageThumbnail: ImagesDataType;
+    event_category: {
+      data: EventCategory;
+    };
+    EventStartDate: Date;
+    EventFinishDate: Date;
+    EventRichDescription: string;
+    EventVideoLink: string;
+    EventPhotoGallery: ImagesDataType[];
+    EventStartTime: Date;
+    EventEndTime: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type Events = Event[];
+
+export type EventCategory = {
+  id: number;
+  attributes: {
+    EventCategoryName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type EventCategories = EventCategory[];
 
 // Homepage type
 export type Homepage = {
@@ -168,6 +209,21 @@ export type About = {
   };
 };
 
+// Event page type
+export type EventPage = {
+  id: number;
+  attributes: {
+    QuickIntroTitle: string;
+    QuickIntroColumnOne: string;
+    QuickIntroColumnTwo: string;
+    SeoData: SeoDataType;
+    EventPageHeroBanner: ImagesDataType;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
 // Other component type
 type SeoDataType = {
   id: number;
@@ -181,14 +237,14 @@ type TwoColumnsBlock = {
   BlockImage: ImagesDataType;
   BlockParagraph: string;
   BlockTitle: string;
-}
+};
 
 type GreyContentBlock = {
   id: number;
   BlockTitle: string;
   BlockRichText: string;
   BlockButtonLink: string;
-}
+};
 
 type ImagesDataType = {
   data: {

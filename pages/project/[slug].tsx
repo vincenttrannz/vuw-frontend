@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { fetchAPI } from "../../lib/api";
 import { Project } from '../../compilers/type'
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
-import ProjectPDF from '../components/ProjectPDF';
+import ProjectPDF from '../components/views/ProjectPDF';
 
 type ProjectProps = {
   project: Project;

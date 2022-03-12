@@ -1,6 +1,6 @@
-/*===============================
-=        PROJECT CONTAINER      =
-=================================*/
+/*=======================================
+=        PROJECT & EVENT CONTAINER      =
+=========================================*/
 
 .projectContainer {
   background: $vic-gray;
@@ -27,10 +27,17 @@
       display: none;
     }
   }
+  // Project portfolios wrapper
   &__portfolios-wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr auto;
     grid-template-columns: calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem);
+    gap: 2rem;
+  }
+  // Events wrapper
+  &__events-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
   &__next-prev-container {
@@ -38,6 +45,7 @@
     display: flex;
     justify-content: space-between;
   }
+  // Project card style
   &__portfolio {
     background: #fff;
     position: relative;
@@ -115,6 +123,20 @@
       box-shadow: 0 0.5rem 1rem rgb(3 3 3 / 15%) !important;
       .img-overlay {
         opacity: 1;
+      }
+    }
+  }
+  // Event card style
+  &__event {
+    background: #fff;
+    position: relative;
+    transition: all ease 0.2s;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    &__img-container {
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
   }

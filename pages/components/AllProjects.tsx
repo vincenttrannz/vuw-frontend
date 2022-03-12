@@ -1,8 +1,8 @@
-import React, { useRef, forwardRef } from "react";
-import Link from 'next/link'
+import React from "react";
+import Link from 'next/link';
 import { Projects, Project } from "../../compilers/type";
-import TextDivider from './TextDivider';
-import AwardRibbon from '../../public/award-ribbon.svg'
+import TextDivider from './views/TextDivider';
+import AwardRibbon from '../../public/award-ribbon.svg';
 import { getStrapiMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
@@ -38,7 +38,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectAward = project.attributes.award.data?.attributes?.AwardType;
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
-            <a className="projectContainer__portfolio shadow-sm" key={project.id}>
+            <a className="projectContainer__portfolio shadow-sm">
               <div className="image-container">
                 <img src={ProjectThumbnail} alt="project thumbanil"/>
                 <div className="img-overlay">
