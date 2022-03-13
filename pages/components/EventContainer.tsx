@@ -47,7 +47,6 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories}) => {
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
-              type="search"
               placeholder="Search"
               aria-label="search"
               aria-describedby="search-field"
@@ -80,6 +79,11 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories}) => {
             <h6>Price</h6> 
             <TextDivider prime={false} />
             {getFilterList(true, EventPriceType, "price-filter", () => {})}
+          </div>
+          <div className="categories-wrapper">
+            <h6>Year</h6>
+            <TextDivider prime={false} />
+            {getFilterList(true, EventYearCollection, "year-filter", () => {})}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}

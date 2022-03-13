@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MouseEvent } from "react";
+import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent } from "react";
 import AllProjects from "./AllProjects";
 import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
@@ -136,8 +136,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   // This effect to check after Set new projects length
   useEffect(() => {
-    // console.log("Check after set projects", paginatedProjects.length);
-
     // 1. Logic for NextBtn
     paginatedProjects.length < 6
       ? NextBtn.current?.setAttribute("disabled", "true")
@@ -245,6 +243,24 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     setPaginatedProjects(FilterProjects);
   }
 
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value;
+    console.log(paginatedProjects.length);
+
+    FilterProjects = projects.filter((project: Project) => {
+      const ProjectTags = project.attributes.ProjectTags;
+      if(ProjectTags?.includes(searchTerm) && project !== undefined){
+        console.log(project);
+        return project;
+      }
+      if(searchTerm == "") {
+        console.log(project);
+        return project;
+      }
+    })
+    setPaginatedProjects(FilterProjects);
+  }
+
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
       {/* PROJECT DETAILS WRAPPER */}
@@ -252,11 +268,11 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
-              type="search"
               placeholder="Search"
               aria-label="search"
               aria-describedby="search-field"
               className="border-0 bg-white py-0"
+              onChange={handleSearch}
             />
             <div className="input-group-append">
               <button

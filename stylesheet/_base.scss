@@ -66,6 +66,9 @@ h6, .h6 {
 p {
   font-size: 16px;
   font-weight: normal;
+  &.bold {
+    font-weight: 600 !important;
+  }
 }
 
 a {

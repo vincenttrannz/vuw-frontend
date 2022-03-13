@@ -23,6 +23,7 @@ export type Project = {
     ProjectPDFLink: string;
     ProjectCode: boolean;
     ProjectCodeLink: string;
+    ProjectTags: string;
     ProjectThumbnail: ImagesDataType;
     SeoData: SeoDataType;
     level: {
