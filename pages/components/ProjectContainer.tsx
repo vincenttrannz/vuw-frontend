@@ -243,9 +243,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     setPaginatedProjects(FilterProjects);
   }
 
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     const searchTerm = event.target.value;
-    console.log(paginatedProjects.length);
 
     FilterProjects = projects.filter((project: Project) => {
       const ProjectTags = project.attributes.ProjectTags;
@@ -260,6 +259,43 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     })
     setPaginatedProjects(FilterProjects);
   }
+
+// FilterProjects = projects.filter((project: Project, index: number) => {
+//   const ProjectFilterObject:any = {
+//     filterArray: [],
+//     searchArray: []
+//   };
+//   const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
+//   const ProjectMajor = project.attributes.major.data.attributes.MajorName;
+//   const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
+//   const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
+//   const ProjectAward = project.attributes.award.data?.attributes.AwardType;
+//   const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
+//   const ProjectTags:any = (project.attributes.ProjectTags !== null) ? project.attributes.ProjectTags.toLowerCase().split(",") : "";
+//   FilterArray = FilterArray.filter(element => {return element !== undefined});
+//   FilterArray = FilterArray.filter(element => {return element !== ''});
+  
+//   // Step by Step logic
+//   let ProjectFilterArrayElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => {
+//     return element !== undefined;
+//   });
+//   ProjectFilterArrayElement = ProjectFilterArrayElement.filter(el => el !== "");
+//   ProjectFilterObject.filterArray = ProjectFilterArrayElement;
+//   ProjectFilterObject.searchArray = ProjectTags;
+//   console.log("Project Search Object:", ProjectFilterObject);
+  
+//   // Filtering
+//   if(FilterArray.every(el => ProjectFilterObject.filterArray.includes(el))) {
+//     // console.log(project);
+//     return project;
+//   }
+//   // Searching
+//   if(ProjectFilterObject.searchArray.toString().includes(searchTerm)){
+//     // console.log(project);
+//     return project;
+//   }
+// })
+// setPaginatedProjects(FilterProjects);
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
