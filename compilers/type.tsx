@@ -8,8 +8,6 @@ export type Project = {
     LecturerName: string;
     CourseName: string;
     ProjectDate: string;
-    ProjectExternalLink: string;
-    ProjectLinkDisplay: string;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;
@@ -25,6 +23,14 @@ export type Project = {
     ProjectCodeLink: string;
     ProjectTags: string;
     ProjectThumbnail: ImagesDataType;
+    ProjectExternalLink: string;
+    ProjectLinkDisplay: string;
+    DownloadLinkOne: string;
+    DownloadLinkOneNameDisplay: string;
+    DownloadLinkTwo: string;
+    DownloadLinkTwoNameDisplay: string;
+    LicensingLink: string;
+    LicensingNameDisplay: string;
     SeoData: SeoDataType;
     level: {
       data: Level;

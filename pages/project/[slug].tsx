@@ -1,34 +1,29 @@
 import type { NextPage } from 'next';
 import React from 'react';
+import Link from 'next/link'
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
-import Slider from "react-slick";
 import { fetchAPI } from "../../lib/api";
-import { Project } from '../../compilers/type'
+import { Project } from '../../compilers/type';
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
+import ReactMarkdown from 'react-markdown'
+import TextDivider from '../components/views/TextDivider';
 import ProjectPDF from '../components/views/ProjectPDF';
+import ProjectCarousel from '../components/views/ProjectCarousel';
+import Project3D from '../components/views/Project3D';
+import ProjectCode from '../components/views/ProjectCode';
+import FacebookShare from '../../public/round-fb-logo.svg';
+import LinkedInShare from '../../public/round-linkedin-logo.svg';
+import TwitterShare from '../../public/round-twitter-logo.svg';
+import CopyLinkShare from '../../public/round-copy-link-logo.svg';
 
 type ProjectProps = {
   project: Project;
 }
 
 const Project: NextPage<ProjectProps> = ({project}) => {
-const projectData = project.attributes;
-  // Configure settings for React Slick
-  const sliderSettings = {
-    dots: true,
-    dotsClass: "desktop-slick slick-dots slick-thumb",
-    focusOnSelect: false,
-    autoplay: true,
-    autoplaySpeed: 8000,
-    draggable: true,
-    infinite: true,
-    speed: 500,
-    arrows: true,
-    adaptiveHeight: true,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
+  const projectData = project.attributes;
+
   // Checking the data
   console.log(projectData);
   return (
@@ -38,36 +33,116 @@ const projectData = project.attributes;
         description={projectData.SeoData.MetaDescription}
         image={getStrapiMedia(projectData.SeoData.ShareImage)}
       />
-      <Container>
-        <h2>{projectData.ProjectTitle}</h2>
-        {
-          // If the project is 3D project
-          (projectData.Project3D) &&
-          <div className='iframe-container'>
-            <iframe title="Student Project" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-trackin="true" execution-while-out-of-viewport="true" execution-while-not-rendered="true" web-share="true" src={projectData.Project3DLink}></iframe>
+      <div className='vic-work__wrapper'>
+        <Container className='vic-work__left-container'>
+          details
+        </Container>
+        <Container className='vic-work__right-container'>
+          <div className="textblock-with-divider">
+            <h1 className='h2'>{projectData.ProjectTitle}</h1>
+            <TextDivider prime/>
           </div>
-        }
-        {
-          // If the project is PDF
-          (projectData.ProjectPDF) &&
-          <ProjectPDF projectData={projectData}/>
-        }
-        {
-          // If the project just contain images
-          (projectData.ImagesCarousel) && 
-          <Slider {...sliderSettings}>
-            {
-              projectData.ProjectImages.data.map((project:any, i:number) => <img alt={`${projectData.ProjectTitle} - image ${i}`} key={i} src={getSingleStrapiMedia(project)}></img>)
-            }
-          </Slider>
-        }
-        {
-          // If the project is Code base
-          <div>
-            <iframe height="500" width="100%" scrolling="no" title={projectData.ProjectTitle} src={projectData.ProjectCodeLink} frameBorder="no" loading="lazy" allowFullScreen></iframe>
+          <div className="project-wrapper mt-3">
+            <div className="project-info-container">
+              {
+                // If the project is 3D project
+                (projectData.Project3D) &&
+                <Project3D projectData={projectData}/>
+              }
+              {
+                // If the project is PDF
+                (projectData.ProjectPDF) &&
+                <ProjectPDF projectData={projectData}/>
+              }
+              {
+                // If the project just contain images
+                (projectData.ImagesCarousel) && 
+                <ProjectCarousel projectData={projectData}/>
+              }
+              {
+                // If the project is Code base
+                (projectData.ProjectCode) &&
+                <ProjectCode projectData={projectData}/>
+              }
+              <div className='project-info-container__details'>
+                <div className='project-info-container__details__left'>
+                  {
+                    [projectData.ProjectDescription, projectData.LecturerName, projectData.CourseName, projectData.ProjectDate].map((el, i:number) => {
+                      if(el !== null){
+                        return (
+                          <div key={i} className='project-info-container__details__text-wrapper-row'>
+                            <h6>
+                              {
+                                (i == 0) ? "Overview:" : (i == 1) ? "Lecturer:" : (i == 2) ? "Course:" : (i == 3) ? "Date:" : ""
+                              }
+                            </h6>
+                            <ReactMarkdown>{el}</ReactMarkdown>
+                          </div>
+                        )
+                      } else {
+                        return ""
+                      }
+                    })
+                  }
+                </div>
+                <div className='project-info-container__details__right'>
+                  {
+                    (projectData.ProjectExternalLink !== null) &&
+                    <div className='project-info-container__details__text-wrapper-column'>
+                      <h6>Project link:</h6>
+                      <Link href={projectData.ProjectExternalLink}>
+                        <a target="_blank">{projectData.ProjectLinkDisplay}</a>
+                      </Link>
+                    </div>
+                  }
+                  {
+                    (projectData.DownloadLinkOne !== null || projectData.DownloadLinkTwo !== null) &&
+                    <div className='project-info-container__details__text-wrapper-column'>
+                      <h6>Download:</h6>
+                      {
+                        (projectData.DownloadLinkOne !== null && projectData.DownloadLinkOne !== "") ?
+                        <Link href={projectData.DownloadLinkOne}>
+                          <a target="_blank">{projectData.DownloadLinkOneNameDisplay}</a>
+                        </Link>
+                        : ""
+                      }
+                      {
+                        (projectData.DownloadLinkTwo !== null && projectData.DownloadLinkTwo !== "") ?
+                        <Link href={projectData.DownloadLinkTwo}>
+                          <a target="_blank">{projectData.DownloadLinkTwoNameDisplay}</a>
+                        </Link>
+                        : ""
+                      }
+                    </div>
+                  }                     
+                  {
+                    (projectData.LicensingLink !== null) &&
+                    <div className='project-info-container__details__text-wrapper-column'>
+                      <h6>Project link:</h6>
+                      <Link href={projectData.LicensingLink}>
+                        <a target="_blank">{projectData.LicensingNameDisplay}</a>
+                      </Link>
+                    </div>
+                  }
+                  {
+                    (projectData.ProjectTags !== null && projectData.ProjectTags !== "") &&
+                    <div className='project-info-container__details__text-wrapper-column'>
+                      <h6>Tags:</h6>
+                      <p>{projectData.ProjectTags.split(",").join(", ")}</p>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <div className='project-share-container'>
+              <FacebookShare className="share-logo"/>
+              <LinkedInShare className="share-logo"/>
+              <TwitterShare className="share-logo"/>
+              <CopyLinkShare className="share-logo"/>
+            </div>
           </div>
-        }
-      </Container>
+        </Container>
+      </div>
     </>
   );
 }
@@ -89,7 +164,7 @@ export async function getStaticProps({params}:any) {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink", "student", "level", "major", "school"]
+    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink", "student", "level", "major", "school", "award"]
   };
   const projectsRes = await fetchAPI("/projects", projectQuery);
 

@@ -27,11 +27,13 @@ p, address {
 h1, .h1 {
   font-size: clamp(32px, 6vw, 64px);
   font-weight: bold;
+  margin: 0;
 }
 
 h2, .h2 {
   font-size: clamp(28px, 5vw, 52px);
   font-weight: 900;
+  margin: 0;
 }
 
 h3, .h3 {
@@ -39,11 +41,13 @@ h3, .h3 {
   letter-spacing: 1.2;
   text-transform: uppercase;
   font-weight: bold;
+  margin: 0;
 }
 
 h4, .h4 {
   font-size: clamp(18px, 3vw, 24px);
   font-weight: bold;
+  margin: 0;
 }
 
 h5, .h5 {
@@ -51,11 +55,13 @@ h5, .h5 {
   letter-spacing: 1.5;
   text-transform: uppercase;
   font-weight: 500;
+  margin: 0;
 }
 
 h6, .h6 {
   font-size: clamp(16px, 1.5vw, 18px);
   font-weight: bold;
+  margin: 0;
 }
 
 .subtitle {
@@ -125,6 +131,11 @@ a {
     width: auto;
     height: 100%;
   }
+}
+
+.share-logo {
+  width: 42px;
+  height: 42px;
 }
 
 .main {

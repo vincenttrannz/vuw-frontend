@@ -1,0 +1,21 @@
+/*================================
+=        VIC WORK INNER PAGE     =
+=================================*/
+// This style set for the PROJECT / EVENT inner page style
+
+.vic-work {
+  &__wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: 25% 75%;
+  }
+  &__left-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: $vic-grey-block;
+  }
+  &__right-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
