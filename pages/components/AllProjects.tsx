@@ -7,7 +7,6 @@ import { getStrapiMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
   projects: Projects;
-  project?: Project;
 };
 
 
@@ -66,7 +65,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                     {ProjectLevel !== undefined  && CategorySplit(ProjectLevel)}
                     {ProjectYear !== undefined  && CategorySplit(ProjectYear)}
                   </div>
-                  <div className="filter-container d-none">
+                  {/* <div className="filter-container d-none">
                     <p data-find-school={ProjectSchool.replace(/ /g, "_")}>{ProjectSchool.replace(/ /g, "_")}</p>
                     <p data-find-major={ProjectMajor.replace(/ /g, "_")}>{ProjectMajor.replace(/ /g, "_")}</p>
                     <p data-find-year={ProjectYear}>{ProjectYear}</p>
@@ -84,7 +83,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                         ProjectStudentAward : ""
                       }
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </a>

@@ -38,7 +38,26 @@
           grid-template-columns: 1fr;
           gap: 10px;
         }
+        &-award-content {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 15px;
+          &__text-wrap {
+            display: flex;
+            // grid-template-columns: auto auto;
+            gap: 15px;
+            align-items: center;
+            .company-logo {
+              width: 28px;
+            }
+          }
+        }
       }
+    }
+    .sub-project-container {
+      display: grid;
+      grid-template-columns: 100%;
+      gap: 45px;
     }
   }
   .project-share-container {
@@ -85,12 +104,21 @@
 
 .slick-slider {
   position: relative;
-  // height: clamp(460px, 39vw, 680px);
   .slick-slide {
-    img {
-      height: clamp(460px, 39vw, 680px);
-      width: 100%;
-      object-fit: cover;
+    div {
+      aspect-ratio: 2 / 1;
+      height: 100%;
+      .work-img-container {
+        position: relative;
+        background-color: #000;
+        img {
+          margin: 0 auto;
+          height: 100%;
+          // aspect-ratio: 2 / 1;
+          // object-fit: contain;
+          // width: 100%;
+        }
+      }
     }
   }
   .slick-arrow {

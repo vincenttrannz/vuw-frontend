@@ -17,5 +17,13 @@
   &__right-container {
     padding-top: 50px;
     padding-bottom: 50px;
+    .other-works-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 30px;
+      .textblock-with-divider {
+        grid-column: span 3;
+      }
+    }
   }
 }

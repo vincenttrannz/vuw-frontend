@@ -5,12 +5,15 @@
 .iframe-container {
   position: relative;
   width: 100%;
-  height: 500px;
+  aspect-ratio: 2 / 1;
   background: url("./loading-bg.gif");
   background-position: center;
   background-size: cover;
   iframe {
     width: 100%;
     height: 100%;
+    &.video-iframe {
+      background-color: #000;
+    }
   }
 }

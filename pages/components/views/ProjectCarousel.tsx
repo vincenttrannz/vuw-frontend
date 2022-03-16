@@ -7,7 +7,7 @@ import ChevronPrev from '../../../public/chevron-prev.svg';
 import ChevronNext from '../../../public/chevron-next.svg';
 
 type ProjectDataProps = {
-  projectData: Project["attributes"];
+  projectData: Project["attributes"] | any;
 }
 
 export default function ProjectCarousel({projectData}:ProjectDataProps) {
@@ -52,14 +52,14 @@ export default function ProjectCarousel({projectData}:ProjectDataProps) {
     <Slider {...sliderSettings}>
       {
         projectData.ProjectImages.data.map((project:any, i:number) => {
-          console.log(project);
           return (
             <React.Fragment key={i}>
-              <img alt={`${project.attributes.alternativeText} - image ${i}`} key={i} src={getSingleStrapiMedia(project)}></img>
+              <div className="work-img-container">
+                <img alt={`${project.attributes.alternativeText} - image ${i}`} key={i} src={getSingleStrapiMedia(project)}></img>
+              </div>
               <ImgCaption className="mx-0 my-1" caption={project.attributes.caption}/>
             </React.Fragment>
-          )
-        }
+          )}
         )
       }
     </Slider>

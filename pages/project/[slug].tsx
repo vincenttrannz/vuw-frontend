@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import { fetchAPI } from "../../lib/api";
-import { Project } from '../../compilers/type';
+import { Project, Projects } from '../../compilers/type';
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
 import ReactMarkdown from 'react-markdown'
 import TextDivider from '../components/views/TextDivider';
@@ -12,20 +13,28 @@ import ProjectPDF from '../components/views/ProjectPDF';
 import ProjectCarousel from '../components/views/ProjectCarousel';
 import Project3D from '../components/views/Project3D';
 import ProjectCode from '../components/views/ProjectCode';
+import ProjectVideo from '../components/views/ProjectVideo';
+import AllProjects from '../components/AllProjects';
 import FacebookShare from '../../public/round-fb-logo.svg';
 import LinkedInShare from '../../public/round-linkedin-logo.svg';
 import TwitterShare from '../../public/round-twitter-logo.svg';
 import CopyLinkShare from '../../public/round-copy-link-logo.svg';
+import {FacebookShareButton, LinkedinShareButton, TwitterShareButton} from 'react-share'
 
 type ProjectProps = {
   project: Project;
+  randomThreeProjects: Projects;
 }
 
-const Project: NextPage<ProjectProps> = ({project}) => {
+const Project: NextPage<ProjectProps> = ({project, randomThreeProjects}) => {
   const projectData = project.attributes;
+  const router = useRouter();
+  const currentURL = "http://vuwunicodesjav1.vuw.ac.nz" + router.asPath;
 
   // Checking the data
   console.log(projectData);
+  
+  // console.log(projectData.SubProjectVideo.ProjectVideoLink.substring(8).split("/")[1]);
   return (
     <>
       <HeadData
@@ -47,7 +56,10 @@ const Project: NextPage<ProjectProps> = ({project}) => {
               {
                 // If the project is 3D project
                 (projectData.Project3D) &&
-                <Project3D projectData={projectData}/>
+                <Project3D 
+                  Project3DLink={projectData.Project3DLink}
+                  Project3DCaption={projectData.ProjectCaption}
+                />
               }
               {
                 // If the project is PDF
@@ -62,18 +74,29 @@ const Project: NextPage<ProjectProps> = ({project}) => {
               {
                 // If the project is Code base
                 (projectData.ProjectCode) &&
-                <ProjectCode projectData={projectData}/>
+                <ProjectCode
+                  ProjectCodeLink={projectData.ProjectCodeLink}
+                  ProjectCodeCaption={projectData.ProjectCaption}
+                />
+              }
+              {
+                // If the project is Video base
+                (projectData.ProjectVideo) &&
+                <ProjectVideo
+                  ProjectVideoLink={projectData.ProjectVideoLink}
+                  ProjectVideoCaption={projectData.ProjectCaption}
+                />
               }
               <div className='project-info-container__details'>
                 <div className='project-info-container__details__left'>
                   {
-                    [projectData.ProjectDescription, projectData.LecturerName, projectData.CourseName, projectData.ProjectDate].map((el, i:number) => {
-                      if(el !== null){
+                    [projectData.ProjectDescription, projectData.student.data.attributes?.StudentName, projectData.LecturerName, projectData.CourseName, new Date(projectData.ProjectDate).toLocaleDateString("nz")].map((el:any, i: number) => {
+                      if(el !== null || el !== ""){
                         return (
                           <div key={i} className='project-info-container__details__text-wrapper-row'>
                             <h6>
                               {
-                                (i == 0) ? "Overview:" : (i == 1) ? "Lecturer:" : (i == 2) ? "Course:" : (i == 3) ? "Date:" : ""
+                                (i == 0) ? "Overview:" : (i == 1) ? "Student:" : (i == 2) ? "Lecturer:" : (i == 3) ? "Course:" : (i == 4) ? "Date:" : ""
                               }
                             </h6>
                             <ReactMarkdown>{el}</ReactMarkdown>
@@ -83,6 +106,37 @@ const Project: NextPage<ProjectProps> = ({project}) => {
                         return ""
                       }
                     })
+                  }
+                  {
+                    /**
+                     * AWARD CONTENT FOR PROJECT
+                     */
+                    (projectData.award.data !== null) &&
+                    <div className='project-info-container__details__text-wrapper-row'>
+                      <h6>Award:</h6>
+                      {
+                        (projectData.award.data?.attributes.AwardType == "Industry_Award") &&
+                        <div className='project-info-container__details__text-wrapper-award-content'>
+                          <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                            <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                            <span>{projectData.award.data.attributes.AwardName}</span>
+                          </div>
+                          <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                            <img className="company-logo" src={getStrapiMedia(projectData.award.data.attributes.CompanyLogo)} alt="Company logo" />
+                            <span>{projectData.award.data.attributes.CompanyName}</span>
+                          </div>
+                        </div>
+                      }
+                      {
+                        (projectData.award.data?.attributes.AwardType == "Excellence_Award") &&
+                        <div className='project-info-container__details__text-wrapper-award-content'>
+                          <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                            <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                            <span>{projectData.award.data.attributes.AwardName}</span>
+                          </div>
+                        </div>
+                      }
+                    </div>
                   }
                 </div>
                 <div className='project-info-container__details__right'>
@@ -133,13 +187,73 @@ const Project: NextPage<ProjectProps> = ({project}) => {
                   }
                 </div>
               </div>
+              <div className='sub-project-container my-3'>
+                {
+                  /**
+                   * SUB PROJECT 3D
+                   */
+                  (projectData.SubProject3D !== null) &&
+                  <Project3D 
+                    Project3DLink={projectData.SubProject3D.Project3DLink}
+                    Project3DCaption={projectData.SubProject3D.ProjectCaption}
+                  />
+                }
+                {
+                  /**
+                   * SUB PROJECT CAROUSEL
+                   */
+                  (projectData.SubProjectCarousel !== null) &&
+                  <ProjectCarousel projectData={projectData.SubProjectCarousel}/>
+                }
+                {
+                  /**
+                   * SUB PROJECT CODE
+                   */
+                  (projectData.SubProjectCode !== null) &&
+                  <ProjectCode 
+                    ProjectCodeLink={projectData.SubProjectCode.ProjectCodeLink}
+                    ProjectCodeCaption={projectData.SubProjectCode.ProjectCaption}
+                  />
+                }
+                {
+                  /**
+                   * SUB PROJECT VIDEO
+                   */
+                  (projectData.SubProjectVideo !== null) &&
+                  <ProjectVideo 
+                    ProjectVideoLink={`https://player.vimeo.com/video/${projectData.SubProjectVideo.ProjectVideoLink.substring(8).split("/")[1]}`}
+                    ProjectVideoCaption={projectData.SubProjectVideo.ProjectCaption}
+                  />
+                }
+              </div>
             </div>
             <div className='project-share-container'>
-              <FacebookShare className="share-logo"/>
-              <LinkedInShare className="share-logo"/>
-              <TwitterShare className="share-logo"/>
-              <CopyLinkShare className="share-logo"/>
+              <FacebookShareButton
+                url={currentURL}
+              >
+                <FacebookShare className="share-logo"/>
+              </FacebookShareButton>
+              <LinkedinShareButton
+                url={currentURL}
+              >
+                <LinkedInShare className="share-logo"/>
+              </LinkedinShareButton>
+              <TwitterShareButton
+                url={currentURL}
+              >
+                <TwitterShare className="share-logo"/>
+              </TwitterShareButton>
+              <a type="button" onClick={() => {navigator.clipboard.writeText(currentURL)}}>
+                <CopyLinkShare className="share-logo"/>
+              </a>
             </div>
+          </div>
+          <div className='other-works-container'>
+            <div className="textblock-with-divider mb-3">
+              <h3>Other projects</h3>
+              <TextDivider prime/>
+            </div>
+            <AllProjects projects={randomThreeProjects}/>
           </div>
         </Container>
       </div>
@@ -164,12 +278,46 @@ export async function getStaticProps({params}:any) {
     filters: {
       Slug: `${params ? params.slug : ""}`
     },
-    populate: ["*", "SeoData.ShareImage", "ProjectImages", "ProjectPDFLink", "student", "level", "major", "school", "award"]
+    populate: [
+      "*", 
+      "SeoData.ShareImage", 
+      "ProjectImages", 
+      "ProjectPDFLink", 
+      "SubProjectCarousel.ProjectImages", 
+      "SubProject3D",
+      "SubProjectPDF.ProjectPDFMedia", 
+      "SubProjectVideo", 
+      "SubProjectCode", 
+      "student", 
+      "level", 
+      "major", 
+      "school", 
+      "award",
+      "award.CompanyLogo"
+    ]
   };
-  const projectsRes = await fetchAPI("/projects", projectQuery);
+  
+  const randomThreeProjectsQuery = {
+    populate: [
+      "*",
+      "ProjectThumbnail",
+      "student.award",
+      "school",
+      "major",
+      "level",
+      "award"
+    ]
+  }
+  const [projectsRes, randomThreeProjectsRes] = await Promise.all([
+    fetchAPI("/projects", projectQuery),
+    fetchAPI("/projects", randomThreeProjectsQuery)
+  ]);
 
   return {
-    props: { project: projectsRes.data[0] },
+    props: { 
+      project: projectsRes.data[0],
+      randomThreeProjects: randomThreeProjectsRes.data.sort(() => 0.5 - Math.random()).slice(0, 3)
+    },
     revalidate: 1,
   }
 };

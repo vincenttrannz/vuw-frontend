@@ -1,23 +1,27 @@
 import React from "react";
 import { Project } from "../../../compilers/type";
+import ImgCaption from '../views/ImgCaption';
 
 type ProjectDataProps = {
-  projectData: Project["attributes"];
+  ProjectCodeLink: string;
+  ProjectCodeCaption?: string;
 };
 
-export default function ProjectCode({ projectData }: ProjectDataProps) {
+export default function ProjectCode({ ProjectCodeLink, ProjectCodeCaption }: ProjectDataProps) {
   return (
-    <div>
+    <div className="iframe-container">
       <iframe
-        height="500"
-        width="100%"
         scrolling="no"
-        title={projectData.ProjectTitle}
-        src={projectData.ProjectCodeLink}
+        title={ProjectCodeCaption}
+        src={ProjectCodeLink}
         frameBorder="no"
         loading="lazy"
         allowFullScreen
       ></iframe>
+      {
+        (ProjectCodeCaption !== undefined) &&
+        <ImgCaption className="mx-0 my-1" caption={ProjectCodeCaption}/>
+      }
     </div>
   );
 }

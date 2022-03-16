@@ -21,10 +21,18 @@ export type Project = {
     ProjectPDFLink: string;
     ProjectCode: boolean;
     ProjectCodeLink: string;
+    ProjectVideo: string;
+    ProjectVideoLink: string;
+    ProjectCaption: string;
     ProjectTags: string;
     ProjectThumbnail: ImagesDataType;
     ProjectExternalLink: string;
     ProjectLinkDisplay: string;
+    SubProject3D: SubProject3D;
+    SubProjectCarousel: SubProjectCarousel;
+    SubProjectCode: SubProjectCode;
+    SubProjectPDF: SubProjectPDF;
+    SubProjectVideo: SubProjectVideo;
     DownloadLinkOne: string;
     DownloadLinkOneNameDisplay: string;
     DownloadLinkTwo: string;
@@ -232,28 +240,61 @@ export type EventPage = {
 };
 
 // Other component type
-type SeoDataType = {
+export type SeoDataType = {
   id: number;
   MetaTitle: string;
   MetaDescription: string;
   ShareImage: ImagesDataType;
 };
 
-type TwoColumnsBlock = {
+export type TwoColumnsBlock = {
   id: number;
   BlockImage: ImagesDataType;
   BlockParagraph: string;
   BlockTitle: string;
 };
 
-type GreyContentBlock = {
+export type GreyContentBlock = {
   id: number;
   BlockTitle: string;
   BlockRichText: string;
   BlockButtonLink: string;
 };
 
-type ImagesDataType = {
+export type SubProject3D = {
+  id: number;
+  Project3DLink: string;
+  ProjectCaption: string;
+}
+
+export type SubProjectCarousel = {
+  id: number;
+  ProjectImages: {
+    data: ImagesDataType["data"][] | ImagesDataType["data"]
+  }
+}
+
+export type SubProjectCode = {
+  id: number;
+  ProjectCodeLink: string;
+  ProjectCaption: string;
+}
+
+export type SubProjectPDF = {
+  id: number;
+  ProjectCaption: string;
+  ProjectPDFMedia: {
+    data: ImagesDataType["data"]
+  };
+}
+
+export type SubProjectVideo = {
+  id: number;
+  ProjectVideoLink: string;
+  ProjectCaption: string;
+}
+
+export type ImagesDataType = {
   data: {
     id: number;
     attributes: {

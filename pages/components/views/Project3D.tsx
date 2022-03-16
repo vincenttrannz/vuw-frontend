@@ -1,11 +1,12 @@
 import React from "react";
-import { Project } from "../../../compilers/type";
+import ImgCaption from '../views/ImgCaption';
 
-type ProjectDataProps = {
-  projectData: Project["attributes"];
+type Project3DProps = {
+  Project3DLink: string;
+  Project3DCaption?: string;
 };
 
-export default function Project3D({ projectData }: ProjectDataProps) {
+export default function Project3D({ Project3DLink, Project3DCaption }: Project3DProps) {
   return (
     <div className="iframe-container">
       <iframe
@@ -17,8 +18,12 @@ export default function Project3D({ projectData }: ProjectDataProps) {
         execution-while-out-of-viewport="true"
         execution-while-not-rendered="true"
         web-share="true"
-        src={projectData.Project3DLink}
+        src={Project3DLink}
       ></iframe>
+      {
+        (Project3DCaption !== undefined) &&
+        <ImgCaption className="mx-0 my-1" caption={Project3DCaption}/>
+      }
     </div>
   );
 }
