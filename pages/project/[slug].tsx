@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import HeadData from "../components/HeadData";
 import { Container } from "react-bootstrap";
 import { fetchAPI } from "../../lib/api";
@@ -14,12 +13,8 @@ import ProjectCarousel from '../components/views/ProjectCarousel';
 import Project3D from '../components/views/Project3D';
 import ProjectCode from '../components/views/ProjectCode';
 import ProjectVideo from '../components/views/ProjectVideo';
-import AllProjects from '../components/AllProjects';
-import FacebookShare from '../../public/round-fb-logo.svg';
-import LinkedInShare from '../../public/round-linkedin-logo.svg';
-import TwitterShare from '../../public/round-twitter-logo.svg';
-import CopyLinkShare from '../../public/round-copy-link-logo.svg';
-import {FacebookShareButton, LinkedinShareButton, TwitterShareButton} from 'react-share'
+import OtherProjects from '../components/views/OtherPorjects';
+import ShareContainer from '../components/views/ShareContainer';
 
 type ProjectProps = {
   project: Project;
@@ -27,9 +22,7 @@ type ProjectProps = {
 }
 
 const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => {
-const projectData = project.attributes;
-  const router = useRouter();
-  const currentURL = "http://vuwunicodesjav1.vuw.ac.nz" + router.asPath;
+  const projectData = project.attributes;
 
   // Checking the data
   console.log(projectData);
@@ -64,7 +57,7 @@ const projectData = project.attributes;
               {
                 // If the project is PDF
                 (projectData.ProjectPDF) &&
-                <ProjectPDF projectData={projectData}/>
+                <ProjectPDF ProjectPDFLink={getStrapiMedia(projectData.ProjectPDFLink)}/>
               }
               {
                 // If the project just contain images
@@ -186,8 +179,16 @@ const projectData = project.attributes;
                     </div>
                   }
                 </div>
+                <ShareContainer className='d-flex d-lg-none mt-2'/>
               </div>
               <div className='sub-project-container my-3'>
+                {
+                  /**
+                   * SUB PROJECT CAROUSEL
+                   */
+                  (projectData.SubProjectCarousel !== null) &&
+                  <ProjectCarousel projectData={projectData.SubProjectCarousel}/>
+                }
                 {
                   /**
                    * SUB PROJECT 3D
@@ -200,10 +201,13 @@ const projectData = project.attributes;
                 }
                 {
                   /**
-                   * SUB PROJECT CAROUSEL
+                   * SUB PROJECT PDF
                    */
-                  (projectData.SubProjectCarousel !== null) &&
-                  <ProjectCarousel projectData={projectData.SubProjectCarousel}/>
+                  (projectData.SubProjectPDF !== null) &&
+                  <ProjectPDF 
+                    ProjectPDFLink={getStrapiMedia(projectData.SubProjectPDF.ProjectPDFLink)}
+                    ProjectPDFCaption={projectData.SubProjectPDF.ProjectCaption}
+                  />
                 }
                 {
                   /**
@@ -227,35 +231,11 @@ const projectData = project.attributes;
                 }
               </div>
             </div>
-            <div className='project-share-container'>
-              <FacebookShareButton
-                url={currentURL}
-              >
-                <FacebookShare className="share-logo"/>
-              </FacebookShareButton>
-              <LinkedinShareButton
-                url={currentURL}
-              >
-                <LinkedInShare className="share-logo"/>
-              </LinkedinShareButton>
-              <TwitterShareButton
-                url={currentURL}
-              >
-                <TwitterShare className="share-logo"/>
-              </TwitterShareButton>
-              <a type="button" onClick={() => {navigator.clipboard.writeText(currentURL)}}>
-                <CopyLinkShare className="share-logo"/>
-              </a>
-            </div>
+            <ShareContainer className='d-none d-lg-flex'/>
           </div>
-          <div className='other-works-container'>
-            <div className="textblock-with-divider mb-3">
-              <h3>Other projects</h3>
-              <TextDivider prime/>
-            </div>
-            <AllProjects projects={randomThreeProjects}/>
-          </div>
+         <OtherProjects className='desktop' projectData={randomThreeProjects}/>
         </Container>
+        <OtherProjects className='mobile container mt-3' projectData={randomThreeProjects}/>
       </div>
     </>
   );
@@ -285,7 +265,7 @@ export async function getStaticProps({params}:any) {
       "ProjectPDFLink", 
       "SubProjectCarousel.ProjectImages", 
       "SubProject3D",
-      "SubProjectPDF.ProjectPDFMedia", 
+      "SubProjectPDF.ProjectPDFLink", 
       "SubProjectVideo", 
       "SubProjectCode", 
       "student", 

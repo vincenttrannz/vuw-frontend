@@ -1,5 +1,4 @@
 import React from "react";
-import { Project } from "../../../compilers/type";
 import ImgCaption from '../views/ImgCaption';
 
 type ProjectDataProps = {
@@ -11,7 +10,7 @@ export default function ProjectCode({ ProjectCodeLink, ProjectCodeCaption }: Pro
   return (
     <div className="iframe-container">
       <iframe
-        scrolling="no"
+        // scrolling="no"
         title={ProjectCodeCaption}
         src={ProjectCodeLink}
         frameBorder="no"

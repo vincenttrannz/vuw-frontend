@@ -1,0 +1,55 @@
+/*===================================
+=        SHARE CONTAINER STYLE      =
+=====================================*/
+.project-share-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  .copied-text {
+    color: $vic-smoke;
+    width: 42px;
+    margin-left: -12px;
+  }
+}
+
+.react-share {
+  &__ShareButton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    &[aria-label="facebook"], &[aria-label="linkedin"], &[aria-label="twitter"], &[aria-label="copy"]{
+      .share-logo {
+        circle {
+          color: $vic-smoke;
+        }
+        path {
+          color: #fff;
+        }
+        &:hover {
+          circle {
+            color: $vic-yellow;
+          }
+          path {
+            color: $vic-smoke;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $small-tablet-screen-size) {
+  .project-share-container {
+    flex-direction: row;
+    gap: 0 15px;
+    .copied-text {
+      margin-left: 0;
+    }
+  }
+  .react-share {
+    &__ShareButton {
+      flex-direction: row;
+    }
+  }
+}

@@ -1,27 +1,31 @@
-import React, { useState } from "react";
-import { Viewer, Worker } from "@react-pdf-viewer/core";
+import React from "react";
+import ImgCaption from '../views/ImgCaption';
+import { Viewer, Worker, SpecialZoomLevel } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import { Project } from "../../../compilers/type";
-import { getStrapiMedia } from "../../../lib/fetchData";
 
 type ProjectDataProps = {
-  projectData: Project["attributes"];
+  ProjectPDFLink: string;
+  ProjectPDFCaption?: string;
 };
 
-export default function ProjectPDF({ projectData }: ProjectDataProps) {
+export default function ProjectPDF({ ProjectPDFLink, ProjectPDFCaption }: ProjectDataProps) {
   // React-pdf appendancies
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
-  const projectPDF = getStrapiMedia(projectData.ProjectPDFLink);
   return (
-    <div>
+    <>
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
-        <div className="pdf-container">
+        <div className="pdf-container mb-4">
           <Viewer
-            fileUrl={projectPDF}
+            fileUrl={ProjectPDFLink}
             plugins={[defaultLayoutPluginInstance]}
+            defaultScale={SpecialZoomLevel.PageFit}
           />
+          {
+            (ProjectPDFCaption !== undefined) &&
+            <ImgCaption className="mx-0 my-1" caption={ProjectPDFCaption}/>
+          }
         </div>
       </Worker>
-    </div>
+    </>
   );
 }

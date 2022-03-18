@@ -17,3 +17,22 @@
     }
   }
 }
+
+.pdf-container {
+  height: 768px;
+}
+
+.rpv-core {
+  &__modal-body {
+    width: 100%;
+  }
+}
+
+.rpv-properties {
+  &__item-label {
+    font-size: smaller;
+  }
+  &__item-value {
+    font-size: smaller;
+  }
+}

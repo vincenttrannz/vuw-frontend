@@ -283,7 +283,7 @@ export type SubProjectCode = {
 export type SubProjectPDF = {
   id: number;
   ProjectCaption: string;
-  ProjectPDFMedia: {
+  ProjectPDFLink: {
     data: ImagesDataType["data"]
   };
 }

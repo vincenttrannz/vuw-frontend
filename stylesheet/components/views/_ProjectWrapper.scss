@@ -16,7 +16,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 15px;
-        padding-right: 60px;
+        padding-right: clamp(30px, 4vw, 60px);
       }
       &__right {
         display: grid;
@@ -24,7 +24,7 @@
         gap: 15px;
         align-content: flex-start;
         border-left: 1px solid $vic-gray;
-        padding-left: 60px;
+        padding-left: clamp(30px, 4vw, 60px);
       }
       &__text-wrapper {
         &-row {
@@ -60,11 +60,6 @@
       gap: 45px;
     }
   }
-  .project-share-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
 }
 
 // 1. PROJECT SLICK SLIDER
@@ -77,7 +72,7 @@
   bottom: 3rem;
   top: auto;
   width: 50%;
-  height: 80px;
+  height: clamp(40px, 13vw, 80px);
   background: #33333335;
   z-index: 2;
   transform: none;
@@ -127,6 +122,33 @@
     }
     &.slick-next {
       @include SlickChevron($prev: false);
+    }
+  }
+}
+
+@media (max-width: $small-tablet-screen-size) {
+  .project-wrapper {
+    .project-info-container {
+      width: 100%;
+      &__details {
+        margin-top: 2rem;
+        grid-template-columns: 1fr;
+        &__left {
+          padding-right: 0;
+          padding-bottom: 25px;
+          border-bottom: 1px solid $vic-gray;
+        }
+        &__right {
+          padding-top: 25px;
+          padding-left: 0;
+          border-left: none;
+        }
+        &__text-wrapper{
+          &-row {
+            grid-template-columns: 1fr;
+          }
+        }
+      }
     }
   }
 }
