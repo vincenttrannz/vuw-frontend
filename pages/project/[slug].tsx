@@ -26,8 +26,8 @@ type ProjectProps = {
   randomThreeProjects: Projects;
 }
 
-const Project: NextPage<ProjectProps> = ({project, randomThreeProjects}) => {
-  const projectData = project.attributes;
+const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => {
+const projectData = project.attributes;
   const router = useRouter();
   const currentURL = "http://vuwunicodesjav1.vuw.ac.nz" + router.asPath;
 
@@ -322,4 +322,4 @@ export async function getStaticProps({params}:any) {
   }
 };
 
-export default Project;
+export default ProjectPage;
