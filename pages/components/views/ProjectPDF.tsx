@@ -14,15 +14,8 @@ export default function ProjectPDF({ projectData }: ProjectDataProps) {
   const projectPDF = getStrapiMedia(projectData.ProjectPDFLink);
   return (
     <div>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.js">
-        <div
-          style={{
-            height: "750px",
-            width: "900px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+        <div className="pdf-container">
           <Viewer
             fileUrl={projectPDF}
             plugins={[defaultLayoutPluginInstance]}
