@@ -1,15 +1,12 @@
 import type { NextPage } from 'next'
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
-import { Container } from "react-bootstrap";
-import { FacebookShareButton } from "react-share";
-import InstaIcon from '../public/insta-logo.svg'
-import FacebookIcon from '../public/fb-logo.svg'
 import PageHeroBanner from './components/views/PageHeroBanner'
 import TextDivider from './components/views/TextDivider';
-import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
+import StickyShare from './components/views/StickySocial';
+import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import {Projects, Homepage, Schools, Levels, Awards} from '../compilers/type'
 
 type HomepageProps = {
@@ -26,7 +23,6 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
-  const heroTitle = getStrapiData(homepage).Hero_title;
   const quickIntroTitle = getStrapiData(homepage).quick_intro_title;
   const quickIntroTeReo = getStrapiData(homepage).Quick_intro_te_reo;
   const quickIntroTextColOne = getStrapiData(homepage).Quick_intro_text_column_one;
@@ -38,16 +34,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
         description={HomepageSeoData.MetaDescription}
         image={getStrapiMedia(HomepageShareImageSeo)}
       />
-      <div className='side-share-container shadow-sm'>
-        <FacebookShareButton
-          url="https://vuw-frontend.vercel.app/"
-          quote="Homepage of VUW Project"
-          hashtag="#helloVUW"
-        >
-          <FacebookIcon/>
-        </FacebookShareButton>
-        <InstaIcon/>
-      </div>
+      <StickyShare/>
       <PageHeroBanner
         OtherSide={false}
         HomepageSubtitle={true}

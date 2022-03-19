@@ -1,14 +1,20 @@
 /*===================================
 =        SHARE CONTAINER STYLE      =
 =====================================*/
-.project-share-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  .copied-text {
-    color: $vic-smoke;
-    width: 42px;
-    margin-left: -12px;
+.project-share-wrapper {
+  position: relative;
+  .project-share-container {
+    position: sticky;
+    top: 110px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    .copied-text {
+      color: $vic-smoke;
+      width: 42px;
+      margin-left: -12px;
+    }
   }
 }
 
@@ -18,6 +24,13 @@
     flex-direction: column;
     gap: 10px;
     align-items: center;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    // Project and Event inner page share
     &[aria-label="facebook"], &[aria-label="linkedin"], &[aria-label="twitter"], &[aria-label="copy"]{
       .share-logo {
         circle {
@@ -36,15 +49,30 @@
         }
       }
     }
+    // Sticky share container
+    &[aria-label="facebook"], &[aria-label="instagram"] {
+      .social-icon {
+        path {
+          color: $vic-smoke;
+        }
+        &:hover {
+          path {
+            color: $vic-teal;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (max-width: $small-tablet-screen-size) {
-  .project-share-container {
-    flex-direction: row;
-    gap: 0 15px;
-    .copied-text {
-      margin-left: 0;
+  .project-share-wrapper {
+    .project-share-container {
+      flex-direction: row;
+      gap: 0 15px;
+      .copied-text {
+        margin-left: 0;
+      }
     }
   }
   .react-share {

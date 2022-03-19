@@ -43,8 +43,9 @@ export default function AllEvents({ events }: EventsProps) {
       {
         events.map((event: Event, i: number) => {
           const EventThumbnail = getStrapiMedia(event.attributes.EventImageThumbnail);
-          const EventTitle = event.attributes.EventName;
-          const EventType = event.attributes.EventType;
+          const EventName = event.attributes.EventName;
+          const EventSlug = event.attributes.Slug;
+          const EventType = event.attributes.event_type.data.attributes.EventTypeName;
           const EventShortDescription = event.attributes.EventShortDescription;
           const EventStartDate = new Date(Date.parse(String(event.attributes.EventStartDate))).toUTCString().split(' ').slice(0, 4).join(' ');
           const EventFinishDate = new Date(Date.parse(String(event.attributes.EventFinishDate))).toUTCString().split(' ').slice(0, 4).join(' ');
@@ -55,56 +56,53 @@ export default function AllEvents({ events }: EventsProps) {
           const EventPrice = event.attributes.EventPrice;
 
           return (
-            <div key={i} className="projectContainer__event shadow-sm">
-              <div className='projectContainer__event__img-container'>
-                <img src={EventThumbnail} alt="event thumbnail"/>
-                <div className='projectContainer__event__event-timestamp'>
-                  {eventGetTimestamp(event.attributes.EventStartDate)}
-                </div>
-              </div>
-              <div className='projectContainer__event__info-container'>
-                <div className='projectContainer__event__info-container-event-title'>
-                  <h4>{EventTitle}</h4>
-                  <TextDivider prime={false}/>
-                </div>
-                <div className='projectContainer__event__info-container-description'>
-                  <div className='projectContainer__event__info-container-description__intro'>
-                    <p className='bold'>{EventType}</p>
-                    <p>{EventShortDescription}</p>
-                    <Link href={`#`}>
-                      <a className='btn btn-vic mt-auto'>
-                        Find out more
-                      </a>
-                    </Link>
+            <Link href={`/event/${EventSlug}`} key={i}>
+              <a className="projectContainer__event shadow-sm">
+                <div className='projectContainer__event__img-container'>
+                  <img src={EventThumbnail} alt="event thumbnail"/>
+                  <div className='projectContainer__event__event-timestamp'>
+                    {eventGetTimestamp(event.attributes.EventStartDate)}
                   </div>
-                  <div className='projectContainer__event__info-container-description__details'>
-                    <div className='detail-container'>
-                      <p className='bold'>Date</p>
-                      <p className='p2'>
-                        <span>{EventStartDate}</span> {(EventFinishDate !== "Invalid Date") ? <span>- {EventFinishDate}</span> : ""} <br/>
-                        <span>{EventStartTime}</span> - <span>{EventFinishTime}</span>
+                </div>
+                <div className='projectContainer__event__info-container'>
+                  <div className='projectContainer__event__info-container-event-title'>
+                    <h4 className='mb-2'>{EventName}</h4>
+                    <TextDivider prime={false}/>
+                  </div>
+                  <div className='projectContainer__event__info-container-description'>
+                    <div className='projectContainer__event__info-container-description__intro'>
+                      <p className='bold'>{EventType}</p>
+                      <p>{EventShortDescription}</p>
+                      <div className='btn btn-vic mt-auto'>
+                        Find out more
+                      </div>
+                    </div>
+                    <div className='projectContainer__event__info-container-description__details'>
+                      <div className='detail-container'>
+                        <p className='bold'>Date</p>
+                        <p className='p2'>
+                          <span>{EventStartDate}</span> {(EventFinishDate !== "Invalid Date") ? <span>- {EventFinishDate}</span> : ""} <br/>
+                          <span>{EventStartTime}</span> - <span>{EventFinishTime}</span>
+                        </p>
+                      </div>
+                      <div className='detail-container'>
+                        <p className='bold'>Location</p>
+                        <p className='p2'>{EventLocation}</p>
+                      </div>
+                      <p className='bold price-type'>
+                        {
+                          (EventPriceType == "Free")
+                          ?
+                          "FREE"
+                          :
+                          EventPrice
+                        }
                       </p>
                     </div>
-                    <div className='detail-container'>
-                      <p className='bold'>Location</p>
-                      <p className='p2'>{EventLocation}</p>
-                    </div>
-                    <p className='bold price-type'>
-                      {
-                        (EventPriceType == "Free")
-                        ?
-                        "FREE"
-                        :
-                        EventPrice
-                      }
-                    </p>
                   </div>
                 </div>
-              </div>
-              <Link href={`#`}>
-                <a className='projectContainer__event__event-link'></a>
-              </Link>
-            </div>
+              </a>
+            </Link>
           )
         })
       }

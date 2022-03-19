@@ -9,7 +9,7 @@
   .project-info-container {
     width: 90%;
     &__details {
-      margin-top: 3rem;
+      margin: 3rem 0;
       display: grid;
       grid-template-columns: 70% 30%;
       &__left {
@@ -131,7 +131,7 @@
     .project-info-container {
       width: 100%;
       &__details {
-        margin-top: 2rem;
+        margin: 0;
         grid-template-columns: 1fr;
         &__left {
           padding-right: 0;
@@ -146,6 +146,9 @@
         &__text-wrapper{
           &-row {
             grid-template-columns: 1fr;
+            &.student {
+              grid-row-start: 1;
+            }
           }
         }
       }

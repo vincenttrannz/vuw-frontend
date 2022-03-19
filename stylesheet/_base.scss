@@ -80,6 +80,9 @@ p {
 a {
   color: $vic-smoke;
   text-decoration: none;
+  &:hover {
+    color: $vic-teal;
+  }
 }
 
 .p2 {
@@ -227,6 +230,9 @@ a {
     gap: 25px;
     height: fit-content;
     align-items: center;
+    &:hover {
+      border-color: $vic-teal;
+    }
     // FOR PREV BUTTON
     &.prev-btn {
       .btn-text {

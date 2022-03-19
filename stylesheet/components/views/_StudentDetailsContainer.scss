@@ -1,0 +1,11 @@
+/*===================================
+=        STUDENT DETAILS STYLE      =
+=====================================*/
+
+.work-details-container {
+  position: sticky;
+  top: 110px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}

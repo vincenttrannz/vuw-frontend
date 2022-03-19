@@ -23,26 +23,28 @@ export default function ShareContainer({className}: ShareContainerProps) {
   }
 
   return (
-    <div className={`project-share-container ${className ? className : ""}`}>
-      <FacebookShareButton
-        url={currentURL}
-      >
-        <FacebookShare className="share-logo"/>
-      </FacebookShareButton>
-      <LinkedinShareButton
-        url={currentURL}
-      >
-        <LinkedInShare className="share-logo"/>
-      </LinkedinShareButton>
-      <TwitterShareButton
-        url={currentURL}
-      >
-        <TwitterShare className="share-logo"/>
-      </TwitterShareButton>
-      <a aria-label="copy" className='react-share__ShareButton' type="button" onClick={clickCopy}>
-        <CopyLinkShare className="share-logo"/>
-        <span className='copied-text' style={{display: "none"}} ref={CopiedText}>Copied!</span>
-      </a>
+    <div className={`project-share-wrapper ${className ? className : ""}`}>
+      <div className='project-share-container'>
+        <FacebookShareButton
+          url={currentURL}
+        >
+          <FacebookShare className="share-logo"/>
+        </FacebookShareButton>
+        <LinkedinShareButton
+          url={currentURL}
+        >
+          <LinkedInShare className="share-logo"/>
+        </LinkedinShareButton>
+        <TwitterShareButton
+          url={currentURL}
+        >
+          <TwitterShare className="share-logo"/>
+        </TwitterShareButton>
+        <a aria-label="copy" className='react-share__ShareButton' type="button" onClick={clickCopy}>
+          <CopyLinkShare className="share-logo"/>
+          <span className='copied-text' style={{display: "none"}} ref={CopiedText}>Copied!</span>
+        </a>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Events, EventCategories } from "../../compilers/type";
+import { Events, EventCategories, EventTypes } from "../../compilers/type";
 import TextDivider from "./views/TextDivider";
 import AllEvents from './AllEvents'
 import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
@@ -9,11 +9,13 @@ import { getFilterList } from '../functions/getFilterList';
 type EventsProps = {
   events: Events;
   eventCategories: EventCategories;
+  eventTypes: EventTypes;
 };
 
-const EventContainer: React.FC<EventsProps> = ({events, eventCategories}) => {
+const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTypes}) => {
   console.log("Events:", events);
   console.log("Event categories:", eventCategories);
+  console.log("Event types", eventTypes);
   
   let FilterArray = new Array;
   let FilterEvents = new Array;
@@ -33,7 +35,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories}) => {
   );
 
   const EventTypes = Array.from(
-    events.map(event => event.attributes.EventType)
+    eventTypes.map(eventType => eventType.attributes.EventTypeName)
   );
 
   const EventPriceType = Array.from(

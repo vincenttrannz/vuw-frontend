@@ -134,10 +134,18 @@ export type Student = {
   id: number;
   attributes: null | {
     StudentName: string;
+    StudentEmail: string;
+    StudentMinor: string;
     StudentShortDetail: string;
-    StudentRichDetail: string;
+    FirstStudentLink: string;
+    SecondStudentLink: string;
+    ThirdStudentLink: string;
+    FourthStudentLink: string;
     award: {
       data: Award;
+    };
+    major: {
+      data: Major;
     };
     createdAt: Date;
     updatedAt: Date;
@@ -152,15 +160,22 @@ export type Event = {
   id: number;
   attributes: {
     EventName: string;
+    Slug: string;
     EventShortDescription: string;
     EventLocation: string;
     EventPrice: string;
     EventPriceType: string;
     EventType: string;
+    EventFirstLink: string;
+    EventSecondLink: string;
+    EventThirdLink: string;
     EventImageThumbnail: ImagesDataType;
     event_category: {
       data: EventCategory;
     };
+    event_type: {
+      data: EventType;
+    }
     EventStartDate: Date;
     EventFinishDate: Date;
     EventRichDescription: string;
@@ -187,6 +202,21 @@ export type EventCategory = {
 };
 
 export type EventCategories = EventCategory[];
+
+export type EventType = {
+  id: number;
+  attributes: {
+    EventTypeName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    events: {
+      data: Events;
+    };
+  }
+};
+
+export type EventTypes = EventType[];
 
 // Homepage type
 export type Homepage = {
@@ -265,34 +295,34 @@ export type SubProject3D = {
   id: number;
   Project3DLink: string;
   ProjectCaption: string;
-}
+};
 
 export type SubProjectCarousel = {
   id: number;
   ProjectImages: {
-    data: ImagesDataType["data"][] | ImagesDataType["data"]
-  }
-}
+    data: ImagesDataType["data"][] | ImagesDataType["data"];
+  };
+};
 
 export type SubProjectCode = {
   id: number;
   ProjectCodeLink: string;
   ProjectCaption: string;
-}
+};
 
 export type SubProjectPDF = {
   id: number;
   ProjectCaption: string;
   ProjectPDFLink: {
-    data: ImagesDataType["data"]
+    data: ImagesDataType["data"];
   };
-}
+};
 
 export type SubProjectVideo = {
   id: number;
   ProjectVideoLink: string;
   ProjectCaption: string;
-}
+};
 
 export type ImagesDataType = {
   data: {

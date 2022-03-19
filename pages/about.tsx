@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
-import { Container } from "react-bootstrap";
+import StickyShare from './components/views/StickySocial';
 import PageHeroBanner from './components/views/PageHeroBanner'
 import Link from "next/link";
 import { About } from "../compilers/type";
@@ -81,6 +81,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         description={AboutSeoData.MetaDescription}
         image={getStrapiMedia(AboutShareImageSeo)}
       />
+      <StickyShare/>
       <PageHeroBanner
         OtherSide={true}
         HeroBanner={AboutHeroBanner}
