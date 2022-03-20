@@ -1,22 +1,32 @@
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import $ from 'jquery';
 import { useRouter } from 'next/router';
-import { Event } from '../../compilers/type';
+import { Event, Events } from '../../compilers/type';
 import { fetchAPI } from "../../lib/api";
+import { getStrapiMedia } from "../../lib/fetchData";
 import { Container, Button } from "react-bootstrap";
 import ReactMarkdown from 'react-markdown';
+import AllEvents from '../components/AllEvents';
 import TextDivider from '../components/views/TextDivider';
+import ImgCaption from '../components/views/ImgCaption';
+import ProjectCarousel from '../components/views/ProjectCarousel';
+import ProjectVideo from '../components/views/ProjectVideo';
+import OtherProjects from '../components/views/OtherProjects';
 
 type EventPageProps = {
   event: Event;
+  randomThreeEvents: Events;
 }
 
-const EventPage: NextPage<EventPageProps> = ({event}) => {
+const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   const eventData = event.attributes;
   const router = useRouter();
-
+  const [ThreeProjects, RandomThreeProjects] = useState(event.attributes.projects.data);
+  const RequiredRandomThreeEvents = randomThreeEvents.filter(randomEvent => randomEvent.attributes.Slug !== eventData.Slug);
+  
   const DateFormat = (date:string) => new Date(Date.parse(String(date))).toUTCString().split(' ').slice(0, 4).join(' ');
   
   function tConvert (time:any) {
@@ -35,7 +45,7 @@ const EventPage: NextPage<EventPageProps> = ({event}) => {
     window.scrollTo({
       top: 0
     })
-    router.push("/event");
+    router.push("/events");
   }
 
   const ProjectLink = (ProjectLinkDisplay:string, ProjectLink:string, i?:number) => {
@@ -45,9 +55,20 @@ const EventPage: NextPage<EventPageProps> = ({event}) => {
       </Link>
     )
   }
+
+  useEffect(() => {
+    const AllContent = Array.from($(".content").children());
+    AllContent.forEach(content => {
+      if(content.innerText.startsWith("<span>")) content.outerHTML = `<span class="p2 img-caption mx-0 my-1">${content.innerText}</span>`
+      if(!content.classList.value.includes("img-caption") && content.children.item(0)?.tagName !== "IMG" && content.tagName !== "H6") content.classList.add("event-p");
+    });
+    RandomThreeProjects(event.attributes.projects.data.sort(() => 0.5 - Math.random()).slice(0, 3));
+  }, [])
   
   // Check event data
   console.log("Event:", eventData);
+  console.log("Random 3 events:", RequiredRandomThreeEvents);
+  
   return (
     <div className='vic-work__wrapper'>
       <Container className='vic-work__left-container'>
@@ -84,13 +105,22 @@ const EventPage: NextPage<EventPageProps> = ({event}) => {
             })
           }
           {
-            (eventData.EventPriceType !== "Free") &&
+            (eventData.EventPriceType !== "Free") 
+            ?
             <div className='textblock-with-divider'>
               <h6>Price</h6>
               <TextDivider prime={false}/>
               <ReactMarkdown className='details-content'>
                 {eventData.EventPrice}
               </ReactMarkdown>
+            </div>
+            :
+            <div className='textblock-with-divider'>
+              <h6>Price</h6>
+              <TextDivider prime={false}/>
+              <p className='details-content'>
+                {eventData.EventPriceType}
+              </p>
             </div>
           }
           {
@@ -118,7 +148,51 @@ const EventPage: NextPage<EventPageProps> = ({event}) => {
         </div>
       </Container>
       <Container className='vic-work__right-container'>
-        EventPage show
+        <div className="textblock-with-divider">
+          <h1 className='h2'>{eventData.EventName}</h1>
+          <TextDivider prime/>
+        </div>
+        <div className="project-wrapper mt-3">
+          <div className="project-info-container">
+            <div className='image-container'>
+              <Image
+                src={getStrapiMedia(eventData.EventImageThumbnail)}
+                layout="fill"
+                objectFit='cover'
+                priority={true}
+              />
+            </div>
+            <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
+            <ReactMarkdown 
+              className='content content__event-detail mt-4 mb-2'
+              transformImageUri={(uri) => 
+                  uri.startsWith("http")
+                ? uri
+                : ""
+              }
+            >
+              {eventData.EventRichDescription}
+            </ReactMarkdown>
+            {
+              (eventData.EventGallery) &&
+              <ProjectCarousel projectData={eventData.EventGallery}/>
+            }
+            {
+              (eventData.EventVideoLink) &&
+              <ProjectVideo
+                ProjectVideoLink={eventData.EventVideoLink}
+              />
+            }
+          </div>
+        </div>
+        <OtherProjects className='mt-4' heading='Related student work' projectData={ThreeProjects}/>
+        <div className='other-works-container mt-4'>
+          <div className="textblock-with-divider mb-0 mb-lg-3">
+            <h3>Other events</h3>
+            <TextDivider prime />
+          </div>
+          <AllEvents events={RequiredRandomThreeEvents}/>
+        </div>
       </Container>
     </div>
   )
@@ -145,19 +219,37 @@ export async function getStaticProps({params}:any) {
       "*",
       "SeoData.ShareImage",
       "EventImageThumbnail",
-      "EventPhotoGallery",
+      "EventGallery.ProjectImages",
       "event_category",
-      "event_type"
+      "event_type",
+      "projects.ProjectThumbnail",
+      "projects.student.award",
+      "projects.school",
+      "projects.major",
+      "projects.level",
+      "projects.award"
     ]
   };
 
-  const [eventRes] = await Promise.all([
-    fetchAPI("/events", eventQuery)
+  const randomThreeEventsQuery = {
+    populate: [
+      "*",
+      "EventImageThumbnail",
+      "EventPhotoGallery",
+      "event_category",
+      "event_type",
+    ]
+  }
+
+  const [eventRes, randomThreeEventsRes] = await Promise.all([
+    fetchAPI("/events", eventQuery),
+    fetchAPI("/events", randomThreeEventsQuery)
   ]);
 
   return {
     props: { 
       event: eventRes.data[0],
+      randomThreeEvents: randomThreeEventsRes.data.sort(() => 0.5 - Math.random()).slice(0, 3)
     },
     revalidate: 1,
   }

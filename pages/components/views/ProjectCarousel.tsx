@@ -57,7 +57,7 @@ export default function ProjectCarousel({projectData}:ProjectDataProps) {
               <div className="work-img-container">
                 <img alt={`${project.attributes.alternativeText} - image ${i}`} key={i} src={getSingleStrapiMedia(project)}></img>
               </div>
-              <ImgCaption className="mx-0 my-1" caption={project.attributes.caption}/>
+              <ImgCaption className="mx-0 my-2" caption={project.attributes.caption}/>
             </React.Fragment>
           )}
         )

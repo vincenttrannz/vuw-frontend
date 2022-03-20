@@ -75,7 +75,7 @@ export async function getStaticProps() {
         "EventImageThumbnail",
         "EventPhotoGallery",
         "event_category",
-        "event_type"
+        "event_type",
       ],
     };
     const eventCategoryQuery = {

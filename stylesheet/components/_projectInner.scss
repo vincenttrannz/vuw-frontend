@@ -6,9 +6,10 @@
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 1;
-  background: url("./loading-bg.gif");
+  background: url("./loader.gif");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   iframe {
     width: 100%;
     height: 100%;

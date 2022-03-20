@@ -175,12 +175,15 @@ export type Event = {
     };
     event_type: {
       data: EventType;
-    }
+    };
+    projects: {
+      data: Projects;
+    };
     EventStartDate: Date;
     EventFinishDate: Date;
     EventRichDescription: string;
     EventVideoLink: string;
-    EventPhotoGallery: ImagesDataType[];
+    EventGallery: SubProjectCarousel;
     EventStartTime: Date;
     EventEndTime: Date;
     createdAt: Date;

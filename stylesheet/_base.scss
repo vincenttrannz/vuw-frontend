@@ -134,6 +134,9 @@ a {
     width: auto;
     height: 100%;
   }
+  &:hover {
+    color: $vic-smoke;
+  }
 }
 
 .share-logo {
@@ -198,7 +201,24 @@ a {
 //  REACT MARKDOWN CUSTOM STYLING
 //  ============================= //
 .content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px 0;
+  img {
+    width: 100%;
+    object-fit: contain;
+    object-position: left;
+    aspect-ratio: 2 / 1;
+  }
+  &__event-detail {
+    .event-p {
+      width: 65%;
+    }
+  }
   &__school-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px 0;
     ul {
       padding: 0;
       list-style: none;
@@ -215,6 +235,19 @@ a {
       }
     }
   }
+}
+
+//  ============================= //
+//  IMAGE CONTAINER FOR NEXT/IMAGE
+//  ============================= //
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: url("./loader.gif");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 //  ====== //
@@ -365,5 +398,12 @@ a {
 @media (max-width: $small-tablet-screen-size) {
   .img-caption {
     margin: 15px 0;
+  }
+  .content {
+    &__event-detail {
+      .event-p {
+        width: 100%;
+      }
+    }
   }
 }

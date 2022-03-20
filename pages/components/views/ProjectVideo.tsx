@@ -12,7 +12,7 @@ export default function ProjectVideo({ ProjectVideoLink, ProjectVideoCaption }: 
     <div className="iframe-container">
       <iframe
         className="video-iframe"
-        src={ProjectVideoLink}
+        src={`https://player.vimeo.com/video/${ProjectVideoLink.substring(8).split("/")[1]}`}
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen

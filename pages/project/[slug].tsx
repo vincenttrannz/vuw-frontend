@@ -15,7 +15,7 @@ import ProjectCarousel from '../components/views/ProjectCarousel';
 import Project3D from '../components/views/Project3D';
 import ProjectCode from '../components/views/ProjectCode';
 import ProjectVideo from '../components/views/ProjectVideo';
-import OtherProjects from '../components/views/OtherPorjects';
+import OtherProjects from '../components/views/OtherProjects';
 import ShareContainer from '../components/views/ShareContainer';
 
 type ProjectProps = {
@@ -61,7 +61,8 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
 
   // Checking the data
   console.log(projectData);
-  
+  // console.log(randomThreeProjects);
+
   return (
     <>
       <HeadData
@@ -204,7 +205,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                    */
                   (projectData.SubProjectVideo !== null) &&
                   <ProjectVideo 
-                    ProjectVideoLink={`https://player.vimeo.com/video/${projectData.SubProjectVideo.ProjectVideoLink.substring(8).split("/")[1]}`}
+                    ProjectVideoLink={projectData.SubProjectVideo.ProjectVideoLink}
                     ProjectVideoCaption={projectData.SubProjectVideo.ProjectCaption}
                   />
                 }
@@ -307,9 +308,9 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
             </div>
             <ShareContainer className='d-none d-lg-flex'/>
           </div>
-         <OtherProjects className='desktop' projectData={randomThreeProjects}/>
+         <OtherProjects heading='Other Projects' className='desktop' projectData={randomThreeProjects}/>
         </Container>
-        <OtherProjects className='mobile container mt-3' projectData={randomThreeProjects}/>
+        <OtherProjects heading='Other Projects' className='mobile container mt-3' projectData={randomThreeProjects}/>
       </div>
     </>
   );
@@ -362,6 +363,7 @@ export async function getStaticProps({params}:any) {
       "award"
     ]
   }
+  
   const [projectsRes, randomThreeProjectsRes] = await Promise.all([
     fetchAPI("/projects", projectQuery),
     fetchAPI("/projects", randomThreeProjectsQuery)
