@@ -1,13 +1,12 @@
-import React, { useRef, forwardRef } from "react";
-import Link from 'next/link'
+import React from "react";
+import Link from 'next/link';
 import { Projects, Project } from "../../compilers/type";
-import TextDivider from './TextDivider';
-import AwardRibbon from '../../public/award-ribbon.svg'
+import TextDivider from './views/TextDivider';
+import AwardRibbon from '../../public/award-ribbon.svg';
 import { getStrapiMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
   projects: Projects;
-  project?: Project;
 };
 
 
@@ -38,7 +37,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectAward = project.attributes.award.data?.attributes?.AwardType;
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
-            <a className="projectContainer__portfolio shadow-sm" key={project.id}>
+            <a className="projectContainer__portfolio shadow-sm">
               <div className="image-container">
                 <img src={ProjectThumbnail} alt="project thumbanil"/>
                 <div className="img-overlay">
@@ -66,7 +65,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                     {ProjectLevel !== undefined  && CategorySplit(ProjectLevel)}
                     {ProjectYear !== undefined  && CategorySplit(ProjectYear)}
                   </div>
-                  <div className="filter-container d-none">
+                  {/* <div className="filter-container d-none">
                     <p data-find-school={ProjectSchool.replace(/ /g, "_")}>{ProjectSchool.replace(/ /g, "_")}</p>
                     <p data-find-major={ProjectMajor.replace(/ /g, "_")}>{ProjectMajor.replace(/ /g, "_")}</p>
                     <p data-find-year={ProjectYear}>{ProjectYear}</p>
@@ -84,7 +83,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                         ProjectStudentAward : ""
                       }
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </a>

@@ -19,7 +19,7 @@ const NavBar: React.FC = () => {
         <Link href="/about">
           <a onClick={clickHrefLink} className="p2">About</a>
         </Link>
-        <Link href="/">
+        <Link href="/events">
           <a onClick={clickHrefLink} className="p2">Events</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">

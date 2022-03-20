@@ -1,0 +1,157 @@
+/*===================================
+=        PROJECT WRAPPER STYLE      =
+=====================================*/
+
+.project-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  .project-info-container {
+    width: 90%;
+    &__details {
+      margin: 3rem 0;
+      display: grid;
+      grid-template-columns: 70% 30%;
+      &__left {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding-right: clamp(30px, 4vw, 60px);
+      }
+      &__right {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        align-content: flex-start;
+        border-left: 1px solid $vic-gray;
+        padding-left: clamp(30px, 4vw, 60px);
+      }
+      &__text-wrapper {
+        &-row {
+          display: grid;
+          grid-template-columns: 100px auto;
+          gap: 15px;
+          justify-content: flex-start;
+        }
+        &-column {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        &-award-content {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 15px;
+          &__text-wrap {
+            display: flex;
+            // grid-template-columns: auto auto;
+            gap: 15px;
+            align-items: center;
+            .company-logo {
+              width: 28px;
+            }
+          }
+        }
+      }
+    }
+    .sub-project-container {
+      display: grid;
+      grid-template-columns: 100%;
+      gap: 45px;
+    }
+  }
+}
+
+// 1. PROJECT SLICK SLIDER
+@mixin SlickChevron($prev: true) {
+  @if($prev){
+    left: 0;
+  } @else {
+    right: 0
+  }
+  bottom: 4rem;
+  top: auto;
+  width: 50%;
+  height: clamp(40px, 13vw, 80px);
+  background: #33333335;
+  z-index: 2;
+  transform: none;
+  .chevron-prev, .chevron-next {
+    transition: transform ease 0.1s;
+    display: block;
+    padding: 15px 0;
+    height: 100%;
+    margin: 0 auto;
+  }
+  &:before {
+    display: none;
+  }
+  &:hover {
+    .chevron-prev, .chevron-next {
+      @if($prev){
+        transform: translateX(-10px);
+      } @else {
+        transform: translateX(10px);
+      }
+    }
+  }
+}
+
+.slick-slider {
+  position: relative;
+  .slick-slide {
+    div {
+      aspect-ratio: 2 / 1;
+      height: 100%;
+      .work-img-container {
+        position: relative;
+        background-color: #000;
+        img {
+          margin: 0 auto;
+          height: 100%;
+          // aspect-ratio: 2 / 1;
+          // object-fit: contain;
+          // width: 100%;
+        }
+      }
+    }
+  }
+  .slick-arrow {
+    &.slick-prev {
+      @include SlickChevron($prev: true);
+    }
+    &.slick-next {
+      @include SlickChevron($prev: false);
+    }
+  }
+}
+
+@media (max-width: $small-tablet-screen-size) {
+  .project-wrapper {
+    .project-info-container {
+      width: 100%;
+      &__details {
+        margin: 0;
+        grid-template-columns: 1fr;
+        &__left {
+          padding-right: 0;
+          padding-bottom: 25px;
+          border-bottom: 1px solid $vic-gray;
+        }
+        &__right {
+          padding-top: 25px;
+          padding-left: 0;
+          border-left: none;
+        }
+        &__text-wrapper{
+          &-row {
+            grid-template-columns: 1fr;
+            &.student {
+              grid-row-start: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

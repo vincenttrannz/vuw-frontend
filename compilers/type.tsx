@@ -8,8 +8,6 @@ export type Project = {
     LecturerName: string;
     CourseName: string;
     ProjectDate: string;
-    ProjectExternalLink: string;
-    ProjectLinkDisplay: string;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;
@@ -23,7 +21,24 @@ export type Project = {
     ProjectPDFLink: string;
     ProjectCode: boolean;
     ProjectCodeLink: string;
+    ProjectVideo: string;
+    ProjectVideoLink: string;
+    ProjectCaption: string;
+    ProjectTags: string;
     ProjectThumbnail: ImagesDataType;
+    ProjectExternalLink: string;
+    ProjectLinkDisplay: string;
+    SubProject3D: SubProject3D;
+    SubProjectCarousel: SubProjectCarousel;
+    SubProjectCode: SubProjectCode;
+    SubProjectPDF: SubProjectPDF;
+    SubProjectVideo: SubProjectVideo;
+    DownloadLinkOne: string;
+    DownloadLinkOneNameDisplay: string;
+    DownloadLinkTwo: string;
+    DownloadLinkTwoNameDisplay: string;
+    LicensingLink: string;
+    LicensingNameDisplay: string;
     SeoData: SeoDataType;
     level: {
       data: Level;
@@ -39,7 +54,7 @@ export type Project = {
     };
     award: {
       data: Award;
-    }
+    };
   };
 };
 
@@ -98,14 +113,14 @@ export type Award = {
     CompanyLink: string;
     CompanyLogo: {
       data: ImagesDataType;
-    }
+    };
     CompanyName: string;
     projects: {
       data: Projects;
-    }
+    };
     students: {
       data: Students;
-    }
+    };
     createdAt: Date;
     publishedAt: Date;
     updatedAt: Date;
@@ -119,10 +134,18 @@ export type Student = {
   id: number;
   attributes: null | {
     StudentName: string;
+    StudentEmail: string;
+    StudentMinor: string;
     StudentShortDetail: string;
-    StudentRichDetail: string;
+    FirstStudentLink: string;
+    SecondStudentLink: string;
+    ThirdStudentLink: string;
+    FourthStudentLink: string;
     award: {
-      data: Award
+      data: Award;
+    };
+    major: {
+      data: Major;
     };
     createdAt: Date;
     updatedAt: Date;
@@ -131,6 +154,72 @@ export type Student = {
 };
 
 export type Students = Student[];
+
+// Event type
+export type Event = {
+  id: number;
+  attributes: {
+    EventName: string;
+    Slug: string;
+    EventShortDescription: string;
+    EventLocation: string;
+    EventPrice: string;
+    EventPriceType: string;
+    EventType: string;
+    EventFirstLink: string;
+    EventSecondLink: string;
+    EventThirdLink: string;
+    EventImageThumbnail: ImagesDataType;
+    event_category: {
+      data: EventCategory;
+    };
+    event_type: {
+      data: EventType;
+    };
+    projects: {
+      data: Projects;
+    };
+    EventStartDate: Date;
+    EventFinishDate: Date;
+    EventRichDescription: string;
+    EventVideoLink: string;
+    EventGallery: SubProjectCarousel;
+    EventStartTime: Date;
+    EventEndTime: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type Events = Event[];
+
+export type EventCategory = {
+  id: number;
+  attributes: {
+    EventCategoryName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type EventCategories = EventCategory[];
+
+export type EventType = {
+  id: number;
+  attributes: {
+    EventTypeName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    events: {
+      data: Events;
+    };
+  }
+};
+
+export type EventTypes = EventType[];
 
 // Homepage type
 export type Homepage = {
@@ -168,29 +257,77 @@ export type About = {
   };
 };
 
+// Event page type
+export type EventPage = {
+  id: number;
+  attributes: {
+    QuickIntroTitle: string;
+    QuickIntroColumnOne: string;
+    QuickIntroColumnTwo: string;
+    SeoData: SeoDataType;
+    EventPageHeroBanner: ImagesDataType;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
 // Other component type
-type SeoDataType = {
+export type SeoDataType = {
   id: number;
   MetaTitle: string;
   MetaDescription: string;
   ShareImage: ImagesDataType;
 };
 
-type TwoColumnsBlock = {
+export type TwoColumnsBlock = {
   id: number;
   BlockImage: ImagesDataType;
   BlockParagraph: string;
   BlockTitle: string;
-}
+};
 
-type GreyContentBlock = {
+export type GreyContentBlock = {
   id: number;
   BlockTitle: string;
   BlockRichText: string;
   BlockButtonLink: string;
-}
+};
 
-type ImagesDataType = {
+export type SubProject3D = {
+  id: number;
+  Project3DLink: string;
+  ProjectCaption: string;
+};
+
+export type SubProjectCarousel = {
+  id: number;
+  ProjectImages: {
+    data: ImagesDataType["data"][] | ImagesDataType["data"];
+  };
+};
+
+export type SubProjectCode = {
+  id: number;
+  ProjectCodeLink: string;
+  ProjectCaption: string;
+};
+
+export type SubProjectPDF = {
+  id: number;
+  ProjectCaption: string;
+  ProjectPDFLink: {
+    data: ImagesDataType["data"];
+  };
+};
+
+export type SubProjectVideo = {
+  id: number;
+  ProjectVideoLink: string;
+  ProjectCaption: string;
+};
+
+export type ImagesDataType = {
   data: {
     id: number;
     attributes: {

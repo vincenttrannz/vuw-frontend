@@ -1,14 +1,12 @@
-import type { NextPage, GetStaticProps } from 'next'
+import type { NextPage } from 'next'
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
-import { Container } from "react-bootstrap";
-import { FacebookShareButton } from "react-share";
-import InstaIcon from '../public/insta-logo.svg'
-import FacebookIcon from '../public/fb-logo.svg'
-import TextDivider from './components/TextDivider';
-import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
+import PageHeroBanner from './components/views/PageHeroBanner'
+import TextDivider from './components/views/TextDivider';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
+import StickyShare from './components/views/StickySocial';
+import ThreeColumnsBlock from './layout/ThreeColumnsBlock';
 import {Projects, Homepage, Schools, Levels, Awards} from '../compilers/type'
 
 type HomepageProps = {
@@ -24,7 +22,6 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
-  const heroTitle = getStrapiData(homepage).Hero_title;
   const quickIntroTitle = getStrapiData(homepage).quick_intro_title;
   const quickIntroTeReo = getStrapiData(homepage).Quick_intro_te_reo;
   const quickIntroTextColOne = getStrapiData(homepage).Quick_intro_text_column_one;
@@ -36,31 +33,14 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
         description={HomepageSeoData.MetaDescription}
         image={getStrapiMedia(HomepageShareImageSeo)}
       />
-      <div className='side-share-container shadow-sm'>
-        <FacebookShareButton
-          url="https://vuw-frontend.vercel.app/"
-          quote="Homepage of VUW Project"
-          hashtag="#helloVUW"
-        >
-          <FacebookIcon/>
-        </FacebookShareButton>
-        <InstaIcon/>
-      </div>
-      <div className='hero-section py-5'
-        style={{
-          backgroundImage: `url(${getStrapiMedia(heroBanner)})`
-        }}
-      >
-        <div className="hero-section__overlay"></div>
-        <Container className='hero-section__title-box-container'>
-          <div className='hero-section__title-box'>
-            <span className="subtitle">Wellington Faculty of</span>
-            <h1>Architecture and Design Innovation</h1>
-            <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>
-          </div>
-        </Container>
-      </div>
-      <ThreeColumnsBlock className="px-sm-3 px-xl-7">
+      <StickyShare/>
+      <PageHeroBanner
+        OtherSide={false}
+        HomepageSubtitle={true}
+        HeroBanner={getStrapiMedia(heroBanner)}
+        HeroTitle="Architecture and Design Innovation"
+      />
+      <ThreeColumnsBlock className="px-sm-3 px-xl-7 mt-3 mt-md-0">
         <div className="textblock-with-divider">
           <h3>{quickIntroTitle}</h3>
           <TextDivider prime/>

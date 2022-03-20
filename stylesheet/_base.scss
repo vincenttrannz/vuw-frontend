@@ -27,11 +27,13 @@ p, address {
 h1, .h1 {
   font-size: clamp(32px, 6vw, 64px);
   font-weight: bold;
+  margin: 0;
 }
 
 h2, .h2 {
   font-size: clamp(28px, 5vw, 52px);
   font-weight: 900;
+  margin: 0;
 }
 
 h3, .h3 {
@@ -39,11 +41,13 @@ h3, .h3 {
   letter-spacing: 1.2;
   text-transform: uppercase;
   font-weight: bold;
+  margin: 0;
 }
 
 h4, .h4 {
   font-size: clamp(18px, 3vw, 24px);
   font-weight: bold;
+  margin: 0;
 }
 
 h5, .h5 {
@@ -51,11 +55,13 @@ h5, .h5 {
   letter-spacing: 1.5;
   text-transform: uppercase;
   font-weight: 500;
+  margin: 0;
 }
 
 h6, .h6 {
   font-size: clamp(16px, 1.5vw, 18px);
   font-weight: bold;
+  margin: 0;
 }
 
 .subtitle {
@@ -66,11 +72,17 @@ h6, .h6 {
 p {
   font-size: 16px;
   font-weight: normal;
+  &.bold {
+    font-weight: 600 !important;
+  }
 }
 
 a {
   color: $vic-smoke;
   text-decoration: none;
+  &:hover {
+    color: $vic-teal;
+  }
 }
 
 .p2 {
@@ -122,6 +134,14 @@ a {
     width: auto;
     height: 100%;
   }
+  &:hover {
+    color: $vic-smoke;
+  }
+}
+
+.share-logo {
+  width: 42px;
+  height: 42px;
 }
 
 .main {
@@ -181,7 +201,24 @@ a {
 //  REACT MARKDOWN CUSTOM STYLING
 //  ============================= //
 .content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px 0;
+  img {
+    width: 100%;
+    object-fit: contain;
+    object-position: left;
+    aspect-ratio: 2 / 1;
+  }
+  &__event-detail {
+    .event-p {
+      width: 65%;
+    }
+  }
   &__school-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px 0;
     ul {
       padding: 0;
       list-style: none;
@@ -200,6 +237,19 @@ a {
   }
 }
 
+//  ============================= //
+//  IMAGE CONTAINER FOR NEXT/IMAGE
+//  ============================= //
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: url("./loader.gif");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 //  ====== //
 //  BUTTON
 //  ====== //
@@ -213,6 +263,9 @@ a {
     gap: 25px;
     height: fit-content;
     align-items: center;
+    &:hover {
+      border-color: $vic-teal;
+    }
     // FOR PREV BUTTON
     &.prev-btn {
       .btn-text {
@@ -345,5 +398,12 @@ a {
 @media (max-width: $small-tablet-screen-size) {
   .img-caption {
     margin: 15px 0;
+  }
+  .content {
+    &__event-detail {
+      .event-p {
+        width: 100%;
+      }
+    }
   }
 }
