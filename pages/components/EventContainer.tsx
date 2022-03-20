@@ -4,7 +4,7 @@ import TextDivider from "./views/TextDivider";
 import AllEvents from './AllEvents'
 import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
-import { getFilterList } from '../functions/getFilterList';
+import getFilterList from '../functions/getFilterList';
 
 type EventsProps = {
   events: Events;

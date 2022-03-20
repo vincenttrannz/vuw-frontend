@@ -1,4 +1,4 @@
-export const getFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string, handleClick: (event:any) => void) => {
+const getFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string, handleClick: (event:any) => void) => {
   return (
     <div id={filterName} className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
       {dataFilter.map((filter: string, i: number) => {
@@ -17,3 +17,5 @@ export const getFilterList = (isDesktop: boolean, dataFilter: string[], filterNa
     </div>
   )
 }
+
+export default getFilterList;
