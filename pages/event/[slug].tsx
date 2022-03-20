@@ -163,14 +163,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
               />
             </div>
             <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
-            <ReactMarkdown 
-              className='content content__event-detail mt-4 mb-2'
-              transformImageUri={(uri) => 
-                  uri.startsWith("http")
-                ? uri
-                : ""
-              }
-            >
+            <ReactMarkdown className='content content__event-detail mt-4 mb-2'>
               {eventData.EventRichDescription}
             </ReactMarkdown>
             {
