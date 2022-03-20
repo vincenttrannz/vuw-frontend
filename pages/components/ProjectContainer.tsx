@@ -5,7 +5,7 @@ import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./views/TextDivider";
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Project, Schools, Levels, Awards } from "../../compilers/type";
-import { getFilterList } from '../functions/getFilterList';
+import getFilterList from '../functions/getFilterList';
 
 type ProjectsProps = {
   projects: Projects;
