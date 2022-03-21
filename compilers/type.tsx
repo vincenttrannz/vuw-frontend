@@ -166,6 +166,7 @@ export type Event = {
     EventPrice: string;
     EventPriceType: string;
     EventType: string;
+    EventCalendarDescription: string;
     EventFirstLink: string;
     EventSecondLink: string;
     EventThirdLink: string;

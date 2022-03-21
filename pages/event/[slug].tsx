@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import ICalendarLink from "react-icalendar-link";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia } from "../../lib/fetchData";
 import { Container, Button } from "react-bootstrap";
 import ReactMarkdown from 'react-markdown';
+import Calendar from '/public/calendar.svg';
 import AllEvents from '../components/AllEvents';
 import TextDivider from '../components/views/TextDivider';
 import ImgCaption from '../components/views/ImgCaption';
@@ -26,6 +28,8 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   const router = useRouter();
   const [ThreeProjects, RandomThreeProjects] = useState(event.attributes.projects.data);
   const RequiredRandomThreeEvents = randomThreeEvents.filter(randomEvent => randomEvent.attributes.Slug !== eventData.Slug);
+  const StartTimeCalendar = new Date(String(`${eventData.EventStartDate} ${eventData.EventStartTime}`)).toISOString();
+  const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) && new Date(String(`${eventData.EventFinishDate} ${eventData.EventEndTime}`)).toISOString()
   
   const DateFormat = (date:string) => new Date(Date.parse(String(date))).toUTCString().split(' ').slice(0, 4).join(' ');
   
@@ -48,6 +52,18 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     router.push("/events");
   }
 
+  // console.log("Start time:", StartTimeCalendar);
+  // console.log("End time:", EndTimeCalendar);
+  // console.log("Event location:", eventData.EventLocation);
+  
+  const eventICS = {
+    title: `${eventData.EventName}`,
+    description: `${eventData.EventCalendarDescription}`,
+    startTime: `${StartTimeCalendar}`,
+    endTime: `${EndTimeCalendar ? EndTimeCalendar : ""}`,
+    location: `${eventData.EventLocation}`
+  }
+
   const ProjectLink = (ProjectLinkDisplay:string, ProjectLink:string, i?:number) => {
     return (
       <Link key={i} href={ProjectLink}>
@@ -67,7 +83,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   
   // Check event data
   console.log("Event:", eventData);
-  console.log("Random 3 events:", RequiredRandomThreeEvents);
+  // console.log("Random 3 events:", RequiredRandomThreeEvents);
   
   return (
     <div className='vic-work__wrapper'>
@@ -88,6 +104,9 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
               {DateFormat(eventData.EventStartDate.toString())} {((eventData.EventFinishDate) ? ` - ${DateFormat(eventData.EventFinishDate.toString())}` : "")}<br/>
               {tConvert(String(eventData.EventStartTime).split(":").slice(0, 2).join(':'))} {(eventData.EventFinishDate) ? ` - ${tConvert(String(eventData.EventEndTime).split(":").slice(0, 2).join(':'))}` : ""}
             </p>
+            <ICalendarLink filename='vuw-event.ics' className='event-calendar' event={eventICS}>
+              <Calendar className="icon"/> Add to Calendar
+            </ICalendarLink>
           </div>
           {
             [eventData.EventLocation, eventData.event_type.data.attributes.EventTypeName].map((eventContent:string, i:number) => {

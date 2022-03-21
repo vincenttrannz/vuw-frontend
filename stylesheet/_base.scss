@@ -313,6 +313,23 @@ a {
   }
 }
 
+//  ==== //
+//  ICON
+//  ==== //
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+//  ============== //
+//  EVENT CALENDAR
+//  ============== //
+.event-calendar {
+  width: fit-content;
+  display: flex;
+  align-items: baseline;
+  gap: 0 5px;
+}
 
 //  ====== //
 //  ARROW
