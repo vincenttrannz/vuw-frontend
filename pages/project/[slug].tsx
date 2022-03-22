@@ -72,15 +72,15 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
+          <Button
+            onClick={GoBack}
+            className="prev-btn mb-3"
+            variant="vic"
+          >
+            <span className="the-arrow rotate"></span>{" "}
+            <span className="btn-text">Back</span>
+          </Button>
           <div className='work-details-container'>
-            <Button
-              onClick={GoBack}
-              className="prev-btn mb-2"
-              variant="vic"
-            >
-              <span className="the-arrow rotate"></span>{" "}
-              <span className="btn-text">Back</span>
-            </Button>
             {
               [projectData.student.data.attributes?.StudentShortDetail, projectData.student.data.attributes?.major.data.attributes.MajorName, projectData.student.data.attributes?.StudentMinor, projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
                 return (
@@ -104,18 +104,20 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
               <div className='textblock-with-divider'>
                 <h6>Links</h6>
                 <TextDivider prime={false}/>
-                {
-                  [
-                    projectData.student.data.attributes?.FirstStudentLink,
-                    projectData.student.data.attributes?.SecondStudentLink,
-                    projectData.student.data.attributes?.ThirdStudentLink,
-                    projectData.student.data.attributes?.FourthStudentLink
-                  ].map((el, i:number) => {
-                    return (
-                      (el !== null) ? ProjectLink(el, el, i) : ""
-                    )
-                  })
-                }
+                <div className='details-content'>
+                  {
+                    [
+                      projectData.student.data.attributes?.FirstStudentLink,
+                      projectData.student.data.attributes?.SecondStudentLink,
+                      projectData.student.data.attributes?.ThirdStudentLink,
+                      projectData.student.data.attributes?.FourthStudentLink
+                    ].map((el, i:number) => {
+                      return (
+                        (el !== null) ? ProjectLink(el, el, i) : ""
+                      )
+                    })
+                  }
+                </div>
               </div>
             }
           </div>

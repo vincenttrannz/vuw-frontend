@@ -88,15 +88,15 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   return (
     <div className='vic-work__wrapper'>
       <Container className='vic-work__left-container'>
+        <Button
+          onClick={GoBack}
+          className="prev-btn mb-3"
+          variant="vic"
+        >
+          <span className="the-arrow rotate"></span>{" "}
+          <span className="btn-text">Back</span>
+        </Button>
         <div className='work-details-container'>
-          <Button
-            onClick={GoBack}
-            className="prev-btn mb-2"
-            variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Back</span>
-          </Button>
           <div className='textblock-with-divider'>
             <h6>Date</h6>
             <TextDivider prime={false}/>
@@ -199,7 +199,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
         </div>
         <OtherProjects className='mt-4' heading='Related student work' projectData={ThreeProjects}/>
         <div className='other-works-container mt-4'>
-          <div className="textblock-with-divider mb-0 mb-lg-3">
+          <div className="textblock-with-divider mb-0 mb-md-3">
             <h3>Other events</h3>
             <TextDivider prime />
           </div>

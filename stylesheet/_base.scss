@@ -86,7 +86,7 @@ a {
 }
 
 .p2 {
-  font-size: clamp(12px, 1vw, 14px);
+  font-size: clamp(12px, 1.5vw, 14px);
   font-weight: 400;
   &.bold {
     font-weight: 600 !important;
@@ -195,6 +195,21 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   gap: 15px;
+  .details-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    a {width: fit-content;}
+  }
+  @media (max-height: 768px) {
+    gap: 10px;
+    .details-content {
+      gap: 10px;
+      p, a {
+        font-size: 14px;
+      }
+    }
+  }
 }
 
 //  ============================= //

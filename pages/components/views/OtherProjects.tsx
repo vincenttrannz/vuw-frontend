@@ -12,7 +12,7 @@ type OtherProjectProps = {
 export default function OtherPorjects({projectData, className, heading}: OtherProjectProps) {
   return (
     <div className={`other-works-container ${className ? className : ""}`}>
-      <div className="textblock-with-divider mb-0 mb-lg-3">
+      <div className="textblock-with-divider mb-0 mb-md-3">
         <h3>{heading}</h3>
         <TextDivider prime />
       </div>

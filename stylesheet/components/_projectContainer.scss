@@ -30,7 +30,8 @@
   // Project portfolios wrapper
   &__portfolios-wrapper {
     display: grid;
-    grid-template-rows: 1fr 1fr auto;
+    // grid-template-rows: 1fr 1fr auto;
+    grid-template-rows: auto auto auto;
     grid-template-columns: calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem) calc((100% / 3) - 1.5rem);
     gap: 2rem;
   }
@@ -232,8 +233,43 @@
   }
 }
 
+@media (max-width: 1366px) {
+  .projectContainer {
+    // Event card
+    &__event {
+      grid-template-columns: 50% 50%;
+      &__info-container {
+        grid-template-columns: auto;
+        &-event-title {
+          grid-column: span 1;
+        }
+        &-description {
+          grid-template-columns: 1fr;
+          &__intro {
+            .btn {
+              display: none;
+            }
+          }
+          &__details {
+            border-top: 1px solid $vic-soft-grey;
+            border-left: none;
+            padding-top: 20px;
+            padding-left: 0;
+            .detail-container {
+              p:nth-child(1) {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: $tablet-screen-size) {
   .projectContainer {
+    // Projects portfolio wrapper
     &__portfolios-wrapper {
       grid-template-columns: calc((100% / 2) - 1rem) calc((100% / 2) - 1rem);
       gap: 2rem;
@@ -241,27 +277,23 @@
     &__next-prev-container {
       grid-column: span 2;
     }
-  }
-}
-
-@media (max-width: $small-tablet-screen-size) {
-  .projectContainer {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-
-@media (max-width: $mobile-screen-size) {
-  .projectContainer {
     // Event card style
+    &__events-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
     &__event {
       grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
       &__event-link {
         display: block;
       }
       &__info-container {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
         gap: 15px 0;
+        align-content: flex-start;
         &-event-title {
           grid-column: span 1;
         }
@@ -286,12 +318,29 @@
         }
       }
     }
+  }
+}
 
+@media (max-width: $small-tablet-screen-size) {
+  .projectContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: $mobile-screen-size) {
+  .projectContainer {
     &__portfolios-wrapper {
       grid-template-columns: 1fr;
     }
     &__next-prev-container {
       grid-column: span 1;
+    }
+    // Events card
+    &__events-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
     &__categories {
       &-desktop {
