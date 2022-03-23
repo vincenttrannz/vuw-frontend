@@ -180,6 +180,7 @@ export type Event = {
     projects: {
       data: Projects;
     };
+    SeoData: SeoDataType;
     EventStartDate: Date;
     EventFinishDate: Date;
     EventRichDescription: string;

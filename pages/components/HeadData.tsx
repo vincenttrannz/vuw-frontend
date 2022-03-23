@@ -22,9 +22,9 @@ const HeadData: React.FC<Props> = ({
   hashtag,
 }) => {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-  const hostname = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : '';
   const location = useRouter();
-  const currentUrl = origin + location.pathname;
+  const currentUrl = origin + location.asPath;
+  
   return (
     <Head>
       <title>{title}</title>

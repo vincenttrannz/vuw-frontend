@@ -68,7 +68,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
       <HeadData
         title={projectData.ProjectTitle}
         description={projectData.SeoData.MetaDescription}
-        image={getStrapiMedia(projectData.SeoData.ShareImage)}
+        image={(projectData.SeoData.ShareImage) ? getStrapiMedia(projectData.SeoData.ShareImage) : ""}
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
@@ -83,15 +83,17 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
           <div className='work-details-container'>
             {
               [projectData.student.data.attributes?.StudentShortDetail, projectData.student.data.attributes?.major.data.attributes.MajorName, projectData.student.data.attributes?.StudentMinor, projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
-                return (
-                  <div key={i} className='textblock-with-divider'>
-                    {
-                      (i == 0) ? <h4>{projectData.student.data.attributes?.StudentName}</h4> : (i == 1) ? <h6>Major</h6> : (i == 2) ? <h6>Minor</h6> : (i == 3) ? <h6>Email</h6> : (i == 4) ? <h6>Links</h6> : ""
-                    }
-                    <TextDivider prime={false}/>
-                    <ReactMarkdown className='details-content'>{StudentDetail}</ReactMarkdown>
-                  </div>
-                )
+                if(StudentDetail !== null && StudentDetail !== "") {
+                  return (
+                    <div key={i} className='textblock-with-divider'>
+                      {
+                        (i == 0) ? <h4>{projectData.student.data.attributes?.StudentName}</h4> : (i == 1) ? <h6>Major</h6> : (i == 2) ? <h6>Minor</h6> : (i == 3) ? <h6>Email</h6> : (i == 4) ? <h6>Links</h6> : ""
+                      }
+                      <TextDivider prime={false}/>
+                      <ReactMarkdown className='details-content'>{StudentDetail}</ReactMarkdown>
+                    </div>
+                  )
+                }
               })
             }
             {
