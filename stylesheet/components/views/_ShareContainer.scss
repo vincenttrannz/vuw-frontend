@@ -7,8 +7,8 @@
     position: sticky;
     top: 110px;
     height: max-content;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 30px;
     .copied-text {
       color: $vic-smoke;
@@ -68,7 +68,7 @@
 @media (max-width: $small-tablet-screen-size) {
   .project-share-wrapper {
     .project-share-container {
-      flex-direction: row;
+      grid-template-columns: repeat(4, auto);
       gap: 0 15px;
       .copied-text {
         margin-left: 0;

@@ -35,12 +35,6 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectMajorTeReo = project.attributes.major.data?.attributes?.MajorTeReo;
         const ProjectStudentAward = project.attributes.student.data.attributes?.award.data?.attributes.AwardType;
         const ProjectAward = project.attributes.award.data?.attributes?.AwardType;
-
-        if(ProjectStudent && ProjectStudent.split(" ").length > 2) {
-          ProjectStudent.split(" ").filter((el, i) => {
-            (i % 2 !== 0) && console.log(el)
-          })        
-        }
         
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>

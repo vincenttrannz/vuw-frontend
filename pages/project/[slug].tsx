@@ -238,12 +238,19 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     /**
                      * AWARD CONTENT FOR PROJECT
                      */
-                    (projectData.award.data !== null) &&
+                    (projectData.award.data !== null) 
+                    ?
                     <div className='project-info-container__details__text-wrapper-row'>
                       <h6>Award:</h6>
                       {
-                        (projectData.award.data?.attributes.AwardType == "Industry_Award") &&
                         <div className='project-info-container__details__text-wrapper-award-content'>
+                          {
+                            (projectData.student.data.attributes?.award.data !== null) &&
+                            <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                              <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                              <span>{projectData.student.data.attributes?.award.data.attributes.AwardName}</span>
+                            </div>
+                          }
                           <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
                             <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
                             <span>{projectData.award.data.attributes.AwardName}</span>
@@ -256,16 +263,19 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                           </div>
                         </div>
                       }
-                      {
-                        (projectData.award.data?.attributes.AwardType == "Excellence_Award") &&
-                        <div className='project-info-container__details__text-wrapper-award-content'>
-                          <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
-                            <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
-                            <span>{projectData.award.data.attributes.AwardName}</span>
-                          </div>
-                        </div>
-                      }
                     </div>
+                    :
+                    (projectData.student.data.attributes?.award.data !== null)
+                    ?
+                    <div className='project-info-container__details__text-wrapper-row'>
+                      <h6>Award:</h6>
+                      <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                        <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                        <span>{projectData.student.data.attributes?.award.data.attributes.AwardName}</span>
+                      </div>
+                    </div>
+                    :
+                    ""
                   }
                 </div>
                 <div className='project-info-container__details__right'>
@@ -347,7 +357,8 @@ export async function getStaticProps({params}:any) {
       "SubProjectPDF.ProjectPDFLink", 
       "SubProjectVideo", 
       "SubProjectCode", 
-      "student.major", 
+      "student.major",
+      "student.award",
       "level", 
       "major", 
       "school", 

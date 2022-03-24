@@ -8,3 +8,11 @@
     height: 45vw;
   }
 }
+
+@media (max-width: $mobile-screen-size) {
+  .school-video-container {
+    iframe {
+      height: 52vw;
+    }
+  }
+}

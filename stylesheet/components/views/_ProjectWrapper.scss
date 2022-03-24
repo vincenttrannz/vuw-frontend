@@ -43,8 +43,8 @@
           grid-template-columns: 1fr;
           gap: 15px;
           &__text-wrap {
-            display: flex;
-            // grid-template-columns: auto auto;
+            display: grid;
+            grid-template-columns: auto 1fr;
             gap: 15px;
             align-items: center;
             .company-logo {
@@ -69,13 +69,14 @@
   } @else {
     right: 0
   }
-  bottom: 4rem;
+  bottom: 60px;
   top: auto;
   width: 50%;
   height: clamp(40px, 13vw, 80px);
   background: #33333335;
   z-index: 2;
   transform: none;
+  // transform: translate(0, -100%);
   .chevron-prev, .chevron-next {
     transition: transform ease 0.1s;
     display: block;
@@ -94,6 +95,9 @@
         transform: translateX(10px);
       }
     }
+  }
+  @media (max-width: 1220px) and (min-width: 992px) {
+    bottom: 80px;
   }
 }
 
