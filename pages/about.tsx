@@ -120,7 +120,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         <div>
           <ReactMarkdown>{FirstContentGreyBlockParagraph}</ReactMarkdown>
           <Link href={FirstContentGreyBlockBtnLink}>
-            <a target="_blank" type="button" className="btn btn-vic mt-4">
+            <a target="_blank" className="btn btn-vic mt-3 mt-md-4">
               See this year’s projects
             </a>
           </Link>
@@ -161,7 +161,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             {SecondContentGreyBlockParagraph}
           </ReactMarkdown>
           <Link href={SecondContentGreyBlockBtnLink}>
-            <a target="_blank" type="button" className="btn btn-vic mt-4">
+            <a target="_blank" className="btn btn-vic mt-2 mt-md-3">
               Learn more
             </a>
           </Link>
@@ -198,7 +198,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             {ThirdContentGreyBlockParagraph}
           </ReactMarkdown>
           <Link href={ThirdContentGreyBlockBtnLink}>
-            <a target="_blank" type="button" className="btn btn-vic mt-4">
+            <a target="_blank" className="btn btn-vic mt-2 mt-md-3">
               Learn more
             </a>
           </Link>
@@ -206,7 +206,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       </TwoColumnsBlock>
       {/* School video */}
       <div className="container school-video-container">
-        <iframe src={SchoolVideoLink} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <iframe src={`https://player.vimeo.com/video/${SchoolVideoLink.substring(8).split("/")[1]}`} title="VUW Video" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
       </div>
     </>
   );

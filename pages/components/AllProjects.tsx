@@ -35,6 +35,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
         const ProjectMajorTeReo = project.attributes.major.data?.attributes?.MajorTeReo;
         const ProjectStudentAward = project.attributes.student.data.attributes?.award.data?.attributes.AwardType;
         const ProjectAward = project.attributes.award.data?.attributes?.AwardType;
+        
         return (
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm">
@@ -56,7 +57,20 @@ export default function AllProjects({ projects }: ProjectsProps) {
                 <div className="details-container__title-name">
                   <h6>{ProjectTitle}</h6>
                   <TextDivider prime={false}/>
-                  <p>By {ProjectStudent}</p>
+                    {
+                      (ProjectStudent && ProjectStudent.split(" ").length > 2) 
+                      ?
+                      <p>
+                        By&nbsp;
+                        {
+                          ProjectStudent.split(" ").filter((el, i) => {
+                            if((i % 2 !== 0)) return el
+                          }).join(" ").toString()
+                        }
+                      </p>
+                      :
+                      <p>By {ProjectStudent}</p>
+                    }
                   <p className="p2">{ProjectMajor} - {ProjectMajorTeReo}</p>
                 </div>
                 <div className="details-container__categories">

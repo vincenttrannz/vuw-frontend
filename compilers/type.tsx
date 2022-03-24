@@ -166,6 +166,7 @@ export type Event = {
     EventPrice: string;
     EventPriceType: string;
     EventType: string;
+    EventCalendarDescription: string;
     EventFirstLink: string;
     EventSecondLink: string;
     EventThirdLink: string;
@@ -179,6 +180,7 @@ export type Event = {
     projects: {
       data: Projects;
     };
+    SeoData: SeoDataType;
     EventStartDate: Date;
     EventFinishDate: Date;
     EventRichDescription: string;

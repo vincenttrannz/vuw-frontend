@@ -90,6 +90,44 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
         <div className="projectContainer__categories-mobile">
+          <Accordion className="categories-wrapper" defaultActiveKey={['0']} alwaysOpen>
+            {/* EVENT CATEGORIES */}
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <h6 className="m-0">Event</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getFilterList(false, EventCategories, "categories-filter", () => {})}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* EVENT TYPE */}
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>
+                <h6 className="m-0">Type</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getFilterList(false, EventTypes, "type-filter", () => {})}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* EVENT PRICE */}
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>
+                <h6 className="m-0">Price</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getFilterList(false, EventPriceType, "price-filter", () => {})}
+              </Accordion.Body>
+            </Accordion.Item>
+            {/* EVENT YEAR */}
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>
+                <h6 className="m-0">Year</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {getFilterList(false, EventYearCollection, "year-filter", () => {})}
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </div>
       {/* EVENTS WRAPPER */}

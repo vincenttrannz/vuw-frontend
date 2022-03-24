@@ -40,10 +40,10 @@ export default function ShareContainer({className}: ShareContainerProps) {
         >
           <TwitterShare className="share-logo"/>
         </TwitterShareButton>
-        <a aria-label="copy" className='react-share__ShareButton' type="button" onClick={clickCopy}>
+        <div aria-label="copy" className='react-share__ShareButton' onClick={clickCopy}>
           <CopyLinkShare className="share-logo"/>
           <span className='copied-text' style={{display: "none"}} ref={CopiedText}>Copied!</span>
-        </a>
+        </div>
       </div>
     </div>
   )

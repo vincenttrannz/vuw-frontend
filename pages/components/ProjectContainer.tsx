@@ -68,16 +68,15 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       <div id="school-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {SchoolCollection.map((name: string, i: number) => {
           return (
-            <a
+            <div
               key={i}
               onClick={handleFilterClick}
-              type="button"
               className={`p2 bold categories-container__category`}
               data-filter={name.replace(/ /g, "_")}
               data-is-school={true}
             >
               {name}
-            </a>
+            </div>
           );
         })}
       </div>
@@ -98,16 +97,15 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           ) =>
             majors.map((major, i: number) => {
               return (
-                <a
+                <div
                   key={i}
                   onClick={handleFilterClick}
-                  type="button"
                   className={`p2 bold categories-container__category`}
                   data-filter={major.major.replace(/ /g, "_")}
                   data-school={major.school.replace(/ /g, "_")}
                 >
                   {major.major}
-                </a>
+                </div>
               );
             })
         )}
@@ -167,7 +165,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     return 1;
   };
 
-  const handleFilterClick = (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleFilterClick = (event: MouseEvent<HTMLDivElement>) => {
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
     const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));

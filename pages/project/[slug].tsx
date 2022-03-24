@@ -68,30 +68,32 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
       <HeadData
         title={projectData.ProjectTitle}
         description={projectData.SeoData.MetaDescription}
-        image={getStrapiMedia(projectData.SeoData.ShareImage)}
+        image={(projectData.SeoData.ShareImage) ? getStrapiMedia(projectData.SeoData.ShareImage) : ""}
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
+          <Button
+            onClick={GoBack}
+            className="prev-btn mb-3"
+            variant="vic"
+          >
+            <span className="the-arrow rotate"></span>{" "}
+            <span className="btn-text">Back</span>
+          </Button>
           <div className='work-details-container'>
-            <Button
-              onClick={GoBack}
-              className="prev-btn mb-2"
-              variant="vic"
-            >
-              <span className="the-arrow rotate"></span>{" "}
-              <span className="btn-text">Back</span>
-            </Button>
             {
               [projectData.student.data.attributes?.StudentShortDetail, projectData.student.data.attributes?.major.data.attributes.MajorName, projectData.student.data.attributes?.StudentMinor, projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
-                return (
-                  <div key={i} className='textblock-with-divider'>
-                    {
-                      (i == 0) ? <h4>{projectData.student.data.attributes?.StudentName}</h4> : (i == 1) ? <h6>Major</h6> : (i == 2) ? <h6>Minor</h6> : (i == 3) ? <h6>Email</h6> : (i == 4) ? <h6>Links</h6> : ""
-                    }
-                    <TextDivider prime={false}/>
-                    <ReactMarkdown className='details-content'>{StudentDetail}</ReactMarkdown>
-                  </div>
-                )
+                if(StudentDetail !== null && StudentDetail !== "") {
+                  return (
+                    <div key={i} className='textblock-with-divider'>
+                      {
+                        (i == 0) ? <h4>{projectData.student.data.attributes?.StudentName}</h4> : (i == 1) ? <h6>Major</h6> : (i == 2) ? <h6>Minor</h6> : (i == 3) ? <h6>Email</h6> : (i == 4) ? <h6>Links</h6> : ""
+                      }
+                      <TextDivider prime={false}/>
+                      <ReactMarkdown className='details-content'>{StudentDetail}</ReactMarkdown>
+                    </div>
+                  )
+                }
               })
             }
             {
@@ -104,18 +106,20 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
               <div className='textblock-with-divider'>
                 <h6>Links</h6>
                 <TextDivider prime={false}/>
-                {
-                  [
-                    projectData.student.data.attributes?.FirstStudentLink,
-                    projectData.student.data.attributes?.SecondStudentLink,
-                    projectData.student.data.attributes?.ThirdStudentLink,
-                    projectData.student.data.attributes?.FourthStudentLink
-                  ].map((el, i:number) => {
-                    return (
-                      (el !== null) ? ProjectLink(el, el, i) : ""
-                    )
-                  })
-                }
+                <div className='details-content'>
+                  {
+                    [
+                      projectData.student.data.attributes?.FirstStudentLink,
+                      projectData.student.data.attributes?.SecondStudentLink,
+                      projectData.student.data.attributes?.ThirdStudentLink,
+                      projectData.student.data.attributes?.FourthStudentLink
+                    ].map((el, i:number) => {
+                      return (
+                        (el !== null) ? ProjectLink(el, el, i) : ""
+                      )
+                    })
+                  }
+                </div>
               </div>
             }
           </div>
@@ -234,12 +238,19 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     /**
                      * AWARD CONTENT FOR PROJECT
                      */
-                    (projectData.award.data !== null) &&
+                    (projectData.award.data !== null) 
+                    ?
                     <div className='project-info-container__details__text-wrapper-row'>
                       <h6>Award:</h6>
                       {
-                        (projectData.award.data?.attributes.AwardType == "Industry_Award") &&
                         <div className='project-info-container__details__text-wrapper-award-content'>
+                          {
+                            (projectData.student.data.attributes?.award.data !== null) &&
+                            <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                              <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                              <span>{projectData.student.data.attributes?.award.data.attributes.AwardName}</span>
+                            </div>
+                          }
                           <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
                             <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
                             <span>{projectData.award.data.attributes.AwardName}</span>
@@ -252,16 +263,19 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                           </div>
                         </div>
                       }
-                      {
-                        (projectData.award.data?.attributes.AwardType == "Excellence_Award") &&
-                        <div className='project-info-container__details__text-wrapper-award-content'>
-                          <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
-                            <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
-                            <span>{projectData.award.data.attributes.AwardName}</span>
-                          </div>
-                        </div>
-                      }
                     </div>
+                    :
+                    (projectData.student.data.attributes?.award.data !== null)
+                    ?
+                    <div className='project-info-container__details__text-wrapper-row'>
+                      <h6>Award:</h6>
+                      <div className='project-info-container__details__text-wrapper-award-content__text-wrap'>
+                        <img className='company-logo' src="/award-ribbon.svg" alt="Award Ribbon"/>
+                        <span>{projectData.student.data.attributes?.award.data.attributes.AwardName}</span>
+                      </div>
+                    </div>
+                    :
+                    ""
                   }
                 </div>
                 <div className='project-info-container__details__right'>
@@ -343,7 +357,8 @@ export async function getStaticProps({params}:any) {
       "SubProjectPDF.ProjectPDFLink", 
       "SubProjectVideo", 
       "SubProjectCode", 
-      "student.major", 
+      "student.major",
+      "student.award",
       "level", 
       "major", 
       "school", 
