@@ -86,7 +86,7 @@ a {
 }
 
 .p2 {
-  font-size: clamp(12px, 1.5vw, 14px);
+  font-size: clamp(12px, 5vw, 14px);
   font-weight: 400;
   &.bold {
     font-weight: 600 !important;
@@ -273,8 +273,7 @@ a {
     border: 2px solid $vic-smoke;
     padding: 15px 30px;
     border-radius: 0px;
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
     width: fit-content;
     gap: 25px;
     height: fit-content;
@@ -284,6 +283,8 @@ a {
     }
     // FOR PREV BUTTON
     &.prev-btn {
+      display: grid;
+      grid-template-columns: auto auto;
       .btn-text {
         transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
       }
@@ -295,6 +296,8 @@ a {
     }
     // FOR NEXT BUTTON
     &.next-btn {
+      display: grid;
+      grid-template-columns: auto auto;
       .btn-text {
         transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
       }
