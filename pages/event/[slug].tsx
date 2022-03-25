@@ -29,8 +29,8 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   const router = useRouter();
   const [ThreeProjects, RandomThreeProjects] = useState(event.attributes.projects.data);
   const RequiredRandomThreeEvents = randomThreeEvents.filter(randomEvent => randomEvent.attributes.Slug !== eventData.Slug);
-  const StartTimeCalendar = new Date(String(`${eventData.EventStartDate} ${eventData.EventStartTime}`)).toISOString();
-  const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) && new Date(String(`${eventData.EventFinishDate} ${eventData.EventEndTime}`)).toISOString()
+  const StartTimeCalendar = new Date(String(`${eventData.EventStartDate}T${eventData.EventStartTime}Z`)).toISOString();
+  const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) && new Date(String(`${eventData.EventFinishDate}T${eventData.EventEndTime}Z`)).toISOString()
   
   const DateFormat = (date:string) => new Date(Date.parse(String(date))).toUTCString().split(' ').slice(0, 4).join(' ');
   
@@ -83,11 +83,9 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   }, [])
   
   // Check event data
-  console.log("Event:", eventData);
-  console.log("Related student works:", ThreeProjects);
-  
-  // console.log("Random 3 events:", RequiredRandomThreeEvents);
-  
+  // console.log("Event:", eventData);
+  // console.log("Related student works:", ThreeProjects);
+    
   return (
     <>
       <HeadData

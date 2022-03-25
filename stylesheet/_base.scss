@@ -283,8 +283,7 @@ a {
     }
     // FOR PREV BUTTON
     &.prev-btn {
-      display: grid;
-      grid-template-columns: auto auto;
+      display: block;
       .btn-text {
         transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
       }
@@ -296,8 +295,7 @@ a {
     }
     // FOR NEXT BUTTON
     &.next-btn {
-      display: grid;
-      grid-template-columns: auto auto;
+      display: block;
       .btn-text {
         transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
       }
@@ -347,7 +345,9 @@ a {
   width: fit-content;
   display: flex;
   align-items: baseline;
-  gap: 0 5px;
+  svg {
+    margin-right: 5px;
+  }
 }
 
 //  ====== //
@@ -356,6 +356,8 @@ a {
 .the-arrow {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
+  margin: 0 15px;
   background: $vic-smoke;
   opacity: 1;
   height: 2px;

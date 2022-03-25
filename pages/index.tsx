@@ -1,7 +1,7 @@
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
-import PageHeroBanner from './components/views/PageHeroBanner'
+import PageHeroBanner from './components/views/PageHeroBanner';
 import TextDivider from './components/views/TextDivider';
 import ProjectContainer from "./components/ProjectContainer";
 import HeadData from "./components/HeadData";
@@ -41,7 +41,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
         HeroBanner={getStrapiMedia(heroBanner)}
         HeroTitle="Architecture and Design Innovation"
       />
-      <ThreeColumnsBlock className="px-sm-3 px-xl-7 mt-3 mt-md-0">
+      <ThreeColumnsBlock className="px-sm-3 px-xl-7">
         <div className="textblock-with-divider">
           <h3>{quickIntroTitle}</h3>
           <TextDivider prime/>

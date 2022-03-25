@@ -218,10 +218,23 @@ export type EventType = {
     events: {
       data: Events;
     };
-  }
+  };
 };
 
 export type EventTypes = EventType[];
+
+// Global type
+export type Global = {
+  id: number;
+  attributes: {
+    SiteName: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    Favicon: ImagesDataType;
+    SeoData: SeoDataType;
+  };
+};
 
 // Homepage type
 export type Homepage = {
