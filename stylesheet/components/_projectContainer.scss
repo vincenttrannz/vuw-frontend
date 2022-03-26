@@ -214,12 +214,12 @@
         list-style: none;
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
       }
       &__category {
         cursor: pointer;
         transition: all ease 0.1s;
         padding: 5px 15px;
+        margin: 0 15px 15px 0;
         background: #fff;
         &.disable {
           opacity: 0.5;

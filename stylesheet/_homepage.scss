@@ -17,7 +17,7 @@
     height: 100%;
     width: 35%;
     background: linear-gradient(90deg, white 0%, white 45%, #ffffffe6 70%, #ffffff00 100%);
-    &.otherSide {
+    &.otherSide, &.customError {
       right: 0;
       left: auto;
       background: linear-gradient(270deg, white 0%, white 45%, #ffffffe6 70%, #ffffff00 100%);
@@ -47,6 +47,33 @@
       float: right;
       width: auto;
       margin-right: 15%;
+    }
+    &.customError {
+      float: left;
+      width: fit-content;
+      h1 {
+        font-size: clamp(64px, 10vw, 128px) !important;
+      }
+    }
+  }
+  // Styling for 404 and 500
+  &.customError {
+    min-height: calc(65vh - 80px);
+    +.twoColumnsBlock {
+      grid-template-columns: auto auto;
+      gap: 45px;
+    }
+    @media (max-width: $small-tablet-screen-size) {
+      min-height: 480px;
+    }
+    @media (max-width: $mobile-screen-size) {
+      background-position: top;
+      background-size: 110% 70%;
+      padding-bottom: 0 !important;
+      min-height: clamp(360px, 25vh, 50vh);
+      +.twoColumnsBlock {
+        grid-template-columns: 1fr;
+      }
     }
   }
 }
@@ -80,7 +107,7 @@
         margin-right: 0;
       }
     }
-    &.otherSide {
+    &.otherSide, &.customError {
       background-size: cover;
       align-items: flex-end;
       .hero-section__overlay {

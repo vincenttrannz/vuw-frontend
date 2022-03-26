@@ -96,9 +96,9 @@
       }
     }
   }
-  @media (max-width: 1220px) and (min-width: 992px) {
-    bottom: 80px;
-  }
+  // @media (max-width: 1220px) and (min-width: 992px) {
+  //   bottom: 80px;
+  // }
 }
 
 .slick-slider {
@@ -109,13 +109,10 @@
       height: 100%;
       .work-img-container {
         position: relative;
-        background-color: #000;
+        background: #fff;
         img {
           margin: 0 auto;
           height: 100%;
-          // aspect-ratio: 2 / 1;
-          // object-fit: contain;
-          // width: 100%;
         }
       }
     }
