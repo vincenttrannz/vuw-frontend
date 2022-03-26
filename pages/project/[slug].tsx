@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import $ from 'jquery';
 import { useRouter } from 'next/router';
 import HeadData from "../components/HeadData";
@@ -132,88 +133,16 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
           <div className="project-wrapper mt-3">
             <div className="project-info-container">
               {
-                // If the project is 3D project
-                (projectData.Project3D) &&
-                <Project3D 
-                  Project3DLink={projectData.Project3DLink}
-                  Project3DCaption={projectData.ProjectCaption}
-                />
-              }
-              {
-                // If the project is PDF
-                (projectData.ProjectPDF) &&
-                <ProjectPDF ProjectPDFLink={getStrapiMedia(projectData.ProjectPDFLink)}/>
-              }
-              {
-                // If the project just contain images
-                (projectData.ImagesCarousel) && 
-                <ProjectCarousel projectData={projectData}/>
-              }
-              {
-                // If the project is Code base
-                (projectData.ProjectCode) &&
-                <ProjectCode
-                  ProjectCodeLink={projectData.ProjectCodeLink}
-                  ProjectCodeCaption={projectData.ProjectCaption}
-                />
-              }
-              {
-                // If the project is Video base
-                (projectData.ProjectVideo) &&
-                <ProjectVideo
-                  ProjectVideoLink={projectData.ProjectVideoLink}
-                  ProjectVideoCaption={projectData.ProjectCaption}
-                />
-              }
-              <div className='sub-project-container my-3'>
-                {
-                  /**
-                   * SUB PROJECT CAROUSEL
-                   */
-                  (projectData.SubProjectCarousel !== null) &&
-                  <ProjectCarousel projectData={projectData.SubProjectCarousel}/>
-                }
-                {
-                  /**
-                   * SUB PROJECT 3D
-                   */
-                  (projectData.SubProject3D !== null) &&
-                  <Project3D 
-                    Project3DLink={projectData.SubProject3D.Project3DLink}
-                    Project3DCaption={projectData.SubProject3D.ProjectCaption}
+                // Project hero image
+                <div className='image-container'>
+                  <Image
+                    src={getStrapiMedia(projectData.ProjectThumbnail)}
+                    layout='fill'
+                    objectFit='cover'
+                    priority={true}
                   />
-                }
-                {
-                  /**
-                   * SUB PROJECT PDF
-                   */
-                  (projectData.SubProjectPDF !== null) &&
-                  <ProjectPDF 
-                    ProjectPDFLink={getStrapiMedia(projectData.SubProjectPDF.ProjectPDFLink)}
-                    ProjectPDFCaption={projectData.SubProjectPDF.ProjectCaption}
-                  />
-                }
-                {
-                  /**
-                   * SUB PROJECT CODE
-                   */
-                  (projectData.SubProjectCode !== null) &&
-                  <ProjectCode 
-                    ProjectCodeLink={projectData.SubProjectCode.ProjectCodeLink}
-                    ProjectCodeCaption={projectData.SubProjectCode.ProjectCaption}
-                  />
-                }
-                {
-                  /**
-                   * SUB PROJECT VIDEO
-                   */
-                  (projectData.SubProjectVideo !== null) &&
-                  <ProjectVideo 
-                    ProjectVideoLink={projectData.SubProjectVideo.ProjectVideoLink}
-                    ProjectVideoCaption={projectData.SubProjectVideo.ProjectCaption}
-                  />
-                }
-              </div>
+                </div>
+              }
               <div className='project-info-container__details'>
                 <div className='project-info-container__details__left'>
                   {
@@ -319,6 +248,89 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                 </div>
                 <ShareContainer className='d-flex d-lg-none mt-2'/>
               </div>
+              {
+                // If the project is 3D project
+                (projectData.Project3D) &&
+                <Project3D 
+                  Project3DLink={projectData.Project3DLink}
+                  Project3DCaption={projectData.ProjectCaption}
+                />
+              }
+              {
+                // If the project is PDF
+                (projectData.ProjectPDF) &&
+                <ProjectPDF ProjectPDFLink={getStrapiMedia(projectData.ProjectPDFLink)}/>
+              }
+              {
+                // If the project just contain images
+                (projectData.ImagesCarousel) && 
+                <ProjectCarousel projectData={projectData}/>
+              }
+              {
+                // If the project is Code base
+                (projectData.ProjectCode) &&
+                <ProjectCode
+                  ProjectCodeLink={projectData.ProjectCodeLink}
+                  ProjectCodeCaption={projectData.ProjectCaption}
+                />
+              }
+              {
+                // If the project is Video base
+                (projectData.ProjectVideo) &&
+                <ProjectVideo
+                  ProjectVideoLink={projectData.ProjectVideoLink}
+                  ProjectVideoCaption={projectData.ProjectCaption}
+                />
+              }
+              <div className='sub-project-container my-3'>
+                {
+                  /**
+                   * SUB PROJECT CAROUSEL
+                   */
+                  (projectData.SubProjectCarousel !== null) &&
+                  <ProjectCarousel projectData={projectData.SubProjectCarousel}/>
+                }
+                {
+                  /**
+                   * SUB PROJECT 3D
+                   */
+                  (projectData.SubProject3D !== null) &&
+                  <Project3D 
+                    Project3DLink={projectData.SubProject3D.Project3DLink}
+                    Project3DCaption={projectData.SubProject3D.ProjectCaption}
+                  />
+                }
+                {
+                  /**
+                   * SUB PROJECT PDF
+                   */
+                  (projectData.SubProjectPDF !== null) &&
+                  <ProjectPDF 
+                    ProjectPDFLink={getStrapiMedia(projectData.SubProjectPDF.ProjectPDFLink)}
+                    ProjectPDFCaption={projectData.SubProjectPDF.ProjectCaption}
+                  />
+                }
+                {
+                  /**
+                   * SUB PROJECT CODE
+                   */
+                  (projectData.SubProjectCode !== null) &&
+                  <ProjectCode 
+                    ProjectCodeLink={projectData.SubProjectCode.ProjectCodeLink}
+                    ProjectCodeCaption={projectData.SubProjectCode.ProjectCaption}
+                  />
+                }
+                {
+                  /**
+                   * SUB PROJECT VIDEO
+                   */
+                  (projectData.SubProjectVideo !== null) &&
+                  <ProjectVideo 
+                    ProjectVideoLink={projectData.SubProjectVideo.ProjectVideoLink}
+                    ProjectVideoCaption={projectData.SubProjectVideo.ProjectCaption}
+                  />
+                }
+              </div>
             </div>
             <ShareContainer className='d-none d-lg-flex'/>
           </div>
@@ -350,6 +362,7 @@ export async function getStaticProps({params}:any) {
     populate: [
       "*", 
       "SeoData.ShareImage", 
+      "ProjectThumbnail",
       "ProjectImages", 
       "ProjectPDFLink", 
       "SubProjectCarousel.ProjectImages", 
