@@ -28,8 +28,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   let FilterArray = new Array;
   let FilterProjects = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [paginatedProjects, setPaginatedProjects] =
-    useState<Projects>(projects);
+  const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
+  const SearchField = useRef<HTMLInputElement>(null);
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
@@ -169,6 +169,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
     const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));
+    // SearchField.current.
     let PreFilterArray:any[] = new Array;
 
     // Handling the active state for the filter button that user has selected
@@ -242,16 +243,28 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   }
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value;
+    const searchTerm = event.target.value.toLowerCase();
+    const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
 
     FilterProjects = projects.filter((project: Project) => {
-      const ProjectTags = project.attributes.ProjectTags;
-      if(ProjectTags?.includes(searchTerm) && project !== undefined){
-        console.log(project);
+      const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
+      const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
+      const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
+      // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
+      
+      if(
+        ProjectTags?.includes(searchTerm) ||
+        ProjectTitle.includes(searchTerm) ||
+        ProjectStudent?.includes(searchTerm) &&
+        project !== undefined
+      ){
+        // console.log(project);
+        AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
         return project;
       }
       if(searchTerm == "") {
-        console.log(project);
+        // console.log(project);
+        AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
         return project;
       }
     })
@@ -302,6 +315,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
+              ref={SearchField}
               placeholder="Search"
               aria-label="search"
               aria-describedby="search-field"
@@ -400,7 +414,13 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       </div>
       {/* PROJECT PORTFOLIOS WRAPPER */}
       <div className="projectContainer__portfolios-wrapper">
-        <AllProjects projects={paginatedProjects} />
+        {
+          (paginatedProjects.length > 0)
+          ?
+          <AllProjects projects={paginatedProjects}/>
+          :
+          <h2>No results</h2>
+        }
         <div className="projectContainer__next-prev-container">
           <Button
             ref={PrevBtn}
