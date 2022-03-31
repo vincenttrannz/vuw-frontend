@@ -224,6 +224,7 @@ a {
     object-fit: contain;
     object-position: left;
     aspect-ratio: 2 / 1;
+    // @include aspect-ratio(2, 1);
   }
   &__event-detail {
     .event-p {
@@ -258,12 +259,19 @@ a {
 .image-container {
   position: relative;
   width: 100%;
-  // aspect-ratio: 2 / 1;
   @include aspect-ratio(2, 1);
   background: url("./loader.gif");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.img {
+  &-thumbnail {
+    padding: 0;
+    border-radius: 0;
+    border: none;
+  }
 }
 
 //  ====== //
