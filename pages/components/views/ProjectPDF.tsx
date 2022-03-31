@@ -13,7 +13,7 @@ export default function ProjectPDF({ ProjectPDFLink, ProjectPDFCaption }: Projec
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   return (
     <>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
         <div className="pdf-container mb-3">
           <Viewer
             fileUrl={ProjectPDFLink}
