@@ -50,7 +50,7 @@ $container-max-widths: (
 
 // Customise bootstrap variable
 $spacer: 2rem;
-$container-padding-x: clamp(1rem, 2.5vw, 2rem);
+$container-padding-x: max(1rem, min(2.5vw, 2rem));
 $input-btn-focus-width: 0;
 $btn-disabled-opacity: .25;
 // 1. Box Shadow

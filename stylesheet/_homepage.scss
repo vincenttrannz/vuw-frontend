@@ -4,7 +4,7 @@
 
 .hero-section {
   position: relative;
-  min-height: calc(clamp(768px, 100vh, 100vh) - 80px);
+  min-height: calc(max(768px, min(100vh, 100vh)) - 80px);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -27,18 +27,18 @@
     z-index: 2;
   }
   &__title-box {
-    padding: clamp(30px, calc(2vw + 2vh), 60px);
+    padding: max(30px, min(calc(2vw + 2vh), 60px));
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     background: $vic-smoke;
     color: #fff;
-    width: clamp(500px, calc(22vw + 25vh), 665px);
+    width: max(500px, min(calc(22vw + 25vh), 665px));
     h1 {
-      font-size: clamp(45px, calc(2vw + 2vh), 60px) !important;
+      font-size: max(45px, min(calc(2vw + 2vh), 60px)) !important;
     }
     .subtitle {
-      font-size: clamp(26px, calc(1vw + 1vh), 32px) !important;
+      font-size: max(26px, min(calc(1vw + 1vh), 32px)) !important;
     }
     & * {
       margin: 0;
@@ -52,7 +52,7 @@
       float: left;
       width: fit-content;
       h1 {
-        font-size: clamp(64px, 10vw, 128px) !important;
+        font-size: max(64px, min(10vw, 128px)) !important;
       }
     }
   }
@@ -70,7 +70,7 @@
       background-position: top;
       background-size: 110% 70%;
       padding-bottom: 0 !important;
-      min-height: clamp(360px, 25vh, 50vh);
+      min-height: max(360px, min(25vh, 50vh));
       +.twoColumnsBlock {
         grid-template-columns: 1fr;
       }
@@ -89,17 +89,17 @@
     background-position: top;
     background-size: 110% 70%;
     padding-bottom: 0 !important;
-    min-height: clamp(360px, 25vh, 50vh);
+    min-height: max(360px, min(25vh, 50vh));
     &__overlay {
       display: none;
     }
     &__title-box {
       width: 100%;
       h1 {
-        font-size: clamp(32px, calc(2vw + 2vh), 45px) !important;
+        font-size: max(32px, min(calc(2vw + 2vh), 45px)) !important;
       }
       .subtitle {
-        font-size: clamp(16px, calc(1vw + 1vh), 26px) !important;
+        font-size: max(16px, min(calc(1vw + 1vh), 26px)) !important;
       }
       &.otherSide {
         float: left;
