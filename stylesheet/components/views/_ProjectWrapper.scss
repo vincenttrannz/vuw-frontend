@@ -104,10 +104,11 @@
 .slick-slider {
   position: relative;
   .slick-slide {
-    div {
-      aspect-ratio: 2 / 1;
-      height: 100%;
+    >div {
+      height: 32vw;
+      min-height: calc(max(260px, min(45vw, 480px)) + 60px);
       .work-img-container {
+        height: calc(100% - 60px);
         position: relative;
         background: #fff;
         img {

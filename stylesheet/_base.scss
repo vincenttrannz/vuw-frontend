@@ -223,8 +223,9 @@ a {
     width: 100%;
     object-fit: contain;
     object-position: left;
-    aspect-ratio: 2 / 1;
-    // @include aspect-ratio(2, 1);
+    // aspect-ratio: 2 / 1;
+    height: 32vw;
+    min-height: max(260px, min(48vw, 480px));
   }
   &__event-detail {
     .event-p {

@@ -9,7 +9,7 @@ type ProjectDataProps = {
 
 export default function ProjectVideo({ ProjectVideoLink, ProjectVideoCaption }: ProjectDataProps) {
   return (
-    <div className="iframe-container">
+    <div className="iframe-container mt-2 mb-4">
       <iframe
         className="video-iframe"
         src={`https://player.vimeo.com/video/${ProjectVideoLink.substring(8).split("/")[1]}`}
