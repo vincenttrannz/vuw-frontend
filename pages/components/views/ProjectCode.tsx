@@ -8,7 +8,7 @@ type ProjectDataProps = {
 
 export default function ProjectCode({ ProjectCodeLink, ProjectCodeCaption }: ProjectDataProps) {
   return (
-    <div className="iframe-container">
+    <div className="iframe-container mt-2 mb-4">
       <iframe
         // scrolling="no"
         title={ProjectCodeCaption}

@@ -8,7 +8,7 @@ type Project3DProps = {
 
 export default function Project3D({ Project3DLink, Project3DCaption }: Project3DProps) {
   return (
-    <div className="iframe-container">
+    <div className="iframe-container mt-2 mb-4">
       <iframe
         title="Student Project"
         frameBorder="0"

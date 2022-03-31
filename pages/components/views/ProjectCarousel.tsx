@@ -49,7 +49,7 @@ export default function ProjectCarousel({projectData}:ProjectDataProps) {
   };
   
   return (
-    <Slider {...sliderSettings}>
+    <Slider className="my-2" {...sliderSettings}>
       {
         projectData.ProjectImages.data.map((project:any, i:number) => {
           return (

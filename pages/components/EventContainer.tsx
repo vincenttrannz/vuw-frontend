@@ -29,7 +29,8 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         new Date(event.attributes.EventStartDate).getFullYear().toString()  
       )
     )
-  )
+  );
+
   const EventCategories = Array.from(
     eventCategories.map(category => category.attributes.EventCategoryName)
   );
@@ -87,6 +88,11 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             <TextDivider prime={false} />
             {getFilterList(true, EventYearCollection, "year-filter", () => {})}
           </div>
+          <div className="categories-wrapper">
+            <h6>Sort by</h6>
+            <TextDivider prime={false} />
+            {getFilterList(true, EventYearCollection, "year-filter", () => {})}
+          </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
         <div className="projectContainer__categories-mobile">
@@ -132,7 +138,13 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       </div>
       {/* EVENTS WRAPPER */}
       <div className="projectContainer__events-wrapper">
-        <AllEvents events={paginatedEvents}/>
+        {
+          (paginatedEvents.length > 0)
+          ?
+          <AllEvents events={paginatedEvents}/>
+          :
+          <h2>No results</h2>
+        }
       </div>
     </Container>
   )

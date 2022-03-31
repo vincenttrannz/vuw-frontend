@@ -28,8 +28,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   let FilterArray = new Array;
   let FilterProjects = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [paginatedProjects, setPaginatedProjects] =
-    useState<Projects>(projects);
+  const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
+  const SearchField = useRef<HTMLInputElement>(null);
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           return (
             <div
               key={i}
-              onClick={handleFilterClick}
+              onClick={handleFilterSearch}
               className={`p2 bold categories-container__category`}
               data-filter={name.replace(/ /g, "_")}
               data-is-school={true}
@@ -99,7 +99,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               return (
                 <div
                   key={i}
-                  onClick={handleFilterClick}
+                  onClick={handleFilterSearch}
                   className={`p2 bold categories-container__category`}
                   data-filter={major.major.replace(/ /g, "_")}
                   data-school={major.school.replace(/ /g, "_")}
@@ -165,8 +165,38 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     return 1;
   };
 
-  const handleFilterClick = (event: MouseEvent<HTMLDivElement>) => {
+  function kmpSearch(pattern:string, text:string) {
+    if (pattern.length == 0)
+      return 0; // Immediate match
+  
+    // Compute longest suffix-prefix table
+    var lsp = [0]; // Base case
+    for (var i = 1; i < pattern.length; i++) {
+      var j = lsp[i - 1]; // Start by assuming we're extending the previous LSP
+      while (j > 0 && pattern.charAt(i) != pattern.charAt(j))
+        j = lsp[j - 1];
+      if (pattern.charAt(i) == pattern.charAt(j))
+        j++;
+      lsp.push(j);
+    }
+  
+    // Walk through text string
+    var j = 0; // Number of chars matched in pattern
+    for (var i = 0; i < text.length; i++) {
+      while (j > 0 && text.charAt(i) != pattern.charAt(j))
+        j = lsp[j - 1]; // Fall back in the pattern
+      if (text.charAt(i) == pattern.charAt(j)) {
+        j++; // Next char matched, increment position
+        if (j == pattern.length)
+          return i - (j - 1);
+      }
+    }
+    return -1; // Not found
+  }
+
+  const handleFilterSearch = (event: MouseEvent<HTMLDivElement>| any) => {
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
+    const SearchTerm = SearchField.current ? SearchField.current.value.toLowerCase() : "";
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
     const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));
     let PreFilterArray:any[] = new Array;
@@ -196,7 +226,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           event.currentTarget.parentElement?.id == "major-filter" ||
           event.currentTarget.parentElement?.id == "year-filter" ||
           event.currentTarget.parentElement?.id == "level-filter" ||
-          event.currentTarget.parentElement?.id == "award-filter"
+          event.currentTarget.parentElement?.id == "award-filter"  ||
+          SearchTerm || SearchTerm == ""     
         ){
           return
         } else {
@@ -205,7 +236,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       }
     })
 
-    // Setup filter array that user has selected
     AllCategoriesChoice.forEach(category => {
       if(category.className.includes("active")){
         PreFilterArray.push(
@@ -218,7 +248,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
       }
     })
-    // console.log("Filter keys are:", FilterArray);
+    // Setup filter & search array that user has selected
+    if(SearchTerm !== "") FilterArray.push(SearchTerm)
+    console.log("Filter keys are:", FilterArray);
 
     // Filtering logic
     FilterProjects = projects.filter((project: Project, index: number) => {
@@ -228,72 +260,59 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
       const ProjectAward = project.attributes.award.data?.attributes.AwardType;
       const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
+      // Term for search logic
+      const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
+      const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
+      const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
+
+      const ProjectSearchFilterElement = {
+        ProjectFilterArray: [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => element !== undefined),
+        ProjectSearchTerm: [ProjectTitle, ProjectStudent].concat(ProjectTags.split(",").map((value) => value.trim())).toString()
+      }
+
+      // const ProjectSearchFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward, ProjectTitle, ProjectStudent].filter(element => element !== undefined).concat(ProjectTags.split(",").map((value) => value.trim()))
+
       // Step by Step logic
-      const ProjectFilterArrayElment = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => {
-        return element !== undefined;
-      });
-      // console.log(`Project ${index}`, ProjectFilterArrayElment);
-      if(FilterArray.every(el => ProjectFilterArrayElment.includes(el))) {
-        // console.log(project);
+      // console.log(`Project ${index}`, ProjectSearchFilterElement);
+      
+      if (
+        FilterArray.every(el => ProjectSearchFilterElement.ProjectFilterArray.includes(el)) ||
+        ((SearchTerm !== "") ? ProjectSearchFilterElement.ProjectSearchTerm.includes(SearchTerm) : "")
+      ) {
         return project;
       }
     })
-    setPaginatedProjects(FilterProjects);
+    setPaginatedProjects(FilterProjects.slice(0, 6));
   }
 
-  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value;
+  // const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+  //   const searchTerm = event.target.value.toLowerCase();
+  //   const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
 
-    FilterProjects = projects.filter((project: Project) => {
-      const ProjectTags = project.attributes.ProjectTags;
-      if(ProjectTags?.includes(searchTerm) && project !== undefined){
-        console.log(project);
-        return project;
-      }
-      if(searchTerm == "") {
-        console.log(project);
-        return project;
-      }
-    })
-    setPaginatedProjects(FilterProjects);
-  }
-
-// FilterProjects = projects.filter((project: Project, index: number) => {
-//   const ProjectFilterObject:any = {
-//     filterArray: [],
-//     searchArray: []
-//   };
-//   const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
-//   const ProjectMajor = project.attributes.major.data.attributes.MajorName;
-//   const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
-//   const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
-//   const ProjectAward = project.attributes.award.data?.attributes.AwardType;
-//   const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
-//   const ProjectTags:any = (project.attributes.ProjectTags !== null) ? project.attributes.ProjectTags.toLowerCase().split(",") : "";
-//   FilterArray = FilterArray.filter(element => {return element !== undefined});
-//   FilterArray = FilterArray.filter(element => {return element !== ''});
-  
-//   // Step by Step logic
-//   let ProjectFilterArrayElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => {
-//     return element !== undefined;
-//   });
-//   ProjectFilterArrayElement = ProjectFilterArrayElement.filter(el => el !== "");
-//   ProjectFilterObject.filterArray = ProjectFilterArrayElement;
-//   ProjectFilterObject.searchArray = ProjectTags;
-//   console.log("Project Search Object:", ProjectFilterObject);
-  
-//   // Filtering
-//   if(FilterArray.every(el => ProjectFilterObject.filterArray.includes(el))) {
-//     // console.log(project);
-//     return project;
-//   }
-//   // Searching
-//   if(ProjectFilterObject.searchArray.toString().includes(searchTerm)){
-//     // console.log(project);
-//     return project;
-//   }
-// })
-// setPaginatedProjects(FilterProjects);
+  //   FilterProjects = projects.filter((project: Project) => {
+  //     const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
+  //     const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
+  //     const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
+  //     // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
+      
+  //     if(
+  //       ProjectTags?.includes(searchTerm) ||
+  //       ProjectTitle.includes(searchTerm) ||
+  //       ProjectStudent?.includes(searchTerm) &&
+  //       project !== undefined
+  //     ){
+  //       // console.log(project);
+  //       AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
+  //       return project;
+  //     }
+  //     if(searchTerm == "") {
+  //       // console.log(project);
+  //       AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
+  //       return project;
+  //     }
+  //   })
+  //   setPaginatedProjects(FilterProjects);
+  // }
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
@@ -302,11 +321,12 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
+              ref={SearchField}
               placeholder="Search"
               aria-label="search"
               aria-describedby="search-field"
               className="border-0 bg-white py-0"
-              onChange={handleSearch}
+              onChange={handleFilterSearch}
             />
             <div className="input-group-append">
               <button
@@ -334,17 +354,17 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <div className="categories-wrapper">
             <h6>Year</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, ProjectYearCollection, "year-filter", handleFilterClick)}
+            {getFilterList(true, ProjectYearCollection, "year-filter", handleFilterSearch)}
           </div>
           <div className="categories-wrapper">
             <h6>Level</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, LevelCollection, "level-filter", handleFilterClick)}
+            {getFilterList(true, LevelCollection, "level-filter", handleFilterSearch)}
           </div>
           <div className="categories-wrapper">
             <h6>Awards</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, AwardCollection, "award-filter", handleFilterClick)}
+            {getFilterList(true, AwardCollection, "award-filter", handleFilterSearch)}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
@@ -374,7 +394,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Year</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, ProjectYearCollection, "year-filter", handleFilterClick)}
+                {getFilterList(false, ProjectYearCollection, "year-filter", handleFilterSearch)}
               </Accordion.Body>
             </Accordion.Item>
             {/* LEVEL */}
@@ -383,7 +403,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Level</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, LevelCollection, "level-filter", handleFilterClick)}
+                {getFilterList(false, LevelCollection, "level-filter", handleFilterSearch)}
               </Accordion.Body>
             </Accordion.Item>
             {/* AWARDS */}
@@ -392,7 +412,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Awards</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, AwardCollection, "award-filter", handleFilterClick)}
+                {getFilterList(false, AwardCollection, "award-filter", handleFilterSearch)}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -400,7 +420,13 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       </div>
       {/* PROJECT PORTFOLIOS WRAPPER */}
       <div className="projectContainer__portfolios-wrapper">
-        <AllProjects projects={paginatedProjects} />
+        {
+          (paginatedProjects.length > 0)
+          ?
+          <AllProjects projects={paginatedProjects}/>
+          :
+          <h2>No results</h2>
+        }
         <div className="projectContainer__next-prev-container">
           <Button
             ref={PrevBtn}

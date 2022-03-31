@@ -25,19 +25,19 @@ p, address {
 
 
 h1, .h1 {
-  font-size: clamp(32px, 6vw, 64px);
+  font-size: max(32px, min(6vw, 64px));
   font-weight: bold;
   margin: 0;
 }
 
 h2, .h2 {
-  font-size: clamp(28px, 5vw, 52px);
+  font-size: max(28px, min(5vw, 52px));
   font-weight: 900;
   margin: 0;
 }
 
 h3, .h3 {
-  font-size: clamp(24px, 4vw, 40px);
+  font-size: max(24px, min(4vw, 40px));
   letter-spacing: 1.2;
   text-transform: uppercase;
   font-weight: bold;
@@ -45,13 +45,13 @@ h3, .h3 {
 }
 
 h4, .h4 {
-  font-size: clamp(18px, 3vw, 24px);
+  font-size: max(18px, min(3vw, 24px));
   font-weight: bold;
   margin: 0;
 }
 
 h5, .h5 {
-  font-size: clamp(16px, 2vw, 18px);
+  font-size: max(16px, min(2vw, 18px));
   letter-spacing: 1.5;
   text-transform: uppercase;
   font-weight: 500;
@@ -59,13 +59,13 @@ h5, .h5 {
 }
 
 h6, .h6 {
-  font-size: clamp(16px, 1.5vw, 18px);
+  font-size: max(16px, min(1.5vw, 18px));
   font-weight: bold;
   margin: 0;
 }
 
 .subtitle {
-  font-size: clamp(36px, 6vw, 40px);
+  font-size: max(36px, min(6vw, 40px));
   font-weight: 500;
 }
 
@@ -86,7 +86,7 @@ a {
 }
 
 .p2 {
-  font-size: clamp(12px, 5vw, 14px);
+  font-size: max(12px, min(5vw, 14px));
   font-weight: 400;
   &.bold {
     font-weight: 600 !important;
@@ -128,7 +128,7 @@ a {
 .vic-logo-container {
   display: flex;
   position: relative;
-  width: clamp(155px, 15vw, 195px);
+  width: max(155px, min(15vw, 195px));
   height: 45px;
   .vic-logo {
     width: auto;
@@ -223,7 +223,9 @@ a {
     width: 100%;
     object-fit: contain;
     object-position: left;
-    aspect-ratio: 2 / 1;
+    // aspect-ratio: 2 / 1;
+    height: 32vw;
+    min-height: max(260px, min(48vw, 480px));
   }
   &__event-detail {
     .event-p {
@@ -258,11 +260,19 @@ a {
 .image-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  @include aspect-ratio(2, 1);
   background: url("./loader.gif");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.img {
+  &-thumbnail {
+    padding: 0;
+    border-radius: 0;
+    border: none;
+  }
 }
 
 //  ====== //

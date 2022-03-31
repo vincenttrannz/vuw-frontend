@@ -6,9 +6,9 @@
   width: 100%;
   align-content: center;
   display: grid;
-  gap: clamp(30px, 15%, 45px) 5%;
+  gap: max(30px, min(15%, 45px)) 5%;
   justify-items: flex-start;
-  padding-top: clamp(30px, 1vw, 45px);
+  padding-top: max(30px, min(1vw, 45px));
   padding-bottom: 30px;
   // grid-template-columns: 30% 30% 10% 10%;
   grid-template-columns: auto auto auto auto;

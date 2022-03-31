@@ -3,9 +3,11 @@
 =================================*/
 
 .iframe-container {
+  display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  height: 32vw;
+  min-height: max(260px, min(48vw, 480px));
   background: url("./loader.gif");
   background-position: center;
   background-size: contain;
