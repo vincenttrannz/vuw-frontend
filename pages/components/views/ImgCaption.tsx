@@ -17,7 +17,7 @@ export default function ImgCaption({caption, className}: ImgCaptionProps) {
   return (
     (caption !== "" || caption == null)
     ?
-    ""
+    <span></span>
     :
     (caption.startsWith("http")) 
     ?
