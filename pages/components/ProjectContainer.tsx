@@ -29,6 +29,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   let FilterProjects = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
+  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([])
   const SearchField = useRef<HTMLInputElement>(null);
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
@@ -248,7 +250,29 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     })
 
     // Filtering logic
-    FilterProjects = projects.filter((project: Project, index: number) => {
+    // FilterProjects = projects.filter((project: Project, index: number) => {
+    //   const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
+    //   const ProjectMajor = project.attributes.major.data.attributes.MajorName;
+    //   const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
+    //   const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
+    //   const ProjectAward = project.attributes.award.data?.attributes.AwardType;
+    //   const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
+    //
+    //   const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => element !== undefined);
+    //
+    //   // Step by Step logic
+    //   // console.log(`Project ${index}`, ProjectSearchFilterElement);
+    //   if (FilterArray.every(el => ProjectFilterElement.includes(el))) {
+    //     return project;
+    //   }
+    // })
+    setCurrentSelectedFilters(FilterArray)
+    setPaginatedProjects(FilterProjects.slice(0, 6));
+  }
+
+  // based on the selected filtes in the sidebar, filter the provided array of projects that have a content match
+  const filterOnSelectedFilter = (filterProjects: Projects, selectedFilters: string[]) => {
+    return filterProjects.filter((project: Project, index: number) => {
       const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
       const ProjectMajor = project.attributes.major.data.attributes.MajorName;
       const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
@@ -260,28 +284,31 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
       // Step by Step logic
       // console.log(`Project ${index}`, ProjectSearchFilterElement);
-      if (FilterArray.every(el => ProjectFilterElement.includes(el))) {
+      if (selectedFilters.every(el => ProjectFilterElement.includes(el))) {
         return project;
       }
     })
-    setPaginatedProjects(FilterProjects.slice(0, 6));
   }
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     const searchTerm = event.target.value.toLowerCase();
+    setSearchQuery(searchTerm);
+  }
+
+  const filterOnTextQuery = (projects: Projects, searchTerm: string): Projects => {
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
 
-    FilterProjects = projects.filter((project: Project) => {
+    return projects.filter((project: Project) => {
       const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
       const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
       const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
       // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
-      
+
       if(
-        ProjectTags?.includes(searchTerm) ||
-        ProjectTitle.includes(searchTerm) ||
-        ProjectStudent?.includes(searchTerm) &&
-        project !== undefined
+          project !== undefined &&
+          ProjectTags?.includes(searchTerm) ||
+          ProjectTitle.includes(searchTerm) ||
+          ProjectStudent?.includes(searchTerm)
       ){
         // console.log(project);
         AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
@@ -293,8 +320,16 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         return project;
       }
     })
-    setPaginatedProjects(FilterProjects.slice(0, 6));
   }
+
+  useEffect(() => {
+    let preFilteredProjects: Projects = projects;
+    preFilteredProjects = filterOnSelectedFilter(preFilteredProjects, currentSelectedFilters)
+    preFilteredProjects = filterOnTextQuery(preFilteredProjects, searchQuery)
+    console.log(currentSelectedFilters)
+
+    setPaginatedProjects(preFilteredProjects.slice(0, 6));
+  }, [searchQuery, currentSelectedFilters])
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
