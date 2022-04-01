@@ -15,10 +15,6 @@ export default function ImgCaption({caption, className}: ImgCaptionProps) {
   }
   
   return (
-    (caption !== "" || caption == null)
-    ?
-    <span></span>
-    :
     (caption.startsWith("http")) 
     ?
     <span className={`p2 img-caption ${className ? className : ""}`}>
