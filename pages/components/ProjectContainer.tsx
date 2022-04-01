@@ -115,38 +115,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     )
   }
 
-  // Logic for paginated projects
-  useEffect(() => {
-    if (projects && projects.length) {
-      switch (currentPage) {
-        case 1:
-          setPaginatedProjects(projects.slice(0, 6));
-          break;
-        case 2:
-          setPaginatedProjects(projects.slice(6, 12));
-          break;
-        default:
-          setPaginatedProjects(
-            projects.slice(currentPage * 6, currentPage * 6 + 6)
-          );
-          break;
-      }
-    }
-  }, [currentPage, projects]);
-
-  // This effect to check after Set new projects length
-  useEffect(() => {
-    // 1. Logic for NextBtn
-    paginatedProjects.length < 6
-      ? NextBtn.current?.setAttribute("disabled", "true")
-      : NextBtn.current?.removeAttribute("disabled");
-
-    // 2. Logic for NextBtn
-    currentPage == 1
-      ? PrevBtn.current?.setAttribute("disabled", "true")
-      : PrevBtn.current?.removeAttribute("disabled");
-  }, [paginatedProjects, currentPage]);
-
   const scrollToRef = (ref: any) =>
     window.scrollTo(0, ref.current?.offsetTop - 75);
 
@@ -167,35 +135,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     return 1;
   };
 
-  function kmpSearch(pattern:string, text:string) {
-    if (pattern.length == 0)
-      return 0; // Immediate match
-  
-    // Compute longest suffix-prefix table
-    var lsp = [0]; // Base case
-    for (var i = 1; i < pattern.length; i++) {
-      var j = lsp[i - 1]; // Start by assuming we're extending the previous LSP
-      while (j > 0 && pattern.charAt(i) != pattern.charAt(j))
-        j = lsp[j - 1];
-      if (pattern.charAt(i) == pattern.charAt(j))
-        j++;
-      lsp.push(j);
-    }
-  
-    // Walk through text string
-    var j = 0; // Number of chars matched in pattern
-    for (var i = 0; i < text.length; i++) {
-      while (j > 0 && text.charAt(i) != pattern.charAt(j))
-        j = lsp[j - 1]; // Fall back in the pattern
-      if (text.charAt(i) == pattern.charAt(j)) {
-        j++; // Next char matched, increment position
-        if (j == pattern.length)
-          return i - (j - 1);
-      }
-    }
-    return -1; // Not found
-  }
-
   const handleFilter = (event: MouseEvent<HTMLDivElement>) => {
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
@@ -207,7 +146,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.id;
+        const CategoryContainerId = category.parentElement?.id;        
         if(CategoryContainerId == event.currentTarget.parentElement?.id){
           category.classList.remove("active");
         }
@@ -250,24 +189,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     })
 
     // Filtering logic
-    // FilterProjects = projects.filter((project: Project, index: number) => {
-    //   const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
-    //   const ProjectMajor = project.attributes.major.data.attributes.MajorName;
-    //   const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
-    //   const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
-    //   const ProjectAward = project.attributes.award.data?.attributes.AwardType;
-    //   const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
-    //
-    //   const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => element !== undefined);
-    //
-    //   // Step by Step logic
-    //   // console.log(`Project ${index}`, ProjectSearchFilterElement);
-    //   if (FilterArray.every(el => ProjectFilterElement.includes(el))) {
-    //     return project;
-    //   }
-    // })
     setCurrentSelectedFilters(FilterArray)
-    setPaginatedProjects(FilterProjects.slice(0, 6));
   }
 
   // based on the selected filtes in the sidebar, filter the provided array of projects that have a content match
@@ -311,25 +233,54 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           ProjectStudent?.includes(searchTerm)
       ){
         // console.log(project);
-        AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
         return project;
       }
       if(searchTerm == "") {
         // console.log(project);
-        AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
         return project;
       }
     })
   }
 
+  // Logic for paginated projects
+  useEffect(() => {
+    if (projects && projects.length) {
+      switch (currentPage) {
+        case 1:
+          setPaginatedProjects(projects.slice(0, 6));
+          break;
+        case 2:
+          setPaginatedProjects(projects.slice(6, 12));
+          break;
+        default:
+          setPaginatedProjects(
+            projects.slice(currentPage * 6, currentPage * 6 + 6)
+          );
+          break;
+      }
+    }
+  }, [currentPage, projects]);
+
+  // This effect to check after Set new projects length
+  useEffect(() => {
+    // 1. Logic for NextBtn
+    paginatedProjects.length < 6
+      ? NextBtn.current?.setAttribute("disabled", "true")
+      : NextBtn.current?.removeAttribute("disabled");
+
+    // 2. Logic for PrevBtn
+    currentPage == 1
+      ? PrevBtn.current?.setAttribute("disabled", "true")
+      : PrevBtn.current?.removeAttribute("disabled");
+  }, [paginatedProjects, currentPage]);
+
+  // Stacking the Filtering and Search with UseEffect hook
   useEffect(() => {
     let preFilteredProjects: Projects = projects;
     preFilteredProjects = filterOnSelectedFilter(preFilteredProjects, currentSelectedFilters)
     preFilteredProjects = filterOnTextQuery(preFilteredProjects, searchQuery)
-    console.log(currentSelectedFilters)
-
     setPaginatedProjects(preFilteredProjects.slice(0, 6));
-  }, [searchQuery, currentSelectedFilters])
+  }, [searchQuery, currentSelectedFilters]);
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
