@@ -26,7 +26,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("Award data:", awardData);
 
   let FilterArray = new Array;
-  let FilterProjects = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
   const [searchQuery, setSearchQuery] = useState<string>("")
@@ -194,15 +193,15 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   // based on the selected filtes in the sidebar, filter the provided array of projects that have a content match
   const filterOnSelectedFilter = (filterProjects: Projects, selectedFilters: string[]) => {
-    return filterProjects.filter((project: Project, index: number) => {
+    return filterProjects.filter((project: Project) => {
       const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
       const ProjectMajor = project.attributes.major.data.attributes.MajorName;
       const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
       const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
       const ProjectAward = project.attributes.award.data?.attributes.AwardType;
       const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
-
-      const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => element !== undefined);
+      // Setting up an array contained all project's filter points
+      const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(el => el !== undefined);
 
       // Step by Step logic
       // console.log(`Project ${index}`, ProjectSearchFilterElement);
@@ -218,14 +217,13 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   }
 
   const filterOnTextQuery = (projects: Projects, searchTerm: string): Projects => {
-    const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
-
     return projects.filter((project: Project) => {
       const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
       const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
       const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
       // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
 
+      // IF found any project that contained the search term
       if(
           project !== undefined &&
           ProjectTags?.includes(searchTerm) ||
@@ -235,6 +233,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         // console.log(project);
         return project;
       }
+      // IF the search term start by default blank or user backspace all search, return everything
       if(searchTerm == "") {
         // console.log(project);
         return project;
@@ -247,14 +246,14 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     if (projects && projects.length) {
       switch (currentPage) {
         case 1:
-          setPaginatedProjects(projects.slice(0, 6));
+          setPaginatedProjects(projects.slice(0, 12));
           break;
         case 2:
-          setPaginatedProjects(projects.slice(6, 12));
+          setPaginatedProjects(projects.slice(12, 24));
           break;
         default:
           setPaginatedProjects(
-            projects.slice(currentPage * 6, currentPage * 6 + 6)
+            projects.slice(currentPage * 12, currentPage * 12 + 12)
           );
           break;
       }
@@ -264,7 +263,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   // This effect to check after Set new projects length
   useEffect(() => {
     // 1. Logic for NextBtn
-    paginatedProjects.length < 6
+    paginatedProjects.length < 12
       ? NextBtn.current?.setAttribute("disabled", "true")
       : NextBtn.current?.removeAttribute("disabled");
 
@@ -279,7 +278,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     let preFilteredProjects: Projects = projects;
     preFilteredProjects = filterOnSelectedFilter(preFilteredProjects, currentSelectedFilters)
     preFilteredProjects = filterOnTextQuery(preFilteredProjects, searchQuery)
-    setPaginatedProjects(preFilteredProjects.slice(0, 6));
+    setPaginatedProjects(preFilteredProjects.slice(0, 12));
   }, [searchQuery, currentSelectedFilters]);
 
   return (

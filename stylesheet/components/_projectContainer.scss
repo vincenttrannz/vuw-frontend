@@ -40,6 +40,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    align-items: baseline;
   }
   &__next-prev-container {
     grid-column: span 3;
@@ -289,6 +290,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
+      align-items: initial;
     }
     &__event {
       grid-template-columns: 1fr;

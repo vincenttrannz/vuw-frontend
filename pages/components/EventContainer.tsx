@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Events, EventCategories, EventTypes } from "../../compilers/type";
+import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent } from "react";
+import { Events, Event, EventCategories, EventTypes } from "../../compilers/type";
 import TextDivider from "./views/TextDivider";
 import AllEvents from './AllEvents'
 import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
@@ -18,10 +18,12 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   console.log("Event types", eventTypes);
   
   let FilterArray = new Array;
-  let FilterEvents = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedEvents, setPaginatedEvents] = useState<Events>(events);
+  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([])
   const today = + new Date();
+  const SearchField = useRef<HTMLInputElement>(null);
   const NextBtn = useRef<HTMLButtonElement>(null);
   const PrevBtn = useRef<HTMLButtonElement>(null);
   const EventContainerDiv = useRef<HTMLDivElement>(null);
@@ -43,9 +45,83 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   );
 
   const EventPriceType = Array.from(
-    events.map(event => event.attributes.EventPriceType)
+    new Set (events.map(event => event.attributes.EventPriceType))
   );
   
+  const handleFilter = (event: MouseEvent<HTMLDivElement>) => {
+    const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
+    let PreFilterArray:any[] = new Array;
+
+    // Handling the active state for the filter button that user has selected
+    if(event.currentTarget.className.includes("active")){
+      event.currentTarget.classList.remove("active");
+    } else {
+      AllCategoriesChoice.forEach(category => {
+        const CategoryContainerId = category.parentElement?.id;        
+        if(CategoryContainerId == event.currentTarget.parentElement?.id){
+          category.classList.remove("active");
+        }
+      })
+      event.currentTarget.classList.toggle("active");
+    }
+
+    AllCategoriesChoice.forEach(category => {
+      if(category.className.includes("active")){
+        PreFilterArray.push(
+          ((category.getAttribute("data-filter") == "Excellence_Award") || (category.getAttribute("data-filter")) == "Industry_Award") ?
+          category.getAttribute("data-filter") :
+          category.getAttribute("data-filter")?.toString().replace(/_/g, " ")
+        )
+        FilterArray = Array.from(new Set(PreFilterArray));
+      } else {
+        FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
+      }
+    })
+
+    // Filtering logic
+    setCurrentSelectedFilters(FilterArray);
+  }
+
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchQuery(searchTerm);
+  }
+
+  const filterOnSelectedFilter = (filterEvents: Events, selectedFilters: string[]) => {
+    return filterEvents.filter((event: Event) => {
+      const EventCategory = event.attributes.event_category.data?.attributes.EventCategoryName;
+      const EventType = event.attributes.event_type.data?.attributes.EventTypeName;
+      const EventPriceType = event.attributes.EventPriceType;
+      const EventYear = new Date(event.attributes.EventStartDate).getFullYear().toString();
+      // Setting up an array contained all event's filter points
+      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear].filter(el => el !== undefined);
+      if(selectedFilters.every(el => EventFilterElement.includes(el))) {
+        return event;
+      }
+    })
+  }
+
+  const filterOnTextQuery = (events: Events, searchTerm: string): Events => {
+    return events.filter((event: Event) => {
+      const EventTitle = String(event.attributes.EventName).toLowerCase();
+      const EventShortDescription = String(event.attributes.EventShortDescription).toLowerCase();
+      const EventLocation = String(event.attributes.EventLocation).toLowerCase();
+
+      // IF found any event that contained the search term
+      if(
+        events !== undefined &&
+        EventTitle.includes(searchTerm) ||
+        EventShortDescription.includes(searchTerm) ||
+        EventLocation.includes(searchTerm)
+      ){
+        return event;
+      }
+      // IF the search term start by default blank or user backspace all search, return everything
+      if(searchTerm == ""){
+        return event;
+      }
+    })
+  }
 
   const sortByUpcoming = () => {
     setPaginatedEvents(
@@ -120,6 +196,14 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       ? PrevBtn.current?.setAttribute("disabled", "true")
       : PrevBtn.current?.removeAttribute("disabled");
   }, [paginatedEvents, currentPage]);
+
+  // Stacking the Filtering and Search with UseEffect hook
+  useEffect(() => {
+    let preFilteredEvents: Events = events;
+    preFilteredEvents = filterOnSelectedFilter(preFilteredEvents, currentSelectedFilters);
+    preFilteredEvents = filterOnTextQuery(preFilteredEvents, searchQuery);
+    setPaginatedEvents(preFilteredEvents.slice(0, 6));
+  }, [searchQuery, currentSelectedFilters])
   
   return (
     <Container ref={EventContainerDiv} className="projectContainer">
@@ -128,10 +212,12 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
+              ref={SearchField}
               placeholder="Search"
               aria-label="search"
               aria-describedby="search-field"
               className="border-0 bg-white py-0"
+              onChange={handleSearch}
             />
             <div className="input-group-append">
               <button
@@ -149,22 +235,22 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
           <div className="categories-wrapper">
             <h6>Event</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, EventCategories, "categories-filter", () => {})}
+            {getFilterList(true, EventCategories, "categories-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Type</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, EventTypes, "type-filter", () => {})}
+            {getFilterList(true, EventTypes, "type-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Price</h6> 
             <TextDivider prime={false} />
-            {getFilterList(true, EventPriceType, "price-filter", () => {})}
+            {getFilterList(true, EventPriceType, "price-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Year</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, EventYearCollection, "year-filter", () => {})}
+            {getFilterList(true, EventYearCollection, "year-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Sort by</h6>
@@ -181,7 +267,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 <h6 className="m-0">Event</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, EventCategories, "categories-filter", () => {})}
+                {getFilterList(false, EventCategories, "categories-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* EVENT TYPE */}
@@ -190,7 +276,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 <h6 className="m-0">Type</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, EventTypes, "type-filter", () => {})}
+                {getFilterList(false, EventTypes, "type-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* EVENT PRICE */}
@@ -199,7 +285,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 <h6 className="m-0">Price</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, EventPriceType, "price-filter", () => {})}
+                {getFilterList(false, EventPriceType, "price-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* EVENT YEAR */}
@@ -208,7 +294,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 <h6 className="m-0">Year</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, EventYearCollection, "year-filter", () => {})}
+                {getFilterList(false, EventYearCollection, "year-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* SORT BY */}
