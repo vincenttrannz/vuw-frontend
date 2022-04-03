@@ -45,6 +45,9 @@
     grid-column: span 3;
     display: flex;
     justify-content: space-between;
+    &#eventPage {
+      grid-column: auto;
+    }
   }
   // Project card style
   &__portfolio {
@@ -277,6 +280,9 @@
     }
     &__next-prev-container {
       grid-column: span 2;
+      &#eventPage {
+        grid-column: span 2;
+      }
     }
     // Event card style
     &__events-wrapper {
@@ -336,6 +342,9 @@
     }
     &__next-prev-container {
       grid-column: span 1;
+      &#eventPage {
+        grid-column: auto;
+      }
     }
     // Events card
     &__events-wrapper {

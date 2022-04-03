@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Events, EventCategories, EventTypes } from "../../compilers/type";
 import TextDivider from "./views/TextDivider";
 import AllEvents from './AllEvents'
@@ -20,8 +20,11 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   let FilterArray = new Array;
   let FilterEvents = new Array;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [paginatedEvents, setPaginatedEvents] =
-    useState<Events>(events);
+  const [paginatedEvents, setPaginatedEvents] = useState<Events>(events);
+  const today = + new Date();
+  const NextBtn = useRef<HTMLButtonElement>(null);
+  const PrevBtn = useRef<HTMLButtonElement>(null);
+  const EventContainerDiv = useRef<HTMLDivElement>(null);
 
   const EventYearCollection = Array.from(
     new Set(
@@ -43,8 +46,83 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
     events.map(event => event.attributes.EventPriceType)
   );
   
+
+  const sortByUpcoming = () => {
+    setPaginatedEvents(
+      events.sort((a, b) => {
+        return Number(Date.parse(String(b.attributes.EventStartDate))) - Number(Date.parse(String(a.attributes.EventStartDate)))
+      })
+    ) 
+  };
+
+  const sortByPast = () => {
+    setPaginatedEvents(
+      events.sort((a, b) => {
+        return Number(Date.parse(String(a.attributes.EventStartDate))) - Number(Date.parse(String(b.attributes.EventStartDate)))
+      })
+    )
+  };
+
+  const sortByEvent = (isDesktop: boolean) => {
+    return (
+      <div id="event-sortby" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
+        <div onClick={() => sortByPast()} className="p2 bold categories-container__category">
+          Past Event
+        </div>
+        <div onClick={() => sortByUpcoming()} className="p2 bold categories-container__category">
+          Upcoming Event
+        </div>
+      </div>
+    )
+  };
+
+  const scrollToRef = (ref: any) =>
+  window.scrollTo(0, ref.current?.offsetTop - 75);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+    scrollToRef(EventContainerDiv);
+  };
+
+  const previousPage = () => {
+    setCurrentPage(currentPage - 1);
+    scrollToRef(EventContainerDiv);
+  };
+
+  // Logic for paginated events
+  useEffect(() => {
+    if (events && events.length) {
+      switch (currentPage) {
+        case 1:
+          setPaginatedEvents(events.slice(0, 6));
+          break;
+        case 2:
+          setPaginatedEvents(events.slice(6, 12));
+          break;
+        default:
+          setPaginatedEvents(
+            events.slice(currentPage * 6, currentPage * 6 + 6)
+          );
+          break;
+      }
+    }
+  }, [currentPage, events]);
+
+  // This effect to check after Set new projects length
+  useEffect(() => {
+    // 1. Logic for NextBtn
+    paginatedEvents.length < 6
+      ? NextBtn.current?.setAttribute("disabled", "true")
+      : NextBtn.current?.removeAttribute("disabled");
+
+    // 2. Logic for PrevBtn
+    currentPage == 1
+      ? PrevBtn.current?.setAttribute("disabled", "true")
+      : PrevBtn.current?.removeAttribute("disabled");
+  }, [paginatedEvents, currentPage]);
+  
   return (
-    <Container className="projectContainer">
+    <Container ref={EventContainerDiv} className="projectContainer">
       {/* EVENT DETAILS WRAPPER */}
       <div className="projectContainer__details-wrapper">
         <div className="bg-white rounded">
@@ -91,7 +169,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
           <div className="categories-wrapper">
             <h6>Sort by</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, EventYearCollection, "year-filter", () => {})}
+            {sortByEvent(true)}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
@@ -133,6 +211,15 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 {getFilterList(false, EventYearCollection, "year-filter", () => {})}
               </Accordion.Body>
             </Accordion.Item>
+            {/* SORT BY */}
+            <Accordion.Item eventKey="4">
+              <Accordion.Header>
+                <h6 className="m-0">Sort by</h6>
+              </Accordion.Header>
+              <Accordion.Body>
+                {sortByEvent(false)}
+              </Accordion.Body>
+            </Accordion.Item>
           </Accordion>
         </div>
       </div>
@@ -145,6 +232,26 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
           :
           <h2>No results</h2>
         }
+        <div className="projectContainer__next-prev-container" id="eventPage">
+          <Button
+            ref={PrevBtn}
+            onClick={previousPage}
+            className="prev-btn"
+            variant="vic"
+          >
+            <span className="the-arrow rotate"></span>{" "}
+            <span className="btn-text">Previous</span>
+          </Button>
+          <Button
+            ref={NextBtn}
+            onClick={nextPage}
+            className="next-btn"
+            variant="vic"
+          >
+            <span className="btn-text">Next</span>{" "}
+            <span className="the-arrow"></span>
+          </Button>
+        </div>
       </div>
     </Container>
   )
