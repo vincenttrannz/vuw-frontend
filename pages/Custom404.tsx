@@ -17,6 +17,7 @@ export default function Custom404() {
         HomepageSubtitle={false}
         HeroBanner={"/img/hero-banner.jpg"}
         HeroTitle="404"
+        HideScrollIndicator={true}
       />
       <TwoColumnsBlock className='px-2 px-xl-7'>
         <div>

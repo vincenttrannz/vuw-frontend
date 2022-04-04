@@ -26,6 +26,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
   const quickIntroTeReo = getStrapiData(homepage).Quick_intro_te_reo;
   const quickIntroTextColOne = getStrapiData(homepage).Quick_intro_text_column_one;
   const quickIntroTextColTwo = getStrapiData(homepage).Quick_intro_text_column_two;
+
   return (
     <>
       <HeadData

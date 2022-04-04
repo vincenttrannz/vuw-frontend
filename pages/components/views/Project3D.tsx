@@ -21,8 +21,11 @@ export default function Project3D({ Project3DLink, Project3DCaption }: Project3D
         src={Project3DLink}
       ></iframe>
       {
-        (Project3DCaption !== undefined) &&
-        <ImgCaption className="mx-0 my-1" caption={Project3DCaption}/>
+        (Project3DCaption == null || Project3DCaption == "")  
+        ? ""
+        : (Project3DCaption !== undefined) 
+        ? <ImgCaption className="mx-0 my-1" caption={Project3DCaption}/>
+        : ""
       }
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import ScrollDownIndicator from './ScrollDownIndicator';
 
 type PageHeroBannerProps = {
   className?: string;
@@ -7,9 +8,10 @@ type PageHeroBannerProps = {
   HomepageSubtitle?: boolean;
   HeroBanner: string;
   HeroTitle: string;
+  HideScrollIndicator?: boolean;
 };
 
-export default function PageHeroBanner({className, OtherSide, HomepageSubtitle, HeroBanner, HeroTitle}: PageHeroBannerProps) {
+export default function PageHeroBanner({className, OtherSide, HomepageSubtitle, HeroBanner, HeroTitle, HideScrollIndicator}: PageHeroBannerProps) {
   return (
     <div
       className={`hero-section ${OtherSide ? "otherSide" : className ? className : ""}`}
@@ -23,6 +25,9 @@ export default function PageHeroBanner({className, OtherSide, HomepageSubtitle, 
           {(HomepageSubtitle) && <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>}
         </div>
       </Container>
+      <div className={`${HideScrollIndicator ? "d-none" : ""}`}>
+        <ScrollDownIndicator/>
+      </div>
     </div>
   );
 }

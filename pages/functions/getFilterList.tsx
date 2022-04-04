@@ -7,6 +7,7 @@ const getFilterList = (isDesktop: boolean, dataFilter: string[], filterName: str
             key={i}
             onClick={handleClick}
             className={`p2 bold categories-container__category`}
+            data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
             data-filter={filter.replace(/ /g, "_")}
           >
             {filter.replace(/_/g, " ")}

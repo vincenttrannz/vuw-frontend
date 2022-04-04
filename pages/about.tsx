@@ -87,7 +87,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         HeroBanner={AboutHeroBanner}
         HeroTitle="About us"
       />
-      <ImgCaption className="mx-2" caption={AboutHeroCaption} />
+      <ImgCaption id="caption-hero" className="mx-2" caption={AboutHeroCaption} />
       {/* About Page General Info Block */}
       <TwoColumnsBlock className="right-img-text-block">
         <div className="text-container">
@@ -119,8 +119,8 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         </div>
         <div>
           <ReactMarkdown>{FirstContentGreyBlockParagraph}</ReactMarkdown>
-          <Link href={FirstContentGreyBlockBtnLink}>
-            <a target="_blank" className="btn btn-vic mt-3 mt-md-4">
+          <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()) } }}>
+            <a target="_self" className="btn btn-vic mt-3 mt-md-4">
               See this year’s projects
             </a>
           </Link>

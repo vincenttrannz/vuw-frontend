@@ -21,8 +21,11 @@ export default function ProjectPDF({ ProjectPDFLink, ProjectPDFCaption }: Projec
             defaultScale={SpecialZoomLevel.PageFit}
           />
           {
-            (ProjectPDFCaption !== undefined) &&
-            <ImgCaption className="mx-0 my-1" caption={ProjectPDFCaption}/>
+            (ProjectPDFCaption == null || ProjectPDFCaption == "") 
+            ? ""
+            : (ProjectPDFCaption !== undefined)
+            ? <ImgCaption className="mx-0 my-1" caption={ProjectPDFCaption}/>
+            : ""
           }
         </div>
       </Worker>

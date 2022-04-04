@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent } from "react";
+import { useRouter } from 'next/router';
+import $ from 'jquery';
 import AllProjects from "./AllProjects";
-import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
+import { Container, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./views/TextDivider";
+import VicButton from './views/VicButton';
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Project, Schools, Levels, Awards } from "../../compilers/type";
 import getFilterList from '../functions/getFilterList';
@@ -26,13 +29,18 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   // console.log("Award data:", awardData);
 
   let FilterArray = new Array;
-  let FilterProjects = new Array;
+  // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([]);
+  const [disableNextBtn, setDisableNextBtn] = useState(false);
+  const [disablePrevBtn, setDisablePrevBtn] = useState(false);
+  // Collection of reference for button, input
   const SearchField = useRef<HTMLInputElement>(null);
-  const NextBtn = useRef<HTMLButtonElement>(null);
-  const PrevBtn = useRef<HTMLButtonElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
+  const HomeURLYearQuery = useRouter().query.year;
+
   const ProjectYearCollection = Array.from(
     new Set(
       projects.map((project) =>
@@ -70,8 +78,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           return (
             <div
               key={i}
-              onClick={handleFilterSearch}
+              onClick={handleFilter}
               className={`p2 bold categories-container__category`}
+              data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
               data-filter={name.replace(/ /g, "_")}
               data-is-school={true}
             >
@@ -99,8 +108,9 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               return (
                 <div
                   key={i}
-                  onClick={handleFilterSearch}
+                  onClick={handleFilter}
                   className={`p2 bold categories-container__category`}
+                  data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
                   data-filter={major.major.replace(/ /g, "_")}
                   data-school={major.school.replace(/ /g, "_")}
                 >
@@ -112,38 +122,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       </div>
     )
   }
-
-  // Logic for paginated projects
-  useEffect(() => {
-    if (projects && projects.length) {
-      switch (currentPage) {
-        case 1:
-          setPaginatedProjects(projects.slice(0, 6));
-          break;
-        case 2:
-          setPaginatedProjects(projects.slice(6, 12));
-          break;
-        default:
-          setPaginatedProjects(
-            projects.slice(currentPage * 6, currentPage * 6 + 6)
-          );
-          break;
-      }
-    }
-  }, [currentPage, projects]);
-
-  // This effect to check after Set new projects length
-  useEffect(() => {
-    // 1. Logic for NextBtn
-    paginatedProjects.length < 6
-      ? NextBtn.current?.setAttribute("disabled", "true")
-      : NextBtn.current?.removeAttribute("disabled");
-
-    // 2. Logic for NextBtn
-    currentPage == 1
-      ? PrevBtn.current?.setAttribute("disabled", "true")
-      : PrevBtn.current?.removeAttribute("disabled");
-  }, [paginatedProjects, currentPage]);
 
   const scrollToRef = (ref: any) =>
     window.scrollTo(0, ref.current?.offsetTop - 75);
@@ -165,38 +143,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     return 1;
   };
 
-  function kmpSearch(pattern:string, text:string) {
-    if (pattern.length == 0)
-      return 0; // Immediate match
-  
-    // Compute longest suffix-prefix table
-    var lsp = [0]; // Base case
-    for (var i = 1; i < pattern.length; i++) {
-      var j = lsp[i - 1]; // Start by assuming we're extending the previous LSP
-      while (j > 0 && pattern.charAt(i) != pattern.charAt(j))
-        j = lsp[j - 1];
-      if (pattern.charAt(i) == pattern.charAt(j))
-        j++;
-      lsp.push(j);
-    }
-  
-    // Walk through text string
-    var j = 0; // Number of chars matched in pattern
-    for (var i = 0; i < text.length; i++) {
-      while (j > 0 && text.charAt(i) != pattern.charAt(j))
-        j = lsp[j - 1]; // Fall back in the pattern
-      if (text.charAt(i) == pattern.charAt(j)) {
-        j++; // Next char matched, increment position
-        if (j == pattern.length)
-          return i - (j - 1);
-      }
-    }
-    return -1; // Not found
-  }
-
-  const handleFilterSearch = (event: MouseEvent<HTMLDivElement>| any) => {
+  const handleFilter = (event: MouseEvent<HTMLDivElement>) => {
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
-    const SearchTerm = SearchField.current ? SearchField.current.value.toLowerCase() : "";
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
     const ProjectMajorLink: HTMLAnchorElement[] = Array.from(document.querySelectorAll("[data-school]"));
     let PreFilterArray:any[] = new Array;
@@ -206,7 +154,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.id;
+        const CategoryContainerId = category.parentElement?.id;        
         if(CategoryContainerId == event.currentTarget.parentElement?.id){
           category.classList.remove("active");
         }
@@ -226,8 +174,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           event.currentTarget.parentElement?.id == "major-filter" ||
           event.currentTarget.parentElement?.id == "year-filter" ||
           event.currentTarget.parentElement?.id == "level-filter" ||
-          event.currentTarget.parentElement?.id == "award-filter"  ||
-          SearchTerm || SearchTerm == ""     
+          event.currentTarget.parentElement?.id == "award-filter"
         ){
           return
         } else {
@@ -248,71 +195,126 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
       }
     })
-    // Setup filter & search array that user has selected
-    if(SearchTerm !== "") FilterArray.push(SearchTerm)
-    console.log("Filter keys are:", FilterArray);
 
     // Filtering logic
-    FilterProjects = projects.filter((project: Project, index: number) => {
+    setCurrentSelectedFilters(FilterArray)
+  }
+
+  // based on the selected filtes in the sidebar, filter the provided array of projects that have a content match
+  const filterOnSelectedFilter = (filterProjects: Projects, selectedFilters: string[]) => {
+    return filterProjects.filter((project: Project) => {
       const ProjectSchool = project.attributes.school.data.attributes.SchoolName;
       const ProjectMajor = project.attributes.major.data.attributes.MajorName;
       const ProjectYear = new Date(project.attributes.ProjectDate).getFullYear().toString();
       const ProjectLevel = project.attributes.level.data?.attributes.StudyLevel;
       const ProjectAward = project.attributes.award.data?.attributes.AwardType;
       const ProjectStudentAward = project.attributes.student.data?.attributes?.award.data?.attributes.AwardType;
-      // Term for search logic
-      const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
-      const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
-      const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
-
-      const ProjectSearchFilterElement = {
-        ProjectFilterArray: [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(element => element !== undefined),
-        ProjectSearchTerm: [ProjectTitle, ProjectStudent].concat(ProjectTags.split(",").map((value) => value.trim())).toString()
-      }
-
-      // const ProjectSearchFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward, ProjectTitle, ProjectStudent].filter(element => element !== undefined).concat(ProjectTags.split(",").map((value) => value.trim()))
+      // Setting up an array contained all project's filter points
+      const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(el => el !== undefined);
 
       // Step by Step logic
       // console.log(`Project ${index}`, ProjectSearchFilterElement);
-      
-      if (
-        FilterArray.every(el => ProjectSearchFilterElement.ProjectFilterArray.includes(el)) ||
-        ((SearchTerm !== "") ? ProjectSearchFilterElement.ProjectSearchTerm.includes(SearchTerm) : "")
-      ) {
+      if (selectedFilters.every(el => ProjectFilterElement.includes(el))) {
         return project;
       }
     })
-    setPaginatedProjects(FilterProjects.slice(0, 6));
   }
 
-  // const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-  //   const searchTerm = event.target.value.toLowerCase();
-  //   const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchQuery(searchTerm);
+  }
 
-  //   FilterProjects = projects.filter((project: Project) => {
-  //     const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
-  //     const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
-  //     const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
-  //     // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
-      
-  //     if(
-  //       ProjectTags?.includes(searchTerm) ||
-  //       ProjectTitle.includes(searchTerm) ||
-  //       ProjectStudent?.includes(searchTerm) &&
-  //       project !== undefined
-  //     ){
-  //       // console.log(project);
-  //       AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
-  //       return project;
-  //     }
-  //     if(searchTerm == "") {
-  //       // console.log(project);
-  //       AllCategoriesChoice.forEach(category => category.classList.remove("active", "disable"));
-  //       return project;
-  //     }
-  //   })
-  //   setPaginatedProjects(FilterProjects);
-  // }
+  const filterOnTextQuery = (projects: Projects, searchTerm: string): Projects => {
+    return projects.filter((project: Project) => {
+      const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
+      const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
+      const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
+      // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
+
+      // IF found any project that contained the search term
+      if(
+          project !== undefined &&
+          ProjectTags?.includes(searchTerm) ||
+          ProjectTitle.includes(searchTerm) ||
+          ProjectStudent?.includes(searchTerm)
+      ){
+        // console.log(project);
+        return project;
+      }
+      // IF the search term start by default blank or user backspace all search, return everything
+      if(searchTerm == "") {
+        // console.log(project);
+        return project;
+      }
+    })
+  }
+
+  // Logic for paginated projects
+  useEffect(() => {
+    if (projects && projects.length) {
+      switch (currentPage) {
+        case 1:
+          setPaginatedProjects(projects.slice(0, 12));
+          break;
+        case 2:
+          setPaginatedProjects(projects.slice(12, 24));
+          break;
+        default:
+          setPaginatedProjects(
+            projects.slice(currentPage * 12, currentPage * 12 + 12)
+          );
+          break;
+      }
+    }
+  }, [currentPage, projects]);
+
+  // This effect to check after Set new projects length
+  // useEffect(() => {
+  //   // 1. Logic for NextBtn
+  //   paginatedProjects.length < 12
+  //     ? NextBtn.current?.setAttribute("disabled", "true")
+  //     : NextBtn.current?.removeAttribute("disabled");
+
+  //   // 2. Logic for PrevBtn
+  //   currentPage == 1
+  //     ? PrevBtn.current?.setAttribute("disabled", "true")
+  //     : PrevBtn.current?.removeAttribute("disabled");
+  // }, [paginatedProjects, currentPage]);
+
+  useEffect(() => {
+    // 1. Logic for NextBtn
+    paginatedProjects.length < 12
+      ? setDisableNextBtn(true)
+      : setDisableNextBtn(false);
+
+    // 2. Logic for PrevBtn
+    currentPage == 1
+      ? setDisablePrevBtn(true)
+      : setDisablePrevBtn(false);
+  }, [paginatedProjects, currentPage, disableNextBtn, disablePrevBtn]);
+
+  useEffect(() => {
+    $(".categories-container__category").each((i, el) => {
+      if(window !== undefined && window.innerWidth > 767){
+        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "desktopFilter"){
+          $(el).trigger("click")
+        }
+      } else if (window !== undefined && window.innerWidth < 767) {
+        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "mobileFilter"){
+          $(el).trigger("click")
+        }
+      }
+    })
+  }, [HomeURLYearQuery])
+
+  // Stacking the Filtering and Search with UseEffect hook
+  useEffect(() => {
+    let preFilteredProjects: Projects = projects;
+    preFilteredProjects = filterOnSelectedFilter(preFilteredProjects, currentSelectedFilters)
+    preFilteredProjects = filterOnTextQuery(preFilteredProjects, searchQuery)
+    setPaginatedProjects(preFilteredProjects.slice(0, 12));
+  }, [searchQuery, currentSelectedFilters]);
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
@@ -326,7 +328,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               aria-label="search"
               aria-describedby="search-field"
               className="border-0 bg-white py-0"
-              onChange={handleFilterSearch}
+              onChange={handleSearch}
             />
             <div className="input-group-append">
               <button
@@ -354,17 +356,17 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <div className="categories-wrapper">
             <h6>Year</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, ProjectYearCollection, "year-filter", handleFilterSearch)}
+            {getFilterList(true, ProjectYearCollection, "year-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Level</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, LevelCollection, "level-filter", handleFilterSearch)}
+            {getFilterList(true, LevelCollection, "level-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
             <h6>Awards</h6>
             <TextDivider prime={false} />
-            {getFilterList(true, AwardCollection, "award-filter", handleFilterSearch)}
+            {getFilterList(true, AwardCollection, "award-filter", handleFilter)}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
@@ -394,7 +396,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Year</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, ProjectYearCollection, "year-filter", handleFilterSearch)}
+                {getFilterList(false, ProjectYearCollection, "year-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* LEVEL */}
@@ -403,7 +405,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Level</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, LevelCollection, "level-filter", handleFilterSearch)}
+                {getFilterList(false, LevelCollection, "level-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
             {/* AWARDS */}
@@ -412,7 +414,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                 <h6 className="m-0">Awards</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {getFilterList(false, AwardCollection, "award-filter", handleFilterSearch)}
+                {getFilterList(false, AwardCollection, "award-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -428,24 +430,22 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <h2>No results</h2>
         }
         <div className="projectContainer__next-prev-container">
-          <Button
-            ref={PrevBtn}
-            onClick={previousPage}
+          <VicButton
+            ClickFunc={previousPage}
+            variant="vic"
+            btnType="prev"
+            btnText="Previous"
             className="prev-btn"
+            disable={disablePrevBtn}
+          />
+          <VicButton
+            ClickFunc={nextPage}
             variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Previous</span>
-          </Button>
-          <Button
-            ref={NextBtn}
-            onClick={nextPage}
+            btnType="next"
+            btnText="Next"
             className="next-btn"
-            variant="vic"
-          >
-            <span className="btn-text">Next</span>{" "}
-            <span className="the-arrow"></span>
-          </Button>
+            disable={disableNextBtn}
+          />
         </div>
       </div>
     </Container>

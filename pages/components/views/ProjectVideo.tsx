@@ -18,8 +18,11 @@ export default function ProjectVideo({ ProjectVideoLink, ProjectVideoCaption }: 
         allowFullScreen
       ></iframe>
       {
-        (ProjectVideoCaption !== undefined) &&
-        <ImgCaption className="mx-0 my-1" caption={ProjectVideoCaption} />
+        (ProjectVideoCaption == null || ProjectVideoCaption == "")
+        ? ""
+        : (ProjectVideoCaption !== undefined)
+        ? <ImgCaption className="mx-0 my-1" caption={ProjectVideoCaption} />
+        : ""
       }
     </div>
   );
