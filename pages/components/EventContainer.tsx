@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent } from "react";
 import { Events, Event, EventCategories, EventTypes } from "../../compilers/type";
 import TextDivider from "./views/TextDivider";
+import VicButton from './views/VicButton';
 import AllEvents from './AllEvents'
 import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
@@ -18,10 +19,14 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   console.log("Event types", eventTypes);
   
   let FilterArray = new Array;
+  // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedEvents, setPaginatedEvents] = useState<Events>(events);
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([]);
+  const [disableNextBtn, setDisableNextBtn] = useState(false);
+  const [disablePrevBtn, setDisablePrevBtn] = useState(false);
+  // Collection of reference for button, input
   const today = + new Date();
   const SearchField = useRef<HTMLInputElement>(null);
   const NextBtn = useRef<HTMLButtonElement>(null);
@@ -188,14 +193,14 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   useEffect(() => {
     // 1. Logic for NextBtn
     paginatedEvents.length < 6
-      ? NextBtn.current?.setAttribute("disabled", "true")
-      : NextBtn.current?.removeAttribute("disabled");
+      ? setDisableNextBtn(true)
+      : setDisableNextBtn(false);
 
     // 2. Logic for PrevBtn
     currentPage == 1
-      ? PrevBtn.current?.setAttribute("disabled", "true")
-      : PrevBtn.current?.removeAttribute("disabled");
-  }, [paginatedEvents, currentPage]);
+      ? setDisablePrevBtn(true)
+      : setDisablePrevBtn(false);
+  }, [paginatedEvents, currentPage, disableNextBtn, disablePrevBtn]);
 
   // Stacking the Filtering and Search with UseEffect hook
   useEffect(() => {
@@ -319,24 +324,22 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
           <h2>No results</h2>
         }
         <div className="projectContainer__next-prev-container" id="eventPage">
-          <Button
-            ref={PrevBtn}
-            onClick={previousPage}
+          <VicButton
+            ClickFunc={previousPage}
+            variant="vic"
+            btnType="prev"
+            btnText="Previous"
             className="prev-btn"
+            disable={disablePrevBtn}
+          />
+          <VicButton
+            ClickFunc={nextPage}
             variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Previous</span>
-          </Button>
-          <Button
-            ref={NextBtn}
-            onClick={nextPage}
+            btnType="next"
+            btnText="Next"
             className="next-btn"
-            variant="vic"
-          >
-            <span className="btn-text">Next</span>{" "}
-            <span className="the-arrow"></span>
-          </Button>
+            disable={disableNextBtn}
+          />
         </div>
       </div>
     </Container>

@@ -119,8 +119,8 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         </div>
         <div>
           <ReactMarkdown>{FirstContentGreyBlockParagraph}</ReactMarkdown>
-          <Link href={FirstContentGreyBlockBtnLink}>
-            <a target="_blank" className="btn btn-vic mt-3 mt-md-4">
+          <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()) } }}>
+            <a target="_self" className="btn btn-vic mt-3 mt-md-4">
               See this year’s projects
             </a>
           </Link>

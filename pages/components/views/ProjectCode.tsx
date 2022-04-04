@@ -18,10 +18,11 @@ export default function ProjectCode({ ProjectCodeLink, ProjectCodeCaption }: Pro
         allowFullScreen
       ></iframe>
       {
-        (ProjectCodeCaption !== undefined) ?
-        <ImgCaption className="mx-0 my-1" caption={ProjectCodeCaption}/> :
-        (ProjectCodeCaption !== null) ?
-        <span></span> : ""
+        (ProjectCodeCaption == null || ProjectCodeCaption == "")
+        ? "" 
+        : (ProjectCodeCaption !== undefined) 
+        ? <ImgCaption className="mx-0 my-1" caption={ProjectCodeCaption}/> 
+        : ""
       }
     </div>
   );

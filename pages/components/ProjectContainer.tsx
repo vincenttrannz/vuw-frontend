@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent } from "react";
+import { useRouter } from 'next/router';
+import $ from 'jquery';
 import AllProjects from "./AllProjects";
-import { Container, Button, Accordion, InputGroup, FormControl } from "react-bootstrap";
+import { Container, Accordion, InputGroup, FormControl } from "react-bootstrap";
 import SearchLogo from "../../public/search-logo.svg";
 import TextDivider from "./views/TextDivider";
+import VicButton from './views/VicButton';
 import { getStrapiMedia, getStrapiData } from "../../lib/fetchData";
 import { Projects, Project, Schools, Levels, Awards } from "../../compilers/type";
 import getFilterList from '../functions/getFilterList';
@@ -26,14 +29,18 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   console.log("Award data:", awardData);
 
   let FilterArray = new Array;
+  // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([]);
+  const [disableNextBtn, setDisableNextBtn] = useState(false);
+  const [disablePrevBtn, setDisablePrevBtn] = useState(false);
+  // Collection of reference for button, input
   const SearchField = useRef<HTMLInputElement>(null);
-  const NextBtn = useRef<HTMLButtonElement>(null);
-  const PrevBtn = useRef<HTMLButtonElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
+  const HomeURLYearQuery = useRouter().query.year;
+
   const ProjectYearCollection = Array.from(
     new Set(
       projects.map((project) =>
@@ -73,6 +80,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               key={i}
               onClick={handleFilter}
               className={`p2 bold categories-container__category`}
+              data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
               data-filter={name.replace(/ /g, "_")}
               data-is-school={true}
             >
@@ -102,6 +110,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
                   key={i}
                   onClick={handleFilter}
                   className={`p2 bold categories-container__category`}
+                  data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
                   data-filter={major.major.replace(/ /g, "_")}
                   data-school={major.school.replace(/ /g, "_")}
                 >
@@ -261,17 +270,43 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   }, [currentPage, projects]);
 
   // This effect to check after Set new projects length
+  // useEffect(() => {
+  //   // 1. Logic for NextBtn
+  //   paginatedProjects.length < 12
+  //     ? NextBtn.current?.setAttribute("disabled", "true")
+  //     : NextBtn.current?.removeAttribute("disabled");
+
+  //   // 2. Logic for PrevBtn
+  //   currentPage == 1
+  //     ? PrevBtn.current?.setAttribute("disabled", "true")
+  //     : PrevBtn.current?.removeAttribute("disabled");
+  // }, [paginatedProjects, currentPage]);
+
   useEffect(() => {
     // 1. Logic for NextBtn
     paginatedProjects.length < 12
-      ? NextBtn.current?.setAttribute("disabled", "true")
-      : NextBtn.current?.removeAttribute("disabled");
+      ? setDisableNextBtn(true)
+      : setDisableNextBtn(false);
 
     // 2. Logic for PrevBtn
     currentPage == 1
-      ? PrevBtn.current?.setAttribute("disabled", "true")
-      : PrevBtn.current?.removeAttribute("disabled");
-  }, [paginatedProjects, currentPage]);
+      ? setDisablePrevBtn(true)
+      : setDisablePrevBtn(false);
+  }, [paginatedProjects, currentPage, disableNextBtn, disablePrevBtn]);
+
+  useEffect(() => {
+    $(".categories-container__category").each((i, el) => {
+      if(window !== undefined && window.innerWidth > 767){
+        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "desktopFilter"){
+          $(el).trigger("click")
+        }
+      } else if (window !== undefined && window.innerWidth < 767) {
+        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "mobileFilter"){
+          $(el).trigger("click")
+        }
+      }
+    })
+  }, [HomeURLYearQuery])
 
   // Stacking the Filtering and Search with UseEffect hook
   useEffect(() => {
@@ -395,24 +430,22 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           <h2>No results</h2>
         }
         <div className="projectContainer__next-prev-container">
-          <Button
-            ref={PrevBtn}
-            onClick={previousPage}
+          <VicButton
+            ClickFunc={previousPage}
+            variant="vic"
+            btnType="prev"
+            btnText="Previous"
             className="prev-btn"
+            disable={disablePrevBtn}
+          />
+          <VicButton
+            ClickFunc={nextPage}
             variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Previous</span>
-          </Button>
-          <Button
-            ref={NextBtn}
-            onClick={nextPage}
+            btnType="next"
+            btnText="Next"
             className="next-btn"
-            variant="vic"
-          >
-            <span className="btn-text">Next</span>{" "}
-            <span className="the-arrow"></span>
-          </Button>
+            disable={disableNextBtn}
+          />
         </div>
       </div>
     </Container>

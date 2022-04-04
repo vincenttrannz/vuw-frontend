@@ -2,15 +2,16 @@ import type { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import $ from 'jquery';
 import { useRouter } from 'next/router';
-import HeadData from "../components/HeadData";
+import ReactMarkdown from 'react-markdown';
+import $ from 'jquery';
 import { Container, Button } from "react-bootstrap";
 import { fetchAPI } from "../../lib/api";
 import { Project, Projects } from '../../compilers/type';
 import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
-import ReactMarkdown from 'react-markdown';
+import HeadData from "../components/HeadData";
 import TextDivider from '../components/views/TextDivider';
+import VicButton from '../components/views/VicButton';
 import ProjectPDF from '../components/views/ProjectPDF';
 import ProjectCarousel from '../components/views/ProjectCarousel';
 import Project3D from '../components/views/Project3D';
@@ -73,14 +74,13 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
-          <Button
-            onClick={GoBack}
-            className="prev-btn mb-3"
-            variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Back</span>
-          </Button>
+          <VicButton
+            variant='vic'
+            btnType='prev'
+            btnText='Back'
+            className='prev-btn mb-3'
+            ClickFunc={GoBack}
+          />
           <div className='work-details-container'>
             {
               [projectData.student.data.attributes?.StudentShortDetail, projectData.student.data.attributes?.major.data.attributes.MajorName, projectData.student.data.attributes?.StudentMinor, projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
@@ -259,7 +259,10 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
               {
                 // If the project is PDF
                 (projectData.ProjectPDF) &&
-                <ProjectPDF ProjectPDFLink={getStrapiMedia(projectData.ProjectPDFLink)}/>
+                <ProjectPDF 
+                  ProjectPDFLink={getStrapiMedia(projectData.ProjectPDFLink)}
+                  ProjectPDFCaption={projectData.ProjectCaption}
+                />
               }
               {
                 // If the project just contain images

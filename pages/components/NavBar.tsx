@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
           <a onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
-          <a onClick={clickHrefLink} className="p2" target="_blank">Enroll</a>
+          <a onClick={clickHrefLink} className="p2" target="_blank">Enrol</a>
         </Link>
         <div className="navbar__link-container__shares">
           <Link href="#">

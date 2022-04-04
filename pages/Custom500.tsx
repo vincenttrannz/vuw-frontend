@@ -16,6 +16,7 @@ export default function Custom500() {
         HomepageSubtitle={false}
         HeroBanner={"/img/hero-banner.jpg"}
         HeroTitle="404"
+        HideScrollIndicator={true}
       />
       <TwoColumnsBlock className='px-2 px-lg-7'>
         <div>
