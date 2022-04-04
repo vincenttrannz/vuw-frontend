@@ -87,7 +87,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         HeroBanner={AboutHeroBanner}
         HeroTitle="About us"
       />
-      <ImgCaption className="mx-2" caption={AboutHeroCaption} />
+      <ImgCaption id="caption-hero" className="mx-2" caption={AboutHeroCaption} />
       {/* About Page General Info Block */}
       <TwoColumnsBlock className="right-img-text-block">
         <div className="text-container">

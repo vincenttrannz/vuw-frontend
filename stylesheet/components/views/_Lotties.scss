@@ -1,0 +1,25 @@
+/*============================
+=        LOTTIES STYLE       =
+==============================*/
+
+.scrolldown {
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  bottom: -55px;
+  transform: translate(-50%, 0);
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #333333;
+  text-align: center;
+  border-radius: 50px;
+  &__text {
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+  }
+
+  @media (max-width: $small-tablet-screen-size) {
+    display: none !important;
+  }
+}

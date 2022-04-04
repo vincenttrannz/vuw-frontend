@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import ScrollDownIndicator from './ScrollDownIndicator';
 
 type PageHeroBannerProps = {
   className?: string;
@@ -23,6 +24,7 @@ export default function PageHeroBanner({className, OtherSide, HomepageSubtitle, 
           {(HomepageSubtitle) && <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>}
         </div>
       </Container>
+      <ScrollDownIndicator/>
     </div>
   );
 }

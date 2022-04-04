@@ -119,6 +119,9 @@ a {
   margin: 30px 60px;
   padding: 5px 15px;
   border-left: 2px solid $vic-soft-grey;
+  &#caption-hero {
+    width: 45%;
+  }
 }
 
 //  ========== //
@@ -446,6 +449,9 @@ a {
 @media (max-width: $small-tablet-screen-size) {
   .img-caption {
     margin: 15px 0;
+    &#caption-hero {
+      width: auto;
+    }
   }
   .content {
     &__event-detail {
