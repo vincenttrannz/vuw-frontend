@@ -64,6 +64,7 @@
     }
     .thumbnail-container {
       position: relative;
+      height: max(200px, min(15vw, 250px));
       img {
         width: 100%;
         object-fit: cover;
@@ -303,8 +304,12 @@
     &__event {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto;
+      align-content: flex-start;
       &__event-link {
         display: block;
+      }
+      &__img-container {
+        height: max(200px, min(15vw, 300px)) !important;
       }
       &__info-container {
         grid-template-columns: 1fr;
