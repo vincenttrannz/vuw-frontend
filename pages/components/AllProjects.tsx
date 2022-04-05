@@ -41,7 +41,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm">
               <div className="thumbnail-container">
-                <Image thumbnail src={ProjectThumbnail} alt="project thumbanil"/>
+                <Image thumbnail src={ProjectThumbnail} alt="project thumbnail"/>
                 <div className="img-overlay">
                   <div className="img-overlay__textbox">
                     <span className="p2">Explore</span>
@@ -80,25 +80,6 @@ export default function AllProjects({ projects }: ProjectsProps) {
                     {ProjectLevel !== undefined  && CategorySplit(ProjectLevel)}
                     {ProjectYear !== undefined  && CategorySplit(ProjectYear)}
                   </div>
-                  {/* <div className="filter-container d-none">
-                    <p data-find-school={ProjectSchool.replace(/ /g, "_")}>{ProjectSchool.replace(/ /g, "_")}</p>
-                    <p data-find-major={ProjectMajor.replace(/ /g, "_")}>{ProjectMajor.replace(/ /g, "_")}</p>
-                    <p data-find-year={ProjectYear}>{ProjectYear}</p>
-                    <p data-find-level={ProjectLevel.replace(/ /g, "_")}>{ProjectLevel.replace(/ /g, "_")}</p>
-                    <p data-find-award={
-                      (ProjectAward !== undefined) ? 
-                      ProjectAward.replace(/ /g, "_") :
-                      (ProjectStudentAward !== undefined) ?
-                      ProjectStudentAward.replace(/ /g, "_") : ""
-                    }>
-                      {
-                        (ProjectAward !== undefined) ? 
-                        ProjectAward :
-                        (ProjectStudentAward !== undefined) ?
-                        ProjectStudentAward : ""
-                      }
-                    </p>
-                  </div> */}
                 </div>
               </div>
             </a>
