@@ -15,9 +15,9 @@ export default function ShareContainer({className}: ShareContainerProps) {
   const router = useRouter();
   const currentURL = "http://vuwunicodesjav1.vuw.ac.nz" + router.asPath;
   const CopiedText = useRef<HTMLSpanElement>(null);
+  
+
   const clickCopy = () => {
-    // $("#copied").fadeIn("fast").delay(800).fadeOut("fast");
-    // (CopiedText.current) && CopiedText.current.setAttribute("opacity", "0");
     (CopiedText.current) && $(CopiedText.current).fadeIn("fast").delay(800).fadeOut("fast");
     navigator.clipboard.writeText(currentURL);
   }

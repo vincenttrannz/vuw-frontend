@@ -160,7 +160,7 @@ a {
   z-index: 9;
   position: fixed;
   right: 0;
-  top: 45%;
+  bottom: 5%;
   background: #fff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -286,7 +286,7 @@ a {
     border: 2px solid $vic-smoke;
     padding: 15px 30px;
     border-radius: 0px;
-    display: grid;
+    display: flex;
     width: fit-content;
     height: fit-content;
     align-items: center;
@@ -295,10 +295,8 @@ a {
     }
     // FOR PREV BUTTON
     &.prev-btn {
-      grid-template-columns: auto auto;
-      gap: 25px;
       .btn-text {
-        transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
+        transition: cubic-bezier(0.19, 1, 0.22, 1) all 1s;
       }
       &:hover {
         .btn-text {
@@ -308,10 +306,8 @@ a {
     }
     // FOR NEXT BUTTON
     &.next-btn {
-      grid-template-columns: auto auto;
-      gap: 25px;
       .btn-text {
-        transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) all .2s;
+        transition: cubic-bezier(0.19, 1, 0.22, 1) all 1s;
       }
       &:hover {
         .btn-text {
@@ -370,6 +366,7 @@ a {
 
 .arrow {
   width: fit-content;
+  display: flex;
 }
 
 .the-arrow {

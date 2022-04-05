@@ -133,10 +133,29 @@
 @media (max-width: $mobile-screen-size) {
   .other-works-container {
     display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    .textblock-with-divider {
+      grid-column: span 2;
+    }
+    &.mobile {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      .textblock-with-divider {
+        grid-column: span 2;
+      }
+    }
+  }
+}
+
+@media (max-width: $small-mobile-screen-size) {
+  .other-works-container {
+    display: grid;
     grid-template-columns: 1fr;
     gap: 25px;
     .textblock-with-divider {
-      grid-column: span 1;
+      grid-column: auto;
     }
     .projectContainer__portfolio {
       &:nth-child(3) {
@@ -144,11 +163,9 @@
       }
     }
     &.mobile {
-      display: grid;
       grid-template-columns: 1fr;
-      gap: 25px;
       .textblock-with-divider {
-        grid-column: span 1;
+        grid-column: auto;
       }
       .projectContainer__portfolio {
         &:nth-child(3) {

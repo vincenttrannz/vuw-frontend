@@ -38,8 +38,6 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
     getStrapiData(about).FirstContentGreyBlock.BlockTitle;
   const FirstContentGreyBlockParagraph =
     getStrapiData(about).FirstContentGreyBlock.BlockRichText;
-  const FirstContentGreyBlockBtnLink =
-    getStrapiData(about).FirstContentGreyBlock.BlockButtonLink;
   // School of Architecture block
   const SchoolArchitectureBlockTitle =
     getStrapiData(about).ArchitectureSchool.BlockTitle;

@@ -36,6 +36,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
       />
       <StickyShare/>
       <PageHeroBanner
+        className='home-hero'
         OtherSide={false}
         HomepageSubtitle={true}
         HeroBanner={getStrapiMedia(heroBanner)}

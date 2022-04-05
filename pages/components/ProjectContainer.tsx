@@ -136,13 +136,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     scrollToRef(ProjectContainerDiv);
   };
 
-  const getPageCount = () => {
-    if (projects && projects.length) {
-      return Math.ceil(projects.length / 6);
-    }
-    return 1;
-  };
-
   const handleFilter = (event: MouseEvent<HTMLDivElement>) => {
     const SelectedFilter = event.currentTarget.getAttribute("data-filter");
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
@@ -269,19 +262,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     }
   }, [currentPage, projects]);
 
-  // This effect to check after Set new projects length
-  // useEffect(() => {
-  //   // 1. Logic for NextBtn
-  //   paginatedProjects.length < 12
-  //     ? NextBtn.current?.setAttribute("disabled", "true")
-  //     : NextBtn.current?.removeAttribute("disabled");
-
-  //   // 2. Logic for PrevBtn
-  //   currentPage == 1
-  //     ? PrevBtn.current?.setAttribute("disabled", "true")
-  //     : PrevBtn.current?.removeAttribute("disabled");
-  // }, [paginatedProjects, currentPage]);
-
   useEffect(() => {
     // 1. Logic for NextBtn
     paginatedProjects.length < 12
@@ -334,7 +314,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               <button
                 id="button-addon1"
                 type="submit"
-                className="btn btn-link text-primary"
+                className="btn btn-link text-primary pe-none"
               >
                 <SearchLogo />
               </button>

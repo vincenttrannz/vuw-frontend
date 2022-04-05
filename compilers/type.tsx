@@ -277,6 +277,7 @@ export type EventPage = {
   id: number;
   attributes: {
     QuickIntroTitle: string;
+    QuickIntroSubtitle: string;
     QuickIntroColumnOne: string;
     QuickIntroColumnTwo: string;
     SeoData: SeoDataType;

@@ -26,6 +26,7 @@ const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, e
   const EventPageHeroBanner = getStrapiMedia(getStrapiData(eventPage).EventPageHeroBanner);
   const EventPageHeroBannerCaption = getStrapiData(eventPage).EventPageHeroBanner.data.attributes.caption;
   const EventPageQuickIntroTitle = getStrapiData(eventPage).QuickIntroTitle;
+  const EventPageQuickIntroSubtitle = getStrapiData(eventPage).QuickIntroSubtitle;
   const EventPageQuickIntroColumnOne = getStrapiData(eventPage).QuickIntroColumnOne;
   const EventPageQuickIntroColumnTwo = getStrapiData(eventPage).QuickIntroColumnTwo;
   
@@ -47,6 +48,7 @@ const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, e
         <div className="textblock-with-divider">
           <h3>{EventPageQuickIntroTitle}</h3>
           <TextDivider prime/>
+          <h6>{EventPageQuickIntroSubtitle}</h6>
         </div>
         <div>
           <p>{EventPageQuickIntroColumnOne}</p>
