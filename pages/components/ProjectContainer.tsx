@@ -73,7 +73,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   const getSchoolFilterList = (isDesktop: boolean) => {
     return (
-      <div id="school-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
+      <div data-parent-filter="school-filter" id="school-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {SchoolCollection.map((name: string, i: number) => {
           return (
             <div
@@ -94,7 +94,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   const getMajorFilterList = (isDesktop: boolean) => {
     return (
-      <div id="major-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
+      <div data-parent-filter="major-filter" id="major-filter" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
         {EachSchoolMajor.map(
           (
             majors: [
@@ -147,11 +147,11 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.id;        
-        if(CategoryContainerId == event.currentTarget.parentElement?.id){
+        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter");        
+        if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
           category.classList.remove("active");
         }
-        if(event.currentTarget.parentElement?.id == "school-filter" && category.parentElement?.id == "major-filter"){
+        if(event.currentTarget.parentElement?.getAttribute("data-parent-filter") == "school-filter" && category.parentElement?.getAttribute("data-parent-filter") == "major-filter"){
           category.classList.remove("active");
         }
       })
@@ -164,10 +164,10 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         elem.classList.toggle("disable");
       } else {
         if(
-          event.currentTarget.parentElement?.id == "major-filter" ||
-          event.currentTarget.parentElement?.id == "year-filter" ||
-          event.currentTarget.parentElement?.id == "level-filter" ||
-          event.currentTarget.parentElement?.id == "award-filter"
+          event.currentTarget.parentElement?.getAttribute("data-parent-filter") == "major-filter" ||
+          event.currentTarget.parentElement?.getAttribute("data-parent-filter") == "year-filter" ||
+          event.currentTarget.parentElement?.getAttribute("data-parent-filter") == "level-filter" ||
+          event.currentTarget.parentElement?.getAttribute("data-parent-filter") == "award-filter"
         ){
           return
         } else {
@@ -188,7 +188,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
       }
     })
-
     // Filtering logic
     setCurrentSelectedFilters(FilterArray)
   }
@@ -407,7 +406,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           ?
           <AllProjects projects={paginatedProjects}/>
           :
-          <h2>No results</h2>
+          <h2 className="no-result">No results</h2>
         }
         <div className="projectContainer__next-prev-container">
           <VicButton

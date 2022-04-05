@@ -226,7 +226,6 @@ a {
     width: 100%;
     object-fit: contain;
     object-position: left;
-    // aspect-ratio: 2 / 1;
     height: 32vw;
     min-height: max(260px, min(48vw, 480px));
   }
@@ -275,6 +274,7 @@ a {
     padding: 0;
     border-radius: 0;
     border: none;
+    height: 100%;
   }
 }
 
