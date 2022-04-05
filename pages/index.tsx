@@ -18,7 +18,6 @@ type HomepageProps = {
 };
 
 const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awards}) => {
-  // console.log("Homepage data:", homepage);
   const HomepageSeoData = getStrapiData(homepage).SeoData;
   const HomepageShareImageSeo = getStrapiData(homepage).SeoData.ShareImage;
   const heroBanner = getStrapiData(homepage).hero_banner;
@@ -61,10 +60,6 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
 };
 
 export async function getStaticProps() {
-  // function getRandomInt(max) {
-  //   return Math.floor(Math.random() * Math.floor(max));
-  // }
-
   // Run API calls in parallel
   const HomepageQuery = {
     populate: [

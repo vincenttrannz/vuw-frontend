@@ -13,11 +13,7 @@ type EventsProps = {
   eventTypes: EventTypes;
 };
 
-const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTypes}) => {
-  console.log("Events:", events);
-  console.log("Event categories:", eventCategories);
-  console.log("Event types", eventTypes);
-  
+const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTypes}) => {  
   let FilterArray = new Array;
   // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -88,7 +84,6 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString())
       }
     })
-    console.log(FilterArray);
     // Filtering logic
     setCurrentSelectedFilters(FilterArray);
   }
@@ -106,9 +101,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       const EventYear = new Date(event.attributes.EventStartDate).getFullYear().toString();
       const EventStatus = (today < Number(Date.parse(String(event.attributes.EventStartDate)))) ? "Upcoming Event" : "Past Event";
       // Setting up an array contained all event's filter points
-      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear, EventStatus].filter(el => el !== undefined);
-      console.log(EventFilterElement);
-      
+      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear, EventStatus].filter(el => el !== undefined);      
       if(selectedFilters.every(el => EventFilterElement.includes(el))) {
         return event;
       }

@@ -53,10 +53,6 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     })
     router.push("/events");
   }
-
-  // console.log("Start time:", StartTimeCalendar);
-  // console.log("End time:", EndTimeCalendar);
-  // console.log("Event location:", eventData.EventLocation);
   
   const eventICS = {
     title: `${eventData.EventName}`,
@@ -82,10 +78,6 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     });
     RandomThreeProjects(event.attributes.projects.data.sort(() => 0.5 - Math.random()).slice(0, 3));
   }, [])
-  
-  // Check event data
-  // console.log("Event:", eventData);
-  // console.log("Related student works:", ThreeProjects);
     
   return (
     <>

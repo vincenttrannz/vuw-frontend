@@ -61,10 +61,6 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
     });
   }, [])
 
-  // Checking the data
-  // console.log(projectData);
-  // console.log(randomThreeProjects);
-
   return (
     <>
       <HeadData

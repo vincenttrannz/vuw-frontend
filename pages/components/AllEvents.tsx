@@ -27,12 +27,10 @@ export default function AllEvents({ events }: EventsProps) {
 
   function eventGetTimestamp(checkTime:Date){
     if(today < Number(Date.parse(String(checkTime)))) {
-      // console.log("Event in the future");
       return (
         <span>Upcoming Event</span>
       )
     } else {
-      // console.log("Event in the past");
       return (
         <span>Past Event</span>
       )

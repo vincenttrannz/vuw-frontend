@@ -23,11 +23,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   levelData,
   awardData,
 }) => {
-  // console.log("Projects data:", projects);
-  // console.log("School data", schoolData);
-  // console.log("Level data:", levelData);
-  // console.log("Award data:", awardData);
-
   let FilterArray = new Array;
   // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);

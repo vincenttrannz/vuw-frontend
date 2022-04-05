@@ -22,7 +22,6 @@ export default function AllProjects({ projects }: ProjectsProps) {
   return (
     <>
       {projects.map((project:Project, i:number) => {
-        // console.log("Each project:", project);
         const ProjectThumbnail = getStrapiMedia(
           project.attributes.ProjectThumbnail
         );

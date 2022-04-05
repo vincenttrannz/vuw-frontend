@@ -18,8 +18,6 @@ type EventPageProps = {
 };
 
 const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, eventTypes }) => {
-  console.log("Event page:", eventPage);
-
   const EventPageShareImageSeo = getStrapiMedia(getStrapiData(eventPage).SeoData.ShareImage);
   const EventPageSeoTitle = getStrapiData(eventPage).SeoData.MetaTitle;
   const EventPageSeoDescription = getStrapiData(eventPage).SeoData.MetaDescription;
