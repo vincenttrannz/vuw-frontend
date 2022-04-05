@@ -106,6 +106,9 @@
         width: fit-content;
         margin-right: 0;
       }
+      &.home-hero {
+        margin-bottom: -100px;
+      }
     }
     &.otherSide, &.customError {
       background-size: cover;

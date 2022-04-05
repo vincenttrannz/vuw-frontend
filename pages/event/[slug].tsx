@@ -14,6 +14,7 @@ import Calendar from '/public/calendar.svg';
 import HeadData from "../components/HeadData";
 import AllEvents from '../components/AllEvents';
 import TextDivider from '../components/views/TextDivider';
+import VicButton from '../components/views/VicButton';
 import ImgCaption from '../components/views/ImgCaption';
 import ProjectCarousel from '../components/views/ProjectCarousel';
 import ProjectVideo from '../components/views/ProjectVideo';
@@ -95,14 +96,13 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
-          <Button
-            onClick={GoBack}
-            className="prev-btn mb-3"
-            variant="vic"
-          >
-            <span className="the-arrow rotate"></span>{" "}
-            <span className="btn-text">Back</span>
-          </Button>
+          <VicButton
+            variant='vic'
+            btnType='prev'
+            btnText='Back'
+            className='prev-btn mb-3'
+            ClickFunc={GoBack}
+          />
           <div className='work-details-container'>
             <div className='textblock-with-divider'>
               <h6>Date</h6>

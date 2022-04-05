@@ -29,8 +29,6 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   // Collection of reference for button, input
   const today = + new Date();
   const SearchField = useRef<HTMLInputElement>(null);
-  const NextBtn = useRef<HTMLButtonElement>(null);
-  const PrevBtn = useRef<HTMLButtonElement>(null);
   const EventContainerDiv = useRef<HTMLDivElement>(null);
 
   const EventYearCollection = Array.from(
@@ -52,6 +50,14 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
   const EventPriceType = Array.from(
     new Set (events.map(event => event.attributes.EventPriceType))
   );
+
+  const EventTimeStatus = Array.from(
+    new Set(events.map(event => 
+      (today < Number(Date.parse(String(event.attributes.EventStartDate))))
+      ? "Upcoming Event"
+      : "Past Event"
+    ))
+  )
   
   const handleFilter = (event: MouseEvent<HTMLDivElement>) => {
     const AllCategoriesChoice: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".categories-container__category"));
@@ -62,14 +68,14 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.id;        
-        if(CategoryContainerId == event.currentTarget.parentElement?.id){
+        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter");        
+        if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
           category.classList.remove("active");
         }
       })
       event.currentTarget.classList.toggle("active");
     }
-
+    
     AllCategoriesChoice.forEach(category => {
       if(category.className.includes("active")){
         PreFilterArray.push(
@@ -79,10 +85,10 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         )
         FilterArray = Array.from(new Set(PreFilterArray));
       } else {
-        FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString().replace(/_/g, " "))
+        FilterArray = PreFilterArray.filter((currentFilter: string) => currentFilter !== category.getAttribute("data-filter")?.toString())
       }
     })
-
+    console.log(FilterArray);
     // Filtering logic
     setCurrentSelectedFilters(FilterArray);
   }
@@ -98,8 +104,11 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       const EventType = event.attributes.event_type.data?.attributes.EventTypeName;
       const EventPriceType = event.attributes.EventPriceType;
       const EventYear = new Date(event.attributes.EventStartDate).getFullYear().toString();
+      const EventStatus = (today < Number(Date.parse(String(event.attributes.EventStartDate)))) ? "Upcoming Event" : "Past Event";
       // Setting up an array contained all event's filter points
-      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear].filter(el => el !== undefined);
+      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear, EventStatus].filter(el => el !== undefined);
+      console.log(EventFilterElement);
+      
       if(selectedFilters.every(el => EventFilterElement.includes(el))) {
         return event;
       }
@@ -127,35 +136,6 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       }
     })
   }
-
-  const sortByUpcoming = () => {
-    setPaginatedEvents(
-      events.sort((a, b) => {
-        return Number(Date.parse(String(b.attributes.EventStartDate))) - Number(Date.parse(String(a.attributes.EventStartDate)))
-      })
-    ) 
-  };
-
-  const sortByPast = () => {
-    setPaginatedEvents(
-      events.sort((a, b) => {
-        return Number(Date.parse(String(a.attributes.EventStartDate))) - Number(Date.parse(String(b.attributes.EventStartDate)))
-      })
-    )
-  };
-
-  const sortByEvent = (isDesktop: boolean) => {
-    return (
-      <div id="event-sortby" className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
-        <div onClick={() => sortByPast()} className="p2 bold categories-container__category">
-          Past Event
-        </div>
-        <div onClick={() => sortByUpcoming()} className="p2 bold categories-container__category">
-          Upcoming Event
-        </div>
-      </div>
-    )
-  };
 
   const scrollToRef = (ref: any) =>
   window.scrollTo(0, ref.current?.offsetTop - 75);
@@ -258,9 +238,9 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {getFilterList(true, EventYearCollection, "year-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Sort by</h6>
+            <h6>Event status</h6>
             <TextDivider prime={false} />
-            {sortByEvent(true)}
+            {getFilterList(true, EventTimeStatus, "event-status-filter", handleFilter)}
           </div>
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
@@ -302,13 +282,13 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
                 {getFilterList(false, EventYearCollection, "year-filter", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
-            {/* SORT BY */}
+            {/* EVENT STATUS */}
             <Accordion.Item eventKey="4">
               <Accordion.Header>
-                <h6 className="m-0">Sort by</h6>
+                <h6 className="m-0">Event status</h6>
               </Accordion.Header>
               <Accordion.Body>
-                {sortByEvent(false)}
+                {getFilterList(false, EventTimeStatus, "event-status-filter-mobile", handleFilter)}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -321,7 +301,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
           ?
           <AllEvents events={paginatedEvents}/>
           :
-          <h2>No results</h2>
+          <h2 className="no-result">No results</h2>
         }
         <div className="projectContainer__next-prev-container" id="eventPage">
           <VicButton

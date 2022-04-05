@@ -45,7 +45,7 @@ export default function VicButton({ClickFunc, className, variant, btnType, btnTe
    >
     {
       (btnType == "prev") && 
-      <div className='arrow'>
+      <div className='arrow me-2'>
         <Lottie
           options={ArrowLeftDefaultOptions}
           width={30}
@@ -54,6 +54,7 @@ export default function VicButton({ClickFunc, className, variant, btnType, btnTe
             margin: "0"
           }}
           speed={1.4}
+          // direction={!playLottie ? 1 : -1}
           isStopped={playLottie}
         />
       </div>
@@ -70,7 +71,7 @@ export default function VicButton({ClickFunc, className, variant, btnType, btnTe
     }
     {
       (btnType == "next") &&
-      <div className='arrow'>
+      <div className='arrow ms-2'>
         <Lottie
           options={ArrowRightDefaultOptions}
           width={30}

@@ -1,6 +1,6 @@
 const getFilterList = (isDesktop: boolean, dataFilter: string[], filterName: string, handleClick: (event:any) => void) => {
   return (
-    <div id={filterName} className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
+    <div data-parent-filter={filterName} className={`${isDesktop ? "categories-container__desktop" : "categories-container__mobile"}`}>
       {dataFilter.map((filter: string, i: number) => {
         return (
           <div

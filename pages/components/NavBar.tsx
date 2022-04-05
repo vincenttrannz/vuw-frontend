@@ -22,18 +22,18 @@ const NavBar: React.FC = () => {
         <Link href="/events">
           <a onClick={clickHrefLink} className="p2">Events</a>
         </Link>
-        <Link href="https://www.wgtn.ac.nz/">
+        <Link href="https://www.wgtn.ac.nz/wfadi/about/contact">
           <a onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
         </Link>
         <Link href="https://www.wgtn.ac.nz/">
           <a onClick={clickHrefLink} className="p2" target="_blank">Enrol</a>
         </Link>
         <div className="navbar__link-container__shares">
-          <Link href="#">
-            <a id="fb-icon"><FacebookIcon/></a>
+          <Link href="https://www.facebook.com/VUWArchitectureandDesign">
+            <a target="_blank" id="fb-icon"><FacebookIcon/></a>
           </Link>
-          <Link href="#">
-            <a id="insta-icon"><InstaIcon/></a>
+          <Link href="https://www.instagram.com/wgtnfadi/">
+            <a target="_blank" id="insta-icon"><InstaIcon/></a>
           </Link>
         </div>
       </>

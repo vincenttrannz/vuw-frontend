@@ -49,13 +49,13 @@ export default function Footer({}: Props) {
         <p className="p2 bold">Links</p>
         <ul>
           <li>
-            <Link href="/">
-              <a>Instagram</a>
+            <Link href="https://www.instagram.com/wgtnfadi/">
+              <a target="_blank">Instagram</a>
             </Link>
           </li>
           <li>
-            <Link href="/">
-              <a>Facebook</a>
+            <Link href="https://www.facebook.com/VUWArchitectureandDesign">
+              <a target="_blank">Facebook</a>
             </Link>
           </li>
         </ul>
