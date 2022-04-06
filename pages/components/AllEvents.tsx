@@ -58,7 +58,7 @@ export default function AllEvents({ events }: EventsProps) {
             <Link href={`/event/${EventSlug}`} key={i}>
               <a className="projectContainer__event shadow-sm">
                 <div className='projectContainer__event__img-container h-100'>
-                  <Image layout='fill' src={EventThumbnail} alt="event thumbnail"/>
+                  <Image priority={true} layout='fill' src={EventThumbnail} alt="event thumbnail"/>
                   <div className='projectContainer__event__event-timestamp'>
                     {eventGetTimestamp(event.attributes.EventStartDate)}
                   </div>
