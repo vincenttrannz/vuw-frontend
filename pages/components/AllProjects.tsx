@@ -1,6 +1,6 @@
 import React from "react";
 import Link from 'next/link';
-import Image from 'react-bootstrap/Image';
+import Image from 'next/image';
 import { Projects, Project } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
 import AwardRibbon from '../../public/award-ribbon.svg';
@@ -40,7 +40,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm">
               <div className="thumbnail-container">
-                <Image thumbnail src={ProjectThumbnail} alt="project thumbnail"/>
+                <Image layout="fill" src={ProjectThumbnail} alt="project thumbnail"/>
                 <div className="img-overlay">
                   <div className="img-overlay__textbox">
                     <span className="p2">Explore</span>

@@ -35,6 +35,7 @@
   .projectContainer {
     &__event {
       grid-template-columns: 1fr;
+      grid-template-rows: max(250px, min(15vw, 300px)) 1fr;
       &__event-link {
         display: block;
       }

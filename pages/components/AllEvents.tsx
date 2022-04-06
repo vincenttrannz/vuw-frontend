@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'react-bootstrap/Image';
+import Image from 'next/image';
 import { Events, Event } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
 import { getStrapiMedia } from "../../lib/fetchData";
@@ -58,7 +58,7 @@ export default function AllEvents({ events }: EventsProps) {
             <Link href={`/event/${EventSlug}`} key={i}>
               <a className="projectContainer__event shadow-sm">
                 <div className='projectContainer__event__img-container h-100'>
-                  <Image thumbnail src={EventThumbnail} alt="event thumbnail"/>
+                  <Image layout='fill' src={EventThumbnail} alt="event thumbnail"/>
                   <div className='projectContainer__event__event-timestamp'>
                     {eventGetTimestamp(event.attributes.EventStartDate)}
                   </div>
