@@ -19,7 +19,7 @@ html {
   font-size: 15px;
 }
 
-p, address {
+p, address, figure {
   margin: 0;
 }
 
@@ -248,6 +248,9 @@ a {
   }
   // Mobile
   @media (max-width: $mobile-screen-size) {
+    img {
+      object-fit: cover;
+    }
     &__school-list {
       ul {
         grid-template-columns: 1fr;
@@ -284,7 +287,7 @@ a {
 .btn {
   &-vic {
     border: 2px solid $vic-smoke;
-    padding: 15px 30px;
+    padding: 10px 30px;
     border-radius: 0px;
     display: flex;
     width: fit-content;

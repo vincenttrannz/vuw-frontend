@@ -86,7 +86,26 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
         description={eventData.SeoData.MetaDescription}
         image={(eventData.SeoData.ShareImage) ? getStrapiMedia(eventData.SeoData.ShareImage) : ""}
       />
-      <div className='vic-work__wrapper'>
+      <div id='eventPageWrapper' className='vic-work__wrapper'>
+        <Container className='pt-3 pb-2 d-block d-lg-none'>
+          <div className="textblock-with-divider mb-3">
+            <h1 className='h2'>{eventData.EventName}</h1>
+            <TextDivider prime/>
+          </div>
+          <figure>
+            <div className='image-container'>
+              <Image
+                src={getStrapiMedia(eventData.EventImageThumbnail)}
+                layout="fill"
+                objectFit='cover'
+                priority={true}
+              />
+            </div>
+            <figcaption>
+              <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
+            </figcaption>
+          </figure>
+        </Container>
         <Container className='vic-work__left-container'>
           <VicButton
             variant='vic'
@@ -166,22 +185,26 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
           </div>
         </Container>
         <Container className='vic-work__right-container'>
-          <div className="textblock-with-divider">
+          <div className="textblock-with-divider d-none d-lg-grid">
             <h1 className='h2'>{eventData.EventName}</h1>
             <TextDivider prime/>
           </div>
-          <div className="project-wrapper mt-3">
+          <div className="project-wrapper mt-0 mt-lg-3">
             <div className="project-info-container">
-              <div className='image-container'>
-                <Image
-                  src={getStrapiMedia(eventData.EventImageThumbnail)}
-                  layout="fill"
-                  objectFit='cover'
-                  priority={true}
-                />
-              </div>
-              <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
-              <ReactMarkdown className='content content__event-detail mt-4 mb-2'>
+              <figure className='d-none d-lg-block'>
+                <div className='image-container'>
+                  <Image
+                    src={getStrapiMedia(eventData.EventImageThumbnail)}
+                    layout="fill"
+                    objectFit='cover'
+                    priority={true}
+                  />
+                </div>
+                <figcaption>
+                  <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
+                </figcaption>
+              </figure>
+              <ReactMarkdown className='content content__event-detail mt-0 mt-lg-4 mb-2'>
                 {eventData.EventRichDescription}
               </ReactMarkdown>
               {
