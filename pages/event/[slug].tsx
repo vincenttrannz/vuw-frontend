@@ -19,6 +19,7 @@ import ImgCaption from '../components/views/ImgCaption';
 import ProjectCarousel from '../components/views/ProjectCarousel';
 import ProjectVideo from '../components/views/ProjectVideo';
 import OtherProjects from '../components/views/OtherProjects';
+import ShareContainer from '../components/views/ShareContainer';
 
 type EventPageProps = {
   event: Event;
@@ -217,7 +218,9 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                   ProjectVideoLink={eventData.EventVideoLink}
                 />
               }
+              <ShareContainer className='d-flex d-lg-none mt-2'/>
             </div>
+            <ShareContainer className='d-none d-lg-flex'/>
           </div>
           {
             /**

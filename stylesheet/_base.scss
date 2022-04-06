@@ -255,9 +255,6 @@ a {
   }
   // Mobile
   @media (max-width: $mobile-screen-size) {
-    img {
-      object-fit: cover;
-    }
     &__school-list {
       ul {
         grid-template-columns: 1fr;
