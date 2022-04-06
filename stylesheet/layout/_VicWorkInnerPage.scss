@@ -98,6 +98,11 @@
     &__wrapper {
       display: grid;
       grid-template-columns: 1fr;
+      &#eventPageWrapper {
+        .vic-work__left-container {
+          grid-row-start: auto;
+        }
+      }
     }
     &__left-container {
       grid-row-start: 2;

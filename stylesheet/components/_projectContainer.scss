@@ -238,7 +238,7 @@
           opacity: 0.5;
           pointer-events: none;
         }
-        &:hover, &.active {
+        &.active {
           background: $vic-teal;
           color: #fff;
         }
@@ -407,6 +407,37 @@
     &__events-wrapper {
       grid-template-columns: 1fr;
       gap: 2rem;
+    }
+  }
+}
+
+// Handling CATEGORY on Mobile click
+@media (hover: hover) {
+  .projectContainer {
+    .categories-wrapper {
+      .categories-container {
+        &__category {
+          &:hover {
+            background: $vic-teal;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (hover: none) {
+  .projectContainer {
+    .categories-wrapper {
+      .categories-container {
+        &__category {
+          &.active {
+            background: $vic-teal;
+            color: #fff;
+          }
+        }
+      }
     }
   }
 }
