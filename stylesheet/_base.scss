@@ -246,11 +246,15 @@ a {
       gap: 15px;
     }
   }
-  // Mobile
-  @media (max-width: $mobile-screen-size) {
+  // Tablet
+  @media (max-width: $tablet-screen-size) {
     img {
       object-fit: cover;
+      object-position: center;
     }
+  }
+  // Mobile
+  @media (max-width: $mobile-screen-size) {
     &__school-list {
       ul {
         grid-template-columns: 1fr;
