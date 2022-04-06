@@ -304,13 +304,10 @@
     }
     &__event {
       grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
+      grid-template-rows: max(250px, min(15vw, 300px)) 1fr;
       align-content: flex-start;
       &__event-link {
         display: block;
-      }
-      &__img-container {
-        height: max(200px, min(15vw, 300px)) !important;
       }
       &__info-container {
         grid-template-columns: 1fr;
