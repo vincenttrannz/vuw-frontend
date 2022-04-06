@@ -246,6 +246,13 @@ a {
       gap: 15px;
     }
   }
+  // Tablet
+  @media (max-width: $tablet-screen-size) {
+    img {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
   // Mobile
   @media (max-width: $mobile-screen-size) {
     img {
