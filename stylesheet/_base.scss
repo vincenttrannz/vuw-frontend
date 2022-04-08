@@ -19,7 +19,7 @@ html {
   font-size: 15px;
 }
 
-p, address, figure {
+p, address, figure, blockquote {
   margin: 0;
 }
 
@@ -232,6 +232,14 @@ a {
   &__event-detail {
     .event-p {
       width: 65%;
+    }
+    blockquote {
+      display: inline-block;
+      width: fit-content;
+      color: $vic-soft-grey;
+      padding: 5px 15px;
+      border-left: 2px solid scale-color($color: $vic-soft-grey, $lightness: 50%);
+      margin-bottom: 15px;
     }
   }
   &__school-list {
