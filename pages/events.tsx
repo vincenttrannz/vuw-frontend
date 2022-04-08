@@ -96,7 +96,7 @@ export async function getStaticProps() {
     return {
       props: { 
         eventPage: eventPageRes.data,
-        events: eventsRes.data,
+        events: eventsRes.data.sort((a:any, b:any) => Date.parse(String(b.attributes.EventStartDate)) - Date.parse(String(a.attributes.EventStartDate))),
         eventCategories: eventCategoryRes.data,
         eventTypes: eventTypeRes.data
       },

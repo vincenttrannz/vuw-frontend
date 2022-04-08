@@ -41,7 +41,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm">
               <div className="thumbnail-container">
-                <Image layout="fill" src={ProjectThumbnail} alt="project thumbnail"/>
+                <Image priority={true} layout="fill" src={ProjectThumbnail} alt="project thumbnail"/>
                 <div className="img-overlay">
                   <div className="img-overlay__textbox">
                     <span className="p2">Explore</span>
