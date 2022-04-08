@@ -288,6 +288,19 @@ export type EventPage = {
   };
 };
 
+// Privacy Policy page
+export type PrivacyPage = {
+  id: number;
+  attributes: {
+    SeoData: SeoDataType;
+    HeroBanner: ImagesDataType;
+    ContentBlock: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  }
+}
+
 // Other component type
 export type SeoDataType = {
   id: number;
