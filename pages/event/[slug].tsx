@@ -79,7 +79,17 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     RandomThreeProjects(event.attributes.projects.data.sort(() => 0.5 - Math.random()).slice(0, 3));
   }, [])
 
-  const CustomEventParagraph = ({children}:any) => <p className='event-p'>{children}</p>;
+  const CustomEventParagraph = ({children}:any) => {
+    if(children[0].type !== undefined && children[0].type == "img"){
+      return (
+        <div className='event__img'>{children}</div>
+      )
+    } else {
+      return (
+        <p className='event__p'>{children}</p>
+      )
+    }
+  };
   
   // Check event data
   // console.log("Event:", eventData);
@@ -212,9 +222,9 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
               </figure>
               <ReactMarkdown 
                 className='content content__event-detail mt-0 mt-lg-4 mb-2'
-                // components={{
-                //   p: (props) => <CustomEventParagraph {...props}/>
-                // }}
+                components={{
+                  p: (props) => <CustomEventParagraph {...props}/>
+                }}
               >
                 {eventData.EventRichDescription}
               </ReactMarkdown>

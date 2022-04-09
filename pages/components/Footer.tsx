@@ -30,7 +30,7 @@ export default function Footer({}: Props) {
         <ul>
           <li>
             <Link href="/">
-              <a>Student work</a>
+              <a>Students Work</a>
             </Link>
           </li>
           <li>

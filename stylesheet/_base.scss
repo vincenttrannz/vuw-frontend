@@ -227,11 +227,13 @@ a {
     object-fit: contain;
     object-position: left;
     height: 32vw;
-    min-height: max(260px, min(48vw, 480px));
+    // min-height: max(260px, min(48vw, 480px));
   }
   &__event-detail {
-    .event-p {
-      width: 65%;
+    .event {
+      &__p {
+        width: 70%;
+      }
     }
     blockquote {
       display: inline-block;
@@ -240,6 +242,10 @@ a {
       padding: 5px 15px;
       border-left: 2px solid scale-color($color: $vic-soft-grey, $lightness: 50%);
       margin-bottom: 15px;
+      p {
+        font-size: max(12px, min(5vw, 14px));
+        width: 100% !important;
+      }
     }
   }
   &__school-list {
@@ -257,8 +263,23 @@ a {
   // Tablet
   @media (max-width: $tablet-screen-size) {
     img {
+      object-fit: contain;
+      object-position: left;
+    }
+    &__event-detail {
+      .event {
+        &__p {
+          width: 100%;
+        }
+      }
+    }
+  }
+  // Small tablet
+  @media (max-width: $small-tablet-screen-size) {
+    img {
       object-fit: cover;
       object-position: center;
+      height: auto;
     }
   }
   // Mobile

@@ -43,7 +43,7 @@ const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, e
         HeroBanner={EventPageHeroBanner}
         HeroTitle="Events"
       />
-      <ImgCaption id="caption-hero" className="mx-2" caption={EventPageHeroBannerCaption}/>
+      <ImgCaption id="caption-hero" className="mx-3" caption={EventPageHeroBannerCaption}/>
       <ThreeColumnsBlock className="px-sm-3 px-xl-7 mt-3 mt-md-0">
         <div className="textblock-with-divider">
           <h3>{EventPageQuickIntroTitle}</h3>
