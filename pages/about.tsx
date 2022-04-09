@@ -84,7 +84,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         HeroBanner={AboutHeroBanner}
         HeroTitle="About us"
       />
-      <ImgCaption id="caption-hero" className="mx-2" caption={AboutHeroCaption} />
+      <ImgCaption id="caption-hero" className="mx-3" caption={AboutHeroCaption} />
       {/* About Page General Info Block */}
       <TwoColumnsBlock className="right-img-text-block">
         <div className="text-container">
@@ -133,7 +133,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
               alt=""
             />
             <figcaption>
-              <ImgCaption caption={SchoolArchitectureBlockImageCaption} />
+              <ImgCaption className="mx-3" caption={SchoolArchitectureBlockImageCaption} />
             </figcaption>
           </figure>
         </div>

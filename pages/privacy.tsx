@@ -35,7 +35,7 @@ const privacy: NextPage<PrivacyPageProps> = ({privacy}) => {
         HeroBanner={PrivacyHeroBanner}
         HeroTitle="Privacy Policies"
       />
-      <ImgCaption id="caption-hero" className="mx-2" caption={PrivacyHeroCaption} />
+      <ImgCaption id="caption-hero" className="mx-3" caption={PrivacyHeroCaption} />
       <Container>
         <div className='px-0 px-lg-6 py-3'>
           <div className="textblock-with-divider pb-2 pb-lg-3">

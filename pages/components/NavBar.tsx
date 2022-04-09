@@ -14,7 +14,7 @@ const NavBar: React.FC = () => {
     return (
       <>
        <Link href="/">
-          <a onClick={clickHrefLink} className="p2">Student Work</a>
+          <a onClick={clickHrefLink} className="p2">Students Work</a>
         </Link>
         <Link href="/about">
           <a onClick={clickHrefLink} className="p2">About</a>

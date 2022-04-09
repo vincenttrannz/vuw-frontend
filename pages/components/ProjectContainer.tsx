@@ -200,7 +200,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       const ProjectFilterElement = [ProjectSchool, ProjectMajor, ProjectYear, ProjectLevel, ProjectAward, ProjectStudentAward].filter(el => el !== undefined);
 
       // Step by Step logic
-      // console.log(`Project ${index}`, ProjectSearchFilterElement);
       if (selectedFilters.every(el => ProjectFilterElement.includes(el))) {
         return project;
       }
@@ -217,7 +216,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
       const ProjectTags = String(project.attributes.ProjectTags).toLowerCase();
       const ProjectTitle = String(project.attributes.ProjectTitle).toLowerCase();
       const ProjectStudent = String(project.attributes.student.data.attributes?.StudentName).toLowerCase();
-      // console.log("Search term:", ProjectTags, ProjectTitle, ProjectStudent);
 
       // IF found any project that contained the search term
       if(
@@ -226,12 +224,10 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           ProjectTitle.includes(searchTerm) ||
           ProjectStudent?.includes(searchTerm)
       ){
-        // console.log(project);
         return project;
       }
       // IF the search term start by default blank or user backspace all search, return everything
       if(searchTerm == "") {
-        // console.log(project);
         return project;
       }
     })

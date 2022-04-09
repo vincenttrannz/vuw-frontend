@@ -3,7 +3,6 @@ import Custom404 from './Custom404';
 import Custom505 from './Custom500';
 
 function Error({statusCode}:any) {
-  // console.log("Error status:", statusCode);
   return (
     <>
       {

@@ -3,7 +3,6 @@ import ICalendarLink from "react-icalendar-link";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import $ from 'jquery';
 import { useRouter } from 'next/router';
 import { Event, Events } from '../../compilers/type';
 import { fetchAPI } from "../../lib/api";
@@ -72,13 +71,20 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   }
 
   useEffect(() => {
-    const AllContent = Array.from($(".content").children());
-    AllContent.forEach(content => {
-      if(content.innerText.startsWith("<span>")) content.outerHTML = `<span class="p2 img-caption mx-0 my-1">${content.innerText}</span>`
-      if(!content.classList.value.includes("img-caption") && content.children.item(0)?.tagName !== "IMG" && content.tagName !== "H6") content.classList.add("event-p");
-    });
     RandomThreeProjects(event.attributes.projects.data.sort(() => 0.5 - Math.random()).slice(0, 3));
   }, [])
+
+  const CustomEventParagraph = ({children}:any) => {
+    if(children[0].type !== undefined && children[0].type == "img"){
+      return (
+        <div className='event__img'>{children}</div>
+      )
+    } else {
+      return (
+        <p className='event__p'>{children}</p>
+      )
+    }
+  };
     
   return (
     <>
@@ -205,7 +211,12 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                   <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
                 </figcaption>
               </figure>
-              <ReactMarkdown className='content content__event-detail mt-0 mt-lg-4 mb-2'>
+              <ReactMarkdown 
+                className='content content__event-detail mt-0 mt-lg-4 mb-2'
+                components={{
+                  p: (props) => <CustomEventParagraph {...props}/>
+                }}
+              >
                 {eventData.EventRichDescription}
               </ReactMarkdown>
               {
