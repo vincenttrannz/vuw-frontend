@@ -349,7 +349,7 @@ export async function getStaticPaths() {
         slug: project.attributes.Slug
       },
     })),
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 
