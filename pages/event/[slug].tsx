@@ -271,7 +271,7 @@ export async function getStaticPaths() {
         slug: event.attributes.Slug
       },
     })),
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
