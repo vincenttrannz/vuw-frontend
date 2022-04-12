@@ -41,7 +41,7 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
         HeroBanner={getStrapiMedia(heroBanner)}
         HeroTitle="Architecture and Design Innovation"
       />
-      <ThreeColumnsBlock className="px-sm-3 px-xl-7">
+      <ThreeColumnsBlock className="px-sm-3 px-xxl-7">
         <div className="textblock-with-divider">
           <h3>{quickIntroTitle}</h3>
           <TextDivider prime/>

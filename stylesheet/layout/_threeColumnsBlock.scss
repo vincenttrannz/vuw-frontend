@@ -9,6 +9,7 @@
   align-items: flex-start;
   grid-template-columns: auto auto auto;
   gap: 80px;
+  max-width: max(250px, min(100%, 1560px));
 }
 
 @media (max-width: $large-screen-size) {
