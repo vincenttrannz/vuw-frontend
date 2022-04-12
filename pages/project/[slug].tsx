@@ -83,12 +83,41 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
           />
           <div className='work-details-container'>
             {
-              [projectData.student.data.attributes?.StudentShortDetail, projectData.student.data.attributes?.major.data.attributes.MajorName, projectData.student.data.attributes?.StudentMinor, projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
+              // Student Name and description
+              <div className='textblock-with-divider'>
+                <h4>{projectData.student.data.attributes?.StudentName}</h4>
+                <TextDivider prime={false}/>
+                <ReactMarkdown className='details-content'>
+                  {
+                    (projectData.student.data.attributes?.StudentShortDetail !== null && projectData.student.data.attributes?.StudentShortDetail !== "") 
+                    ?
+                    String(projectData.student.data.attributes?.StudentShortDetail)
+                    :
+                    ""
+                  }
+                </ReactMarkdown>
+              </div>
+            }
+            {
+              // Student Major
+              (projectData.student.data.attributes?.major.data !== null) &&
+              <div className='textblock-with-divider'>
+                <h6>Major</h6>
+                <TextDivider prime={false}/>
+                <ReactMarkdown className='details-content'>
+                  {String(projectData.student.data.attributes?.major.data.attributes.MajorName)}
+                </ReactMarkdown>
+              </div>
+            }
+            {
+              // Student Minor and Email
+              [projectData.student.data.attributes?.StudentMinor, 
+              projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
                 if(StudentDetail !== null && StudentDetail !== "") {
                   return (
                     <div key={i} className='textblock-with-divider'>
                       {
-                        (i == 0) ? <h4>{projectData.student.data.attributes?.StudentName}</h4> : (i == 1) ? <h6>Major</h6> : (i == 2) ? <h6>Minor</h6> : (i == 3) ? <h6>Email</h6> : (i == 4) ? <h6>Links</h6> : ""
+                        (i == 0)  ? <h6>Minor</h6> : (i == 1) ? <h6>Email</h6> : ""
                       }
                       <TextDivider prime={false}/>
                       <ReactMarkdown className='details-content'>{StudentDetail}</ReactMarkdown>
@@ -99,10 +128,14 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
             }
             {
               (
-                projectData.student.data.attributes?.FirstStudentLink !== undefined ||
-                projectData.student.data.attributes?.SecondStudentLink !== undefined ||
-                projectData.student.data.attributes?.ThirdStudentLink !== undefined ||
-                projectData.student.data.attributes?.FourthStudentLink !== undefined
+                projectData.student.data.attributes?.FirstStudentLink !== null &&
+                projectData.student.data.attributes?.FirstStudentLink !== "" ||
+                projectData.student.data.attributes?.SecondStudentLink !== null &&
+                projectData.student.data.attributes?.SecondStudentLink !== "" ||
+                projectData.student.data.attributes?.ThirdStudentLink !== null &&
+                projectData.student.data.attributes?.ThirdStudentLink !== "" ||
+                projectData.student.data.attributes?.FourthStudentLink !== null &&
+                projectData.student.data.attributes?.FourthStudentLink !== ""
               ) &&
               <div className='textblock-with-divider'>
                 <h6>Links</h6>
@@ -116,7 +149,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                       projectData.student.data.attributes?.FourthStudentLink
                     ].map((el, i:number) => {
                       return (
-                        (el !== null) ? ProjectLink(el, el, i) : ""
+                        (el !== null) ? ProjectLink(String(el), String(el), i) : ""
                       )
                     })
                   }

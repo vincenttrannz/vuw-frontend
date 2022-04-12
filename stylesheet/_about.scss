@@ -4,7 +4,7 @@
 
 .school-video-container {
   iframe {
-    width: 100%;
+    width: max(250px, min(100%, 1560px));
     height: 45vw;
   }
 }
