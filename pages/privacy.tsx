@@ -39,7 +39,7 @@ const privacy: NextPage<PrivacyPageProps> = ({privacy}) => {
       <Container>
         <div className='px-0 px-lg-6 py-3'>
           <div className="textblock-with-divider pb-2 pb-lg-3">
-            <h3>Privacy Policy</h3>
+            <h2 className='h3'>Privacy Policy</h2>
             <TextDivider prime />
           </div>
           <div className='px-0 px-lg-4'>

@@ -90,7 +90,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       <TwoColumnsBlock className="right-img-text-block">
         <div className="text-container">
           <div className="textblock-with-divider">
-            <h3>{AboutPageInfoBlockTitle}</h3>
+            <h2 className="h3">{AboutPageInfoBlockTitle}</h2>
             <TextDivider prime />
           </div>
           <p className="mt-3">{AboutPageInfoBlockParagraph}</p>

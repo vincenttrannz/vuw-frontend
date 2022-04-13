@@ -170,6 +170,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                 <div className='image-container'>
                   <Image
                     src={getStrapiMedia(projectData.ProjectThumbnail)}
+                    alt={projectData.ProjectThumbnail.data.attributes.alternativeText}
                     layout='fill'
                     objectFit='cover'
                     priority={true}

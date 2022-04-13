@@ -310,40 +310,36 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               onChange={handleSearch}
             />
             <div className="input-group-append">
-              <button
-                id="button-addon1"
-                type="submit"
-                className="btn btn-link text-primary pe-none"
-              >
+              <div className="btn btn-link text-primary pe-none">
                 <SearchLogo />
-              </button>
+              </div>
             </div>
           </InputGroup>
         </div>
         {/* Categories wrapper - Display block style only on tablet and above */}
         <div className="projectContainer__categories-desktop">
           <div className="categories-wrapper">
-            <h6>School</h6>
+            <p className="h6">School</p>
             <TextDivider prime={false} />
             {getSchoolFilterList(true)}
           </div>
           <div className="categories-wrapper">
-            <h6>Major</h6>
+            <p className="h6">Major</p>
             <TextDivider prime={false} />
             {getMajorFilterList(true)}
           </div>
           <div className="categories-wrapper">
-            <h6>Year</h6>
+            <p className="h6">Year</p>
             <TextDivider prime={false} />
             {getFilterList(true, ProjectYearCollection, "year-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Level</h6>
+            <p className="h6">Level</p>
             <TextDivider prime={false} />
             {getFilterList(true, LevelCollection, "level-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Awards</h6>
+            <p className="h6">Awards</p>
             <TextDivider prime={false} />
             {getFilterList(true, AwardCollection, "award-filter", handleFilter)}
           </div>
@@ -354,7 +350,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {/* SCHOOL */}
             <Accordion.Item eventKey="0">
               <Accordion.Header>
-                <h6 className="m-0">School</h6>
+                <p className="h6 m-0">School</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getSchoolFilterList(false)}
@@ -363,7 +359,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {/* MAJOR */}
             <Accordion.Item eventKey="1">
               <Accordion.Header>
-                <h6 className="m-0">Major</h6>
+                <p className="h6 m-0">Major</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getMajorFilterList(false)}
@@ -372,7 +368,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {/* YEAR */}
             <Accordion.Item eventKey="2">
               <Accordion.Header>
-                <h6 className="m-0">Year</h6>
+                <p className="h6 m-0">Year</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, ProjectYearCollection, "year-filter", handleFilter)}
@@ -381,7 +377,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {/* LEVEL */}
             <Accordion.Item eventKey="3">
               <Accordion.Header>
-                <h6 className="m-0">Level</h6>
+                <p className="h6 m-0">Level</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, LevelCollection, "level-filter", handleFilter)}
@@ -390,7 +386,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
             {/* AWARDS */}
             <Accordion.Item eventKey="4">
               <Accordion.Header>
-                <h6 className="m-0">Awards</h6>
+                <p className="h6 m-0">Awards</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, AwardCollection, "award-filter", handleFilter)}

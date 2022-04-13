@@ -7,10 +7,10 @@ type Props = {};
 
 export default function Footer({}: Props) {
   return (
-    <Container fluid className="footer">
+    <Container role="contentinfo" fluid className="footer">
       <div className="footer__column">
         <Link href="/">
-          <a className="vic-logo-container">
+          <a aria-label="Back to Homepage" className="vic-logo-container">
             <VicLogo className="vic-logo" />
           </a>
         </Link>

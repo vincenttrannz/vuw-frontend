@@ -44,9 +44,9 @@ const Home: NextPage<HomepageProps> = ({homepage, projects, schools, levels, awa
       />
       <ThreeColumnsBlock className="px-sm-3 px-xxl-7">
         <div className="textblock-with-divider">
-          <h3>{quickIntroTitle}</h3>
+          <h2 className='h3'>{quickIntroTitle}</h2>
           <TextDivider prime/>
-          <h5>{quickIntroTeReo}</h5>
+          <h3 className='h5'>{quickIntroTeReo}</h3>
         </div>
         <div>
           <p>{quickIntroTextColOne}</p>
