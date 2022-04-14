@@ -68,8 +68,10 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter");        
-        if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
+        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter"); 
+        if(CategoryContainerId == "categories-filter"){
+          return
+        } else if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
           category.classList.remove("active");
         }
       })
@@ -100,13 +102,13 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
 
   const filterOnSelectedFilter = (filterEvents: Events, selectedFilters: string[]) => {
     return filterEvents.filter((event: Event) => {
-      const EventCategory = event.attributes.event_category.data?.attributes.EventCategoryName;
+      const EventCategories = event.attributes.event_categories.data.map(category => category.attributes.EventCategoryName);
       const EventType = event.attributes.event_type.data?.attributes.EventTypeName;
       const EventPriceType = event.attributes.EventPriceType;
       const EventYear = new Date(event.attributes.EventStartDate).getFullYear().toString();
       const EventStatus = (today < Number(Date.parse(String(event.attributes.EventStartDate)))) ? "Upcoming Event" : "Past Event";
       // Setting up an array contained all event's filter points
-      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear, EventStatus].filter(el => el !== undefined);
+      const EventFilterElement = [EventType, EventPriceType, EventYear, EventStatus].concat(EventCategories).filter(el => el !== undefined);
       console.log(EventFilterElement);
       
       if(selectedFilters.every(el => EventFilterElement.includes(el))) {

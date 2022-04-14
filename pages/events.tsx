@@ -76,7 +76,7 @@ export async function getStaticProps() {
         "*",
         "EventImageThumbnail",
         "EventPhotoGallery",
-        "event_category",
+        "event_categories",
         "event_type",
       ],
     };
