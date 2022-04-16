@@ -88,19 +88,23 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     } else if (children[0].type == "a") {
       // Check if the children type is anchor tag
       return (
-        <a className='event__a' target="_blank" href={children[0].props.href}>{children[0].props.href}</a>
+        <Link href={children[0].props.href}>
+          <a className='event__a' target="_blank">{children[0].props.href}</a>
+        </Link>      
       )
     } else {
       // Check if the children type paragraph included anchor link
       return (
         <p className='event__p'>
           {
-            children.map((element:any) => {
+            children.map((element:any, index:number) => {
               if(typeof(element) !== "string" && element.type == "a"){
                 return (
-                  <a href={element.props.href} className='event__a' target='_blank'>
-                    {element.props.children}
-                  </a>
+                  <Link key={index} href={element.props.href}>
+                    <a className='event__a' target='_blank'>
+                      {element.props.children}
+                    </a>
+                  </Link>
                 )
               } else {
                 return element
