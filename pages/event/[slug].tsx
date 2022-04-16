@@ -81,12 +81,33 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
 
   const CustomEventParagraph = ({children}:any) => {
     if(children[0].type !== undefined && children[0].type == "img"){
+      // Check if the children type is image
       return (
         <div className='event__img'>{children}</div>
       )
-    } else {
+    } else if (children[0].type == "a") {
+      // Check if the children type is anchor tag
       return (
-        <p className='event__p'>{children}</p>
+        <a className='event__a' target="_blank" href={children[0].props.href}>{children[0].props.href}</a>
+      )
+    } else {
+      // Check if the children type paragraph included anchor link
+      return (
+        <p className='event__p'>
+          {
+            children.map((element:any) => {
+              if(typeof(element) !== "string" && element.type == "a"){
+                return (
+                  <a href={element.props.href} className='event__a' target='_blank'>
+                    {element.props.children}
+                  </a>
+                )
+              } else {
+                return element
+              }
+            })
+          }
+        </p>
       )
     }
   };
@@ -142,21 +163,30 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 <Calendar className="icon"/> Add to Calendar
               </ICalendarLink>
             </div>
-            {
-              [eventData.EventLocation, eventData.event_type.data.attributes.EventTypeName].map((eventContent:string, i:number) => {
-                return (
-                  <div key={i} className='textblock-with-divider'>
-                    {
-                      (i == 0) ? <h6>Location</h6> : (i == 1) ? <h6>Event Type</h6> : ""
-                    }
-                    <TextDivider prime={false}/>
-                    <ReactMarkdown className='details-content'>
-                      {eventContent}
-                    </ReactMarkdown>
-                  </div>
-                )  
-              })
-            }
+            <div className='textblock-with-divider'>
+              <h6>Location</h6>
+              <TextDivider prime={false}/>
+              {
+                (eventData.EventGoogleLocation !== null && eventData.EventGoogleLocation !== "")
+                ?
+                <Link  href={eventData.EventGoogleLocation}>
+                  <a className='details-content' target="_blank">
+                    {eventData.EventLocation}
+                  </a>
+                </Link>
+                :
+                <ReactMarkdown className='details-content'>
+                  {eventData.EventLocation}
+                </ReactMarkdown>
+              }
+            </div>
+            <div className='textblock-with-divider'>
+              <h6>Event Type</h6>
+              <TextDivider prime={false}/>
+              <ReactMarkdown className='details-content'>
+                {eventData.event_type.data.attributes.EventTypeName}
+              </ReactMarkdown>
+            </div>
             {
               (eventData.EventPriceType !== "Free") 
               ?

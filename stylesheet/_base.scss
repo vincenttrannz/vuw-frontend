@@ -80,6 +80,7 @@ p {
 a {
   color: $vic-smoke;
   text-decoration: none;
+  word-break: break-word;
   &:hover {
     color: $vic-teal;
   }
@@ -233,6 +234,18 @@ a {
     .event {
       &__p {
         width: 70%;
+        a {
+          color: $blue;
+          &:hover {
+            color: $vic-teal;
+          }
+        }
+      }
+      &__a {
+        color: $blue;
+        &:hover {
+          color: $vic-teal;
+        }
       }
     }
     blockquote {

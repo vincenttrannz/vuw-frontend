@@ -16,7 +16,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     loader: "default",
-    domains: ["localhost"],
+    domains: ["localhost", "vuwunicodesjav1.vuw.ac.nz", "eoye.nz"],
   },
   webpack(config) {
     config.module.rules.push({

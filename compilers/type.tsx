@@ -163,6 +163,7 @@ export type Event = {
     Slug: string;
     EventShortDescription: string;
     EventLocation: string;
+    EventGoogleLocation: string;
     EventPrice: string;
     EventPriceType: string;
     EventType: string;
