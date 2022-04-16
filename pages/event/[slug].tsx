@@ -90,10 +90,10 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
       return (
         <p className='event__p'>
           {
-            children.map((element:any) => {
+            children.map((element:any, index:number) => {
               if(typeof(element) !== "string" && element.type == "a"){
                 return (
-                  <a href={element.props.href} className='event__a' target='_blank'>
+                  <a key={index} href={element.props.href} className='event__a' target='_blank'>
                     {element.props.children}
                   </a>
                 )
