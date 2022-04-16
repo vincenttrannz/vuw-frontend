@@ -64,8 +64,10 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
       event.currentTarget.classList.remove("active");
     } else {
       AllCategoriesChoice.forEach(category => {
-        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter");        
-        if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
+        const CategoryContainerId = category.parentElement?.getAttribute("data-parent-filter"); 
+        if(CategoryContainerId == "categories-filter"){
+          return
+        } else if(CategoryContainerId == event.currentTarget.parentElement?.getAttribute("data-parent-filter")){
           category.classList.remove("active");
         }
       })
@@ -95,13 +97,13 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
 
   const filterOnSelectedFilter = (filterEvents: Events, selectedFilters: string[]) => {
     return filterEvents.filter((event: Event) => {
-      const EventCategory = event.attributes.event_category.data?.attributes.EventCategoryName;
+      const EventCategories = event.attributes.event_categories.data.map(category => category.attributes.EventCategoryName);
       const EventType = event.attributes.event_type.data?.attributes.EventTypeName;
       const EventPriceType = event.attributes.EventPriceType;
       const EventYear = new Date(event.attributes.EventStartDate).getFullYear().toString();
       const EventStatus = (today < Number(Date.parse(String(event.attributes.EventStartDate)))) ? "Upcoming Event" : "Past Event";
       // Setting up an array contained all event's filter points
-      const EventFilterElement = [EventCategory, EventType, EventPriceType, EventYear, EventStatus].filter(el => el !== undefined);      
+      const EventFilterElement = [EventType, EventPriceType, EventYear, EventStatus].concat(EventCategories).filter(el => el !== undefined);      
       if(selectedFilters.every(el => EventFilterElement.includes(el))) {
         return event;
       }
@@ -198,40 +200,36 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
               onChange={handleSearch}
             />
             <div className="input-group-append">
-              <button
-                id="button-addon1"
-                type="submit"
-                className="btn btn-link text-primary"
-              >
-                <SearchLogo />
-              </button>
+              <div className="btn btn-link text-primary pe-none">
+                <SearchLogo/>
+              </div>
             </div>
           </InputGroup>
         </div>
         {/* Event wrapper - Display block style only on tablet and above */}
         <div className="projectContainer__categories-desktop">
           <div className="categories-wrapper">
-            <h6>Event</h6>
+            <p className="h6">Event</p>
             <TextDivider prime={false} />
             {getFilterList(true, EventCategories, "categories-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Type</h6>
+            <p className="h6">Type</p>
             <TextDivider prime={false} />
             {getFilterList(true, EventTypes, "type-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Price</h6> 
+            <p className="h6">Price</p> 
             <TextDivider prime={false} />
             {getFilterList(true, EventPriceType, "price-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Year</h6>
+            <p className="h6">Year</p>
             <TextDivider prime={false} />
             {getFilterList(true, EventYearCollection, "year-filter", handleFilter)}
           </div>
           <div className="categories-wrapper">
-            <h6>Event status</h6>
+            <p className="h6">Event status</p>
             <TextDivider prime={false} />
             {getFilterList(true, EventTimeStatus, "event-status-filter", handleFilter)}
           </div>
@@ -242,7 +240,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {/* EVENT CATEGORIES */}
             <Accordion.Item eventKey="0">
               <Accordion.Header>
-                <h6 className="m-0">Event</h6>
+                <p className="h6 m-0">Event</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, EventCategories, "categories-filter", handleFilter)}
@@ -251,7 +249,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {/* EVENT TYPE */}
             <Accordion.Item eventKey="1">
               <Accordion.Header>
-                <h6 className="m-0">Type</h6>
+                <p className="h6 m-0">Type</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, EventTypes, "type-filter", handleFilter)}
@@ -260,7 +258,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {/* EVENT PRICE */}
             <Accordion.Item eventKey="2">
               <Accordion.Header>
-                <h6 className="m-0">Price</h6>
+                <p className="h6 m-0">Price</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, EventPriceType, "price-filter", handleFilter)}
@@ -269,7 +267,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {/* EVENT YEAR */}
             <Accordion.Item eventKey="3">
               <Accordion.Header>
-                <h6 className="m-0">Year</h6>
+                <p className="h6 m-0">Year</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, EventYearCollection, "year-filter", handleFilter)}
@@ -278,7 +276,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
             {/* EVENT STATUS */}
             <Accordion.Item eventKey="4">
               <Accordion.Header>
-                <h6 className="m-0">Event status</h6>
+                <p className="h6 m-0">Event status</p>
               </Accordion.Header>
               <Accordion.Body>
                 {getFilterList(false, EventTimeStatus, "event-status-filter-mobile", handleFilter)}

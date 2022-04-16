@@ -44,9 +44,9 @@ const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, e
       <ImgCaption id="caption-hero" className="mx-2 mx-lg-3" caption={EventPageHeroBannerCaption}/>
       <ThreeColumnsBlock className="px-sm-3 px-xl-7 mt-3 mt-md-0">
         <div className="textblock-with-divider">
-          <h3>{EventPageQuickIntroTitle}</h3>
+          <h2 className="h3">{EventPageQuickIntroTitle}</h2>
           <TextDivider prime/>
-          <h6>{EventPageQuickIntroSubtitle}</h6>
+          <h3 className="h6">{EventPageQuickIntroSubtitle}</h3>
         </div>
         <div>
           <p>{EventPageQuickIntroColumnOne}</p>
@@ -74,7 +74,7 @@ export async function getStaticProps() {
         "*",
         "EventImageThumbnail",
         "EventPhotoGallery",
-        "event_category",
+        "event_categories",
         "event_type",
       ],
     };

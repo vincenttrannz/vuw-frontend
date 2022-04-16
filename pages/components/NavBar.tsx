@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import $ from 'jquery';
 import Link from "next/link";
 import VicLogo from "../../public/vic-logo.svg";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import InstaIcon from '../../public/insta-logo.svg';
 import FacebookIcon from '../../public/fb-logo.svg';
 
@@ -54,15 +54,15 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <Container fluid className="navbar shadow-sm">
+    <header id="site-header" aria-label="header" className="container-fluid navbar shadow-sm">
       <Link href="/">
-        <a className="vic-logo-container">
+        <a aria-label="Back to Homepage" className="vic-logo-container">
           <VicLogo className="vic-logo" />
         </a>
       </Link>
-      <div ref={MenuContainer} className="navbar__link-container">
+      <nav role="navigation" ref={MenuContainer} className="navbar__link-container">
         {MenuList()}
-      </div>
+      </nav>
       <div className="hamburger-container">
         <button
           ref={hamburger}
@@ -78,7 +78,7 @@ const NavBar: React.FC = () => {
           </span>
         </button>
       </div>
-    </Container>
+    </header>
   );
 };
 

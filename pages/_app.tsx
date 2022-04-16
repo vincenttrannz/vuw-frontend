@@ -23,9 +23,9 @@ function VicApp({ Component, pageProps }: AppProps) {
       {/* META SEO DATA - END */}
       <GlobalContext.Provider value={global.attributes}>
         <NavBar/>
-        <div className="main">
+        <main role="main" className="main">
           <Component {...pageProps} />
-        </div>
+        </main>
         <Footer/>
       </GlobalContext.Provider>
     </>

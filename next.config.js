@@ -9,10 +9,14 @@ const nextConfig = {
       }]
     }]
   },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
   reactStrictMode: true,
   images: {
     loader: "default",
-    domains: ["vuwunicodesjav1.vuw.ac.nz"],
+    domains: ["vuwunicodesjav1.vuw.ac.nz", "eoye.nz"],
   },
   webpack(config) {
     config.module.rules.push({

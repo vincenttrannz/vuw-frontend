@@ -163,6 +163,7 @@ export type Event = {
     Slug: string;
     EventShortDescription: string;
     EventLocation: string;
+    EventGoogleLocation: string;
     EventPrice: string;
     EventPriceType: string;
     EventType: string;
@@ -171,8 +172,8 @@ export type Event = {
     EventSecondLink: string;
     EventThirdLink: string;
     EventImageThumbnail: ImagesDataType;
-    event_category: {
-      data: EventCategory;
+    event_categories: {
+      data: EventCategories;
     };
     event_type: {
       data: EventType;
@@ -200,6 +201,7 @@ export type EventCategory = {
   id: number;
   attributes: {
     EventCategoryName: string;
+    events: Events;
     createdAt: Date;
     updatedAt: Date;
     publishedAt: Date;

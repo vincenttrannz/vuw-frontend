@@ -40,7 +40,11 @@ export default function AllProjects({ projects }: ProjectsProps) {
           <Link key={i} href={`/project/${ProjectSlug}`}>
             <a className="projectContainer__portfolio shadow-sm">
               <div className="thumbnail-container">
-                <Image priority={true} layout="fill" src={ProjectThumbnail} alt="project thumbnail"/>
+                <Image 
+                  src={ProjectThumbnail} 
+                  priority={true} 
+                  layout="fill"
+                  alt="project thumbnail"/>
                 <div className="img-overlay">
                   <div className="img-overlay__textbox">
                     <span className="p2">Explore</span>
@@ -55,7 +59,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                   </div>
                 }
                 <div className="details-container__title-name">
-                  <h6>{ProjectTitle}</h6>
+                  <h4 className="h6">{ProjectTitle}</h4>
                   <TextDivider prime={false}/>
                     {
                       (ProjectStudent && ProjectStudent.split(" ").length > 2) 
