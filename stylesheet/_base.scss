@@ -235,6 +235,7 @@ a {
       &__p {
         width: 70%;
         a {
+          width: fit-content;
           color: $blue;
           &:hover {
             color: $vic-teal;
@@ -242,6 +243,7 @@ a {
         }
       }
       &__a {
+        width: fit-content;
         color: $blue;
         &:hover {
           color: $vic-teal;
