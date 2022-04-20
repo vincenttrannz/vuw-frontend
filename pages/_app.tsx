@@ -1,7 +1,7 @@
 import "../stylesheet/master.scss";
 import App from "next/app";
 import type { AppProps } from "next/app";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import NavBar from "./components/NavBar";
@@ -13,6 +13,8 @@ export const GlobalContext = createContext({});
 
 function VicApp({ Component, pageProps }: AppProps) {
   const { global } = pageProps;
+  // This useEffect avoid tabindex focus state on iPhone/iPad (iOS devices)
+  useEffect(() => document.body.setAttribute("ontouchstart", ""))
   console.log("App global data:", global);
   return (
     <>
