@@ -495,6 +495,12 @@ a {
 //  ========== //
 
 @media (max-width: $tablet-screen-size) {
+  [tabindex]{
+    &:focus-visible {
+      border: none !important;
+      outline: none !important;
+    }
+  }
   .side-share-container {
     display: none;
   }
