@@ -1,34 +1,157 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Victora University of Wellington - Wellington Faculty of Architecture and Design Innovation
 
-## Getting Started
+VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [Strapi CMS](https://strapi.io/).
 
-First, run the development server:
+## Development environment overview:
+  * Frontend - [Next.js](https://nextjs.org/) (Awareness: Node JS required version 14.18.2)
+  * Backend - [Strapi CMS](https://strapi.io/)
+  * React Bootstrap and SCSS Stylesheet
+  * Plugins:
+    - Code Project - [Codepen](https://codepen.io/)
+    - 3D Project - [Sketchfab](https://sketchfab.com/)
+    - Video Project - [Vimeo](https://vimeo.com/)
+    - Images Slider Project - [React Slick Slider](https://react-slick.neostack.com/)
+    - PDF Project - [React PDF Viewer](https://react-pdf-viewer.dev/)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### First step
+There are two ways you can setup the local development environment, both ways required the Strapi Backend CMS run first to connect with the frontend.
+  * Setup your own local Strapi backend CMS by cloning this [repo](https://github.com/psychoactive-studios/vuw-backend) and make sure you are working on the 'master' branch
+
+    ```bash
+    # Step 1
+    npm ci
+    # Step 2 - the project will run on localhost:1337
+    npm run develop
+    # Step 3
+    npm run build
+    # Step 4 - the project will run on localhost:1337
+    npm run start
+    ```
+
+  * Connect to the live server by creating the `.env` file in the root folder
+
+    ```env
+    NEXT_PUBLIC_STRAPI_API_URL="http://vuwunicodesjav1.vuw.ac.nz/backend"
+    ```
+
+### Second step
+Next step is run the frontend locally with:
+  * If you chose with local development - after cloned the Strapi CMS Backend and ensure it run locally on [http://localhost:1337](http://localhost:3000)
+  * OR if you decided to use live server
+
+  ```bash
+  npm run dev
+  ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Development step
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+#### Setting up API and fetching data
+Files: 
+  ##### `/lib/api.ts`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  ```ts
+  import qs from "qs";
 
-## Learn More
+  export function getStrapiURL(path = "") {
+    return `${
+      process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
+    }${path}`;
+  }
 
-To learn more about Next.js, take a look at the following resources:
+  /**
+  * Helper to make GET requests to Strapi API endpoints
+  * @param {string} path Path of the API route
+  * @param {Object} urlParamsObject URL params object, will be stringified
+  * @param {Object} options Options passed to fetch
+  * @returns Parsed API call response
+  */
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  // Helper to make GET requests to Strapi
+  // export async function fetchAPI(path:string) {
+  //   const requestUrl = getStrapiURL(path);
+  //   const response = await fetch(requestUrl);
+  //   const data = await response.json();
+  //   return data;
+  // }
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  export async function fetchAPI(path:string, urlParamsObject = {}, options = {}) {
+    // Merge default and user options
+    const mergedOptions = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      ...options,
+    };
 
-## Deploy on Vercel
+    // Build request URL
+    const queryString = qs.stringify(urlParamsObject);
+    const requestUrl = `${getStrapiURL(
+      `/api${path}${queryString ? `?${queryString}` : ""}`
+    )}`;
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    // Trigger API call
+    const response = await fetch(requestUrl, mergedOptions);
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    // Handle response
+    if (!response.ok) {
+      console.error(response.statusText);
+      throw new Error(`An error occured please try again`);
+    }
+    const data = await response.json();
+    return data;
+  }
+  ```
+
+  * Import `qs` (querystring) - This library to handle the API query in order to return the correct data from Strapi CMS
+
+  * Function getStrapiURL
+
+  ```ts
+  export function getStrapiURL(path = "") {
+    return `${
+      process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
+    }${path}`;
+  }
+  ```
+
+  `process.env.NEXT_PUBLIC_STRAPI_API_URL` use the live Strapi API path if declared in the .env file || otherwise connect to localhost:1337
+
+  * async function fetchAPI
+
+  ```ts
+  export async function fetchAPI(path:string, urlParamsObject = {}, options = {}) {
+    // Merge default and user options
+    const mergedOptions = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      ...options,
+    };
+
+    // Build request URL
+    const queryString = qs.stringify(urlParamsObject);
+    const requestUrl = `${getStrapiURL(
+      `/api${path}${queryString ? `?${queryString}` : ""}`
+    )}`;
+
+    // Trigger API call
+    const response = await fetch(requestUrl, mergedOptions);
+
+    // Handle response
+    if (!response.ok) {
+      console.error(response.statusText);
+      throw new Error(`An error occured please try again`);
+    }
+    const data = await response.json();
+    return data;
+  }
+  ```
+
+  - Required parameters: path, urlParamsObject & options
+  
+  * ##### `/lib/fetchData.ts`
+
+## Deploy on VUW Server with Nginx
+

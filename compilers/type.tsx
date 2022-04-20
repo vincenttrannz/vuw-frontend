@@ -235,6 +235,10 @@ export type Global = {
     publishedAt: Date;
     Favicon: ImagesDataType;
     SeoData: SeoDataType;
+    ContactLink: string;
+    EnrolLink: string;
+    DisplayPhone: boolean;
+    PhoneNumber: string;
   };
 };
 

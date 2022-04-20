@@ -26,12 +26,12 @@ type EventPageProps = {
 }
 
 const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
-  const eventData = event.attributes;
+  const eventData = event.attributes;  
   const router = useRouter();
   const [ThreeProjects, RandomThreeProjects] = useState(event.attributes.projects.data);
   const RequiredRandomThreeEvents = randomThreeEvents.filter(randomEvent => randomEvent.attributes.Slug !== eventData.Slug);
-  const StartTimeCalendar = new Date(String(`${eventData.EventStartDate}T${eventData.EventStartTime}Z`)).toISOString();
-  const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) && new Date(String(`${eventData.EventFinishDate}T${eventData.EventEndTime}Z`)).toISOString()
+  const StartTimeCalendar = (eventData.EventStartTime) ? new Date(String(`${eventData.EventStartDate}T${eventData.EventStartTime}Z`)).toISOString() : new Date(String(eventData.EventStartDate)).toISOString();
+  const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) ? new Date(String(`${eventData.EventFinishDate}T${eventData.EventEndTime}Z`)).toISOString() : (eventData.EventFinishDate) ? new Date(String(eventData.EventFinishDate)).toISOString() : ""
   
   const DateFormat = (date:string) => new Date(Date.parse(String(date))).toUTCString().split(' ').slice(0, 4).join(' ');
   
@@ -56,9 +56,9 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   
   const eventICS = {
     title: `${eventData.EventName}`,
-    description: `${eventData.EventCalendarDescription}`,
+    description: `${(eventData.EventCalendarDescription) ? (eventData.EventCalendarDescription).replace(/(\r\n|\n|\r)/gm, " | ") : ""}`,
     startTime: `${StartTimeCalendar}`,
-    endTime: `${EndTimeCalendar ? EndTimeCalendar : ""}`,
+    endTime: `${EndTimeCalendar}`,
     location: `${eventData.EventLocation}`
   }
 
@@ -85,7 +85,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
       return (
         <Link href={children[0].props.href}>
           <a className='event__a' target="_blank">{children[0].props.href}</a>
-        </Link>
+        </Link>      
       )
     } else {
       // Check if the children type paragraph included anchor link
@@ -152,7 +152,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
               <TextDivider prime={false}/>
               <p>
                 {DateFormat(eventData.EventStartDate.toString())} {((eventData.EventFinishDate) ? ` - ${DateFormat(eventData.EventFinishDate.toString())}` : "")}<br/>
-                {tConvert(String(eventData.EventStartTime).split(":").slice(0, 2).join(':'))} {(eventData.EventFinishDate) ? ` - ${tConvert(String(eventData.EventEndTime).split(":").slice(0, 2).join(':'))}` : ""}
+                {(eventData.EventStartTime) && tConvert(String(eventData.EventStartTime).split(":").slice(0, 2).join(':'))} {(eventData.EventEndTime) ? ` - ${tConvert(String(eventData.EventEndTime).split(":").slice(0, 2).join(':'))}` : ""}
               </p>
               <ICalendarLink filename='vuw-event.ics' className='event-calendar' event={eventICS}>
                 <Calendar className="icon"/> Add to Calendar
