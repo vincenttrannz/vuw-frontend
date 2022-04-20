@@ -5,6 +5,7 @@ const getFilterList = (isDesktop: boolean, dataFilter: string[], filterName: str
         return (
           <div
             key={i}
+            tabIndex={0}
             onClick={handleClick}
             className={`p2 bold categories-container__category`}
             data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}

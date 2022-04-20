@@ -44,15 +44,15 @@ const Event: NextPage<EventPageProps> = ({ eventPage, events, eventCategories, e
       <ImgCaption id="caption-hero" className="mx-2 mx-lg-3" caption={EventPageHeroBannerCaption}/>
       <ThreeColumnsBlock className="px-sm-3 px-xl-7 mt-3 mt-md-0">
         <div className="textblock-with-divider">
-          <h2 className="h3">{EventPageQuickIntroTitle}</h2>
+          <h2 tabIndex={0} className="h3">{EventPageQuickIntroTitle}</h2>
           <TextDivider prime/>
-          <h3 className="h6">{EventPageQuickIntroSubtitle}</h3>
+          <h3 tabIndex={0} className="h6">{EventPageQuickIntroSubtitle}</h3>
         </div>
         <div>
-          <p>{EventPageQuickIntroColumnOne}</p>
+          <p tabIndex={0}>{EventPageQuickIntroColumnOne}</p>
         </div>
         <div>
-          <p>{EventPageQuickIntroColumnTwo}</p>
+          <p tabIndex={0}>{EventPageQuickIntroColumnTwo}</p>
         </div>
       </ThreeColumnsBlock>
       <EventContainer events={events} eventCategories={eventCategories} eventTypes={eventTypes}/>

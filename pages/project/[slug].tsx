@@ -81,23 +81,25 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
             {
               // Student Name and description
               <div className='textblock-with-divider'>
-                <h4>{projectData.student.data.attributes?.StudentName}</h4>
+                <h4 tabIndex={0}>{projectData.student.data.attributes?.StudentName}</h4>
                 <TextDivider prime={false}/>
-                <ReactMarkdown className='details-content'>
-                  {
-                    (projectData.student.data.attributes?.StudentShortDetail !== null && projectData.student.data.attributes?.StudentShortDetail !== "") 
-                    ?
-                    String(projectData.student.data.attributes?.StudentShortDetail)
-                    :
-                    ""
-                  }
-                </ReactMarkdown>
+                <div tabIndex={0}>
+                  <ReactMarkdown className='details-content'>
+                    {
+                      (projectData.student.data.attributes?.StudentShortDetail !== null && projectData.student.data.attributes?.StudentShortDetail !== "") 
+                      ?
+                      String(projectData.student.data.attributes?.StudentShortDetail)
+                      :
+                      ""
+                    }
+                  </ReactMarkdown>
+                </div>
               </div>
             }
             {
               // Student Major
               (projectData.student.data.attributes?.major.data !== null) &&
-              <div className='textblock-with-divider'>
+              <div tabIndex={0} className='textblock-with-divider'>
                 <h6>Major</h6>
                 <TextDivider prime={false}/>
                 <ReactMarkdown className='details-content'>
@@ -111,7 +113,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
               projectData.student.data.attributes?.StudentEmail].map((StudentDetail:any, i:number) => {
                 if(StudentDetail !== null && StudentDetail !== "") {
                   return (
-                    <div key={i} className='textblock-with-divider'>
+                    <div tabIndex={0} key={i} className='textblock-with-divider'>
                       {
                         (i == 0)  ? <h6>Minor</h6> : (i == 1) ? <h6>Email</h6> : ""
                       }
@@ -133,7 +135,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                 projectData.student.data.attributes?.FourthStudentLink !== null &&
                 projectData.student.data.attributes?.FourthStudentLink !== ""
               ) &&
-              <div className='textblock-with-divider'>
+              <div tabIndex={0} className='textblock-with-divider'>
                 <h6>Links</h6>
                 <TextDivider prime={false}/>
                 <div className='details-content'>
@@ -156,7 +158,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
         </Container>
         <Container className='vic-work__right-container'>
           <div className="textblock-with-divider">
-            <h1 className='h2'>{projectData.ProjectTitle}</h1>
+            <h1 tabIndex={0} className='h2'>{projectData.ProjectTitle}</h1>
             <TextDivider prime/>
           </div>
           <div className="project-wrapper mt-3">
@@ -179,7 +181,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     [projectData.ProjectDescription, projectData.student.data.attributes?.StudentName, projectData.LecturerName, projectData.CourseName, new Date(projectData.ProjectDate).getFullYear().toString()].map((el:any, i: number) => {
                       if(el !== null || el !== ""){
                         return (
-                          <div key={i} className={`project-info-container__details__text-wrapper-row ${(i == 1) ? "student" : ""}`}>
+                          <div tabIndex={0} key={i} className={`project-info-container__details__text-wrapper-row ${(i == 1) ? "student" : ""}`}>
                             <h6>
                               {
                                 (i == 0) ? "Overview:" : (i == 1) ? "Student:" : (i == 2) ? "Lecturer:" : (i == 3) ? "Course:" : (i == 4) ? "Published:" : ""

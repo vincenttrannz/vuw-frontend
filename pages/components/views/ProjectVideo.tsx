@@ -1,5 +1,4 @@
 import React from "react";
-import { Project } from "../../../compilers/type";
 import ImgCaption from "../views/ImgCaption";
 
 type ProjectDataProps = {
@@ -11,6 +10,7 @@ export default function ProjectVideo({ ProjectVideoLink, ProjectVideoCaption }: 
   return (
     <div className="iframe-container mt-2 mb-4">
       <iframe
+        title={ProjectVideoCaption ? ProjectVideoCaption : "Embed video"}
         className="video-iframe"
         src={`https://player.vimeo.com/video/${ProjectVideoLink.substring(8).split("/")[1]}`}
         frameBorder="0"

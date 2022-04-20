@@ -17,11 +17,11 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
             <VicLogo className="vic-logo" />
           </a>
         </Link>
-        <p>Te Herenga Waka-Victoria University of Wellington</p>
+        <p tabIndex={0}>Te Herenga Waka-Victoria University of Wellington</p>
       </div>
       <address className="footer__column">
-        <p className="p2 bold">Contact</p>
-        <p>
+        <p tabIndex={0} className="p2 bold">Contact</p>
+        <p tabIndex={0}>
           Wellington Faculty of Architecture and Design Innovation,<br/>
           Te Herenga Waka-Victoria University of Wellington<br/>
           139 Vivian Street, Te Aro Wellington 6011
@@ -35,7 +35,7 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
         }
       </address>
       <div className="footer__column">
-        <p className="p2 bold">Navigation</p>
+        <p tabIndex={0} className="p2 bold">Navigation</p>
         <ul>
           <li>
             <Link href="/">
@@ -55,7 +55,7 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
         </ul>
       </div>
       <div className="footer__column">
-        <p className="p2 bold">Links</p>
+        <p tabIndex={0} className="p2 bold">Links</p>
         <ul>
           <li>
             <Link href="https://www.instagram.com/wgtnfadi/">
@@ -70,7 +70,7 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
         </ul>
       </div>
       <div className="footer__copyright">
-        <span>All rights reserved. © 2022 VUW</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
+        <span tabIndex={0}>All rights reserved. © 2022 VUW</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
       </div>
     </Container>
   );
