@@ -23,11 +23,11 @@ function VicApp({ Component, pageProps }: AppProps) {
       />
       {/* META SEO DATA - END */}
       <GlobalContext.Provider value={global.attributes}>
-        <NavBar/>
+        <NavBar ContactLink={global.attributes.ContactLink} EnrolLink={global.attributes.EnrolLink}/>
         <main role="main" className="main">
           <Component {...pageProps} />
         </main>
-        <Footer/>
+        <Footer DisplayPhone={global.attributes.DisplayPhone} PhoneNumber={global.attributes.PhoneNumber}/>
       </GlobalContext.Provider>
     </>
   );

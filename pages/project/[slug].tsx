@@ -26,7 +26,7 @@ type ProjectProps = {
 }
 
 const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => {
-  const projectData = project.attributes;
+  const projectData = project.attributes;  
   const router = useRouter();
 
   const GoBack = () => {
@@ -180,13 +180,13 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
               <div className='project-info-container__details'>
                 <div className='project-info-container__details__left'>
                   {
-                    [projectData.ProjectDescription, projectData.student.data.attributes?.StudentName, projectData.LecturerName, projectData.CourseName, new Date(projectData.ProjectDate).toLocaleDateString("nz")].map((el:any, i: number) => {
+                    [projectData.ProjectDescription, projectData.student.data.attributes?.StudentName, projectData.LecturerName, projectData.CourseName, new Date(projectData.ProjectDate).getFullYear().toString()].map((el:any, i: number) => {
                       if(el !== null || el !== ""){
                         return (
                           <div key={i} className={`project-info-container__details__text-wrapper-row ${(i == 1) ? "student" : ""}`}>
                             <h6>
                               {
-                                (i == 0) ? "Overview:" : (i == 1) ? "Student:" : (i == 2) ? "Lecturer:" : (i == 3) ? "Course:" : (i == 4) ? "Date:" : ""
+                                (i == 0) ? "Overview:" : (i == 1) ? "Student:" : (i == 2) ? "Lecturer:" : (i == 3) ? "Course:" : (i == 4) ? "Published:" : ""
                               }
                             </h6>
                             <ReactMarkdown>{el}</ReactMarkdown>

@@ -50,8 +50,8 @@ export default function AllEvents({ events }: EventsProps) {
           const EventShortDescription = event.attributes.EventShortDescription;
           const EventStartDate = new Date(Date.parse(String(event.attributes.EventStartDate))).toUTCString().split(' ').slice(0, 4).join(' ');
           const EventFinishDate = new Date(Date.parse(String(event.attributes.EventFinishDate))).toUTCString().split(' ').slice(0, 4).join(' ');
-          const EventStartTime = tConvert(String(event.attributes.EventStartTime).split(":").slice(0, 2).join(':'));
-          const EventFinishTime = tConvert(String(event.attributes.EventEndTime).split(":").slice(0, 2).join(':'));
+          const EventStartTime = (event.attributes.EventStartTime) && tConvert(String(event.attributes.EventStartTime).split(":").slice(0, 2).join(':'));
+          const EventFinishTime = (event.attributes.EventEndTime) && tConvert(String(event.attributes.EventEndTime).split(":").slice(0, 2).join(':'));
           const EventLocation = event.attributes.EventLocation;
           const EventPriceType = event.attributes.EventPriceType;
           const EventPrice = event.attributes.EventPrice;
@@ -83,7 +83,7 @@ export default function AllEvents({ events }: EventsProps) {
                         <p className='bold'>Date</p>
                         <p className='p2'>
                           <span>{EventStartDate}</span> {(EventFinishDate !== "Invalid Date") ? <span>- {EventFinishDate}</span> : ""} <br/>
-                          <span>{EventStartTime}</span> - <span>{EventFinishTime}</span>
+                          <span>{EventStartTime}</span> <span>{EventFinishTime && `- ${EventFinishTime}`}</span>
                         </p>
                       </div>
                       <div className='detail-container'>

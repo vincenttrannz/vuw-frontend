@@ -143,7 +143,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             <h3>{SchoolArchitectureBlockTitle}</h3>
             <TextDivider prime />
           </div>
-          <p className="mt-3">{SchoolArchitectureBlockParagraph}</p>
+          <ReactMarkdown className="mt-3 content">{SchoolArchitectureBlockParagraph}</ReactMarkdown>
         </div>
       </TwoColumnsBlock>
       {/* Second content grey block */}
@@ -172,7 +172,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             <h3>{DesignSchoolBlockTitle}</h3>
             <TextDivider prime />
           </div>
-          <p className="mt-3">{DesignSchoolBlockParagraph}</p>
+          <ReactMarkdown className="mt-3 content">{DesignSchoolBlockParagraph}</ReactMarkdown>
         </div>
         <div className="img-container">
           <figure>

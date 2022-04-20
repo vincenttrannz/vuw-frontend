@@ -2,14 +2,18 @@ import React, { useRef, useEffect } from "react";
 import $ from 'jquery';
 import Link from "next/link";
 import VicLogo from "../../public/vic-logo.svg";
-import { Container } from "react-bootstrap";
 import InstaIcon from '../../public/insta-logo.svg';
 import FacebookIcon from '../../public/fb-logo.svg';
 
-const NavBar: React.FC = () => {
+type NavBarProps = {
+  ContactLink: string;
+  EnrolLink: string;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ ContactLink, EnrolLink }) => {
   const hamburger = useRef<HTMLButtonElement>(null);
   const MenuContainer = useRef<HTMLDivElement>(null);
-
+  
   const MenuList = () => {
     return (
       <>
@@ -22,10 +26,10 @@ const NavBar: React.FC = () => {
         <Link href="/events">
           <a onClick={clickHrefLink} className="p2">Events</a>
         </Link>
-        <Link href="https://www.wgtn.ac.nz/wfadi/about/contact">
+        <Link href={ContactLink}>
           <a onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
         </Link>
-        <Link href="https://www.wgtn.ac.nz/">
+        <Link href={EnrolLink}>
           <a onClick={clickHrefLink} className="p2" target="_blank">Enrol</a>
         </Link>
         <div className="navbar__link-container__shares">
