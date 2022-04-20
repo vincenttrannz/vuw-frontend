@@ -137,6 +137,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
             <div className='image-container'>
               <Image
                 src={getStrapiMedia(eventData.EventImageThumbnail)}
+                alt={eventData.EventImageThumbnail.data.attributes.alternativeText}
                 layout="fill"
                 objectFit='cover'
                 priority={true}
@@ -156,7 +157,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
             ClickFunc={GoBack}
           />
           <div className='work-details-container'>
-            <div className='textblock-with-divider'>
+            <div tabIndex={0} className='textblock-with-divider'>
               <h6>Date</h6>
               <TextDivider prime={false}/>
               <p>
@@ -167,7 +168,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 <Calendar className="icon"/> Add to Calendar
               </ICalendarLink>
             </div>
-            <div className='textblock-with-divider'>
+            <div tabIndex={0} className='textblock-with-divider'>
               <h6>Location</h6>
               <TextDivider prime={false}/>
               {
@@ -184,7 +185,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 </ReactMarkdown>
               }
             </div>
-            <div className='textblock-with-divider'>
+            <div tabIndex={0} className='textblock-with-divider'>
               <h6>Event Type</h6>
               <TextDivider prime={false}/>
               <ReactMarkdown className='details-content'>
@@ -194,7 +195,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
             {
               (eventData.EventPriceType !== "Free") 
               ?
-              <div className='textblock-with-divider'>
+              <div tabIndex={0} className='textblock-with-divider'>
                 <h6>Price</h6>
                 <TextDivider prime={false}/>
                 <ReactMarkdown className='details-content'>
@@ -202,7 +203,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 </ReactMarkdown>
               </div>
               :
-              <div className='textblock-with-divider'>
+              <div tabIndex={0} className='textblock-with-divider'>
                 <h6>Price</h6>
                 <TextDivider prime={false}/>
                 <p className='details-content'>
@@ -216,7 +217,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 eventData.EventSecondLink ||
                 eventData.EventThirdLink
               ) &&
-              <div className='textblock-with-divider'>
+              <div tabIndex={0} className='textblock-with-divider'>
                 <h6>Links</h6>
                 <TextDivider prime={false}/>
                 {
@@ -236,7 +237,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
         </Container>
         <Container className='vic-work__right-container'>
           <div className="textblock-with-divider d-none d-lg-grid">
-            <h1 className='h2'>{eventData.EventName}</h1>
+            <h1 tabIndex={0} className='h2'>{eventData.EventName}</h1>
             <TextDivider prime/>
           </div>
           <div className="project-wrapper mt-0 mt-lg-3">
@@ -245,6 +246,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 <div className='image-container'>
                   <Image
                     src={getStrapiMedia(eventData.EventImageThumbnail)}
+                    alt={eventData.EventImageThumbnail.data.attributes.alternativeText}
                     layout="fill"
                     objectFit='cover'
                     priority={true}
@@ -254,14 +256,16 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                   <ImgCaption className="mx-0 my-1" caption={eventData.EventImageThumbnail.data.attributes.caption}/>
                 </figcaption>
               </figure>
-              <ReactMarkdown 
-                className='content content__event-detail mt-0 mt-lg-4 mb-2'
-                components={{
-                  p: (props) => <CustomEventParagraph {...props}/>
-                }}
-              >
-                {eventData.EventRichDescription}
-              </ReactMarkdown>
+              <article tabIndex={0}>
+                <ReactMarkdown 
+                  className='content content__event-detail mt-0 mt-lg-4 mb-2'
+                  components={{
+                    p: (props) => <CustomEventParagraph {...props}/>
+                  }}
+                >
+                  {eventData.EventRichDescription}
+                </ReactMarkdown>
+              </article>
               {
                 (eventData.EventGallery) &&
                 <ProjectCarousel projectData={eventData.EventGallery}/>

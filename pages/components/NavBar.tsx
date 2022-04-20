@@ -18,26 +18,26 @@ const NavBar: React.FC<NavBarProps> = ({ ContactLink, EnrolLink }) => {
     return (
       <>
        <Link href="/">
-          <a onClick={clickHrefLink} className="p2">Students Work</a>
+          <a tabIndex={0} onClick={clickHrefLink} className="p2">Students Work</a>
         </Link>
         <Link href="/about">
-          <a onClick={clickHrefLink} className="p2">About</a>
+          <a tabIndex={0} onClick={clickHrefLink} className="p2">About</a>
         </Link>
         <Link href="/events">
-          <a onClick={clickHrefLink} className="p2">Events</a>
+          <a tabIndex={0} onClick={clickHrefLink} className="p2">Events</a>
         </Link>
         <Link href={ContactLink}>
-          <a onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
+          <a tabIndex={0} onClick={clickHrefLink} className="p2" target="_blank">Contact</a>
         </Link>
         <Link href={EnrolLink}>
-          <a onClick={clickHrefLink} className="p2" target="_blank">Enrol</a>
+          <a tabIndex={0} onClick={clickHrefLink} className="p2" target="_blank">Enrol</a>
         </Link>
         <div className="navbar__link-container__shares">
           <Link href="https://www.facebook.com/VUWArchitectureandDesign">
-            <a target="_blank" id="fb-icon"><FacebookIcon/></a>
+            <a tabIndex={0} target="_blank" id="fb-icon"><FacebookIcon/></a>
           </Link>
           <Link href="https://www.instagram.com/wgtnfadi/">
-            <a target="_blank" id="insta-icon"><InstaIcon/></a>
+            <a tabIndex={0} target="_blank" id="insta-icon"><InstaIcon/></a>
           </Link>
         </div>
       </>

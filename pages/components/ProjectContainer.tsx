@@ -78,6 +78,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
           return (
             <div
               key={i}
+              tabIndex={0}
               onClick={handleFilter}
               className={`p2 bold categories-container__category`}
               data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
@@ -108,6 +109,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
               return (
                 <div
                   key={i}
+                  tabIndex={0}
                   onClick={handleFilter}
                   className={`p2 bold categories-container__category`}
                   data-responsive={isDesktop ? "desktopFilter" : "mobileFilter"}
@@ -302,6 +304,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
+              tabIndex={0}
               ref={SearchField}
               placeholder="Search"
               aria-label="search"

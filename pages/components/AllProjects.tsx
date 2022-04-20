@@ -45,7 +45,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                   src={ProjectThumbnail} 
                   priority={true} 
                   layout="fill"
-                  alt="project thumbnail"/>
+                  alt={`${ProjectTitle} thumbnail`}/>
                 <div className="img-overlay">
                   <div className="img-overlay__textbox">
                     <span className="p2">Explore</span>

@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
+import Link from "next/link";
+import Image from 'next/image';
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia, getStrapiData } from "../lib/fetchData";
 import StickyShare from './components/views/StickySocial';
-import PageHeroBanner from './components/views/PageHeroBanner'
-import Link from "next/link";
+import PageHeroBanner from './components/views/PageHeroBanner';
 import { About } from "../compilers/type";
 import HeadData from "./components/HeadData";
 import TextDivider from "./components/views/TextDivider";
@@ -33,6 +34,8 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
   );
   const AboutPageInfoBlockImageCaption =
     getStrapiData(about).AboutPageInfoBlock.BlockImage.data.attributes.caption;
+  const AboutPageInfoBlockImageAlt =
+    getStrapiData(about).AboutPageInfoBlock.BlockImage.data.attributes.alternativeText;
   // First Grey block
   const FirstContentGreyBlockTitle =
     getStrapiData(about).FirstContentGreyBlock.BlockTitle;
@@ -48,6 +51,8 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
   );
   const SchoolArchitectureBlockImageCaption =
     getStrapiData(about).ArchitectureSchool.BlockImage.data.attributes.caption;
+  const SchoolArchitectureBlockImageAlt =
+    getStrapiData(about).ArchitectureSchool.BlockImage.data.attributes.alternativeText;
   // Second Grey block
   const SecondContentGreyBlockTitle =
     getStrapiData(about).SecondContentGreyBlock.BlockTitle;
@@ -64,6 +69,8 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
   );
   const DesignSchoolBlockImageCaption =
     getStrapiData(about).DesignSchool.BlockImage.data.attributes.caption;
+  const DesignSchoolBlockImageAlt =
+    getStrapiData(about).DesignSchool.BlockImage.data.attributes.alternativeText;
   // Third Grey block
   const ThirdContentGreyBlockTitle =
     getStrapiData(about).ThirdContentGreyBlock.BlockTitle;
@@ -88,7 +95,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       <ImgCaption id="caption-hero" className="mx-2 mx-lg-3" caption={AboutHeroCaption} />
       {/* About Page General Info Block */}
       <TwoColumnsBlock className="right-img-text-block">
-        <div className="text-container">
+        <div tabIndex={0} className="text-container">
           <div className="textblock-with-divider">
             <h2 className="h3">{AboutPageInfoBlockTitle}</h2>
             <TextDivider prime />
@@ -97,7 +104,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         </div>
         <div className="img-container">
           <figure>
-            <img className="img-fluid" src={AboutPageInfoBlockImage} alt="" />
+            <img className="img-fluid" src={AboutPageInfoBlockImage} alt={AboutPageInfoBlockImageAlt}/>
             <figcaption>
               <ImgCaption
                 caption={AboutPageInfoBlockImageCaption}
@@ -111,11 +118,11 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       <TwoColumnsBlock className="py-4 grey-block">
         <div>
           <div className="textblock-with-divider">
-            <h3>{FirstContentGreyBlockTitle}</h3>
+            <h3 tabIndex={0}>{FirstContentGreyBlockTitle}</h3>
             <TextDivider prime />
           </div>
         </div>
-        <div>
+        <div tabIndex={0}>
           <ReactMarkdown>{FirstContentGreyBlockParagraph}</ReactMarkdown>
           <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()) } }}>
             <a target="_self" className="btn btn-vic mt-3 mt-md-4">
@@ -131,14 +138,14 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             <img
               className="img-fluid"
               src={SchoolArchitectureBlockImage}
-              alt=""
+              alt={SchoolArchitectureBlockImageAlt}
             />
             <figcaption>
               <ImgCaption className="mx-0 mx-lg-3" caption={SchoolArchitectureBlockImageCaption} />
             </figcaption>
           </figure>
         </div>
-        <div className="text-container">
+        <div tabIndex={0} className="text-container">
           <div className="textblock-with-divider">
             <h3>{SchoolArchitectureBlockTitle}</h3>
             <TextDivider prime />
@@ -150,16 +157,16 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       <TwoColumnsBlock className="py-4 grey-block">
         <div>
           <div className="textblock-with-divider">
-            <h3>{SecondContentGreyBlockTitle}</h3>
+            <h3 tabIndex={0}>{SecondContentGreyBlockTitle}</h3>
             <TextDivider prime />
           </div>
         </div>
-        <div>
+        <div tabIndex={0}>
           <ReactMarkdown className="content content__school-list">
             {SecondContentGreyBlockParagraph}
           </ReactMarkdown>
           <Link href={SecondContentGreyBlockBtnLink}>
-            <a target="_blank" className="btn btn-vic mt-2 mt-md-3">
+            <a aria-label="Learn more about Architecture School areas of study" target="_blank" className="btn btn-vic mt-2 mt-md-3">
               Learn more
             </a>
           </Link>
@@ -167,7 +174,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       </TwoColumnsBlock>
       {/* School of Design section */}
       <TwoColumnsBlock className="right-img-text-block">
-        <div className="text-container">
+        <div tabIndex={0} className="text-container">
           <div className="textblock-with-divider">
             <h3>{DesignSchoolBlockTitle}</h3>
             <TextDivider prime />
@@ -176,7 +183,7 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         </div>
         <div className="img-container">
           <figure>
-            <img className="img-fluid" src={DesignSchoolBlockImage} alt="" />
+            <img className="img-fluid" src={DesignSchoolBlockImage} alt={DesignSchoolBlockImageAlt} />
             <figcaption>
               <ImgCaption className="mx-0" caption={DesignSchoolBlockImageCaption}/>
             </figcaption>
@@ -187,16 +194,16 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
       <TwoColumnsBlock className="py-4 grey-block">
         <div>
           <div className="textblock-with-divider">
-            <h3>{ThirdContentGreyBlockTitle}</h3>
+            <h3 tabIndex={0}>{ThirdContentGreyBlockTitle}</h3>
             <TextDivider prime />
           </div>
         </div>
-        <div>
+        <div tabIndex={0}>
           <ReactMarkdown className="content content__school-list">
             {ThirdContentGreyBlockParagraph}
           </ReactMarkdown>
           <Link href={ThirdContentGreyBlockBtnLink}>
-            <a target="_blank" className="btn btn-vic mt-2 mt-md-3">
+            <a aria-label="Learn more about Design School areas of study" target="_blank" className="btn btn-vic mt-2 mt-md-3">
               Learn more
             </a>
           </Link>

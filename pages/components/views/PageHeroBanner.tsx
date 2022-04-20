@@ -20,12 +20,12 @@ export default function PageHeroBanner({className, OtherSide, HomepageSubtitle, 
       <div className={`hero-section__overlay ${OtherSide ? "otherSide" : ""}`}></div>
       <Container className="hero-section__title-box-container">
         <div className={`hero-section__title-box ${OtherSide ? "otherSide" : className ? className : ""}`}>
-          {(HomepageSubtitle) && <span className="subtitle">Wellington Faculty of</span>}
-          <h1>{HeroTitle}</h1>
-          {(HomepageSubtitle) && <span className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>}
+          {(HomepageSubtitle) && <span tabIndex={0} className="subtitle">Wellington Faculty of</span>}
+          <h1 tabIndex={0}>{HeroTitle}</h1>
+          {(HomepageSubtitle) && <span tabIndex={0} className="subtitle" lang="mi">Te Wāhanga Waihanga-Hoahoa</span>}
         </div>
       </Container>
-      <div className={`${HideScrollIndicator ? "d-none" : ""}`}>
+      <div tabIndex={-1} className={`${HideScrollIndicator ? "d-none" : ""}`}>
         <ScrollDownIndicator/>
       </div>
     </div>

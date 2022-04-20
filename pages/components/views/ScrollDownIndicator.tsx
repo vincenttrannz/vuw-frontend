@@ -8,9 +8,6 @@ export default function ScrollDownIndicator() {
     loop: true,
     autoplay: true,
     animationData: ScrollDownLottieData,
-    // rendererSettings: {
-    //   preserveAspectRatio: 'xMidYMid slice'
-    // }
   };
   return (
     <div className="scrolldown">
