@@ -75,7 +75,7 @@
     .textblock-with-divider {
       grid-column: span 2;
     }
-    .projectContainer__portfolio {
+    .projectContainer__portfolio, .projectContainer__event {
       &:nth-child(3) {
         display: none;
       }
@@ -85,7 +85,7 @@
       .textblock-with-divider {
         grid-column: span 2;
       }
-      .projectContainer__portfolio {
+      .projectContainer__portfolio, .projectContainer__event {
         &:nth-child(3) {
           display: none;
         }
@@ -127,7 +127,7 @@
       .textblock-with-divider {
         grid-column: span 2;
       }
-      .projectContainer__portfolio {
+      .projectContainer__portfolio, .projectContainer__event {
         &:nth-child(3) {
           display: none;
         }
@@ -163,9 +163,9 @@
     .textblock-with-divider {
       grid-column: auto;
     }
-    .projectContainer__portfolio {
+    .projectContainer__portfolio, .projectContainer__event {
       &:nth-child(3) {
-        display: initial;
+        display: grid;
       }
     }
     &.mobile {
@@ -173,9 +173,9 @@
       .textblock-with-divider {
         grid-column: auto;
       }
-      .projectContainer__portfolio {
+      .projectContainer__portfolio, .projectContainer__event {
         &:nth-child(3) {
-          display: initial;
+          display: grid;
         }
       }
     }
