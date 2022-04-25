@@ -3,7 +3,9 @@
 VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [Strapi CMS](https://strapi.io/).
 
 ## Table of Content
-* [I. Deploy on VUW Server with Nginx](#i-deploy-on-vuw-server-with-nginx)
+* [I. Hosting with VUW Server and Nginx](#i-hosting-with-vuw-server-and-nginx)
+  - [To connect to VUW server](#to-connect-to-vuw-server)
+  - [Development and Deployment environment](#development-and-deployment-environment)
 * [II. Development environment overview](#ii-development-environment-overview)
   - [1. First step](#1-first-step)
   - [2. Second step](#2-second-step)
@@ -25,10 +27,28 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [HeadData](#headdata)
       - [NavBar](#navbar)
       - [Footer](#footer)
+      - [StickySocial](#stickysocial)
+      - [ShareContainer](#sharecontainer)
+      - [TextDivider](#textdivider)
       - [ImgCaption](#imgcaption)
+      - [VicButton](#vicbutton)
+      - [PageHerroBanner](#pageherobanner)
+      - [ScrollDownIndicator](#scrolldownindicator)
+      - [OtherProjects](#otherprojects)
+      - [Project3D](#project3d)
+      - [ProjectCarousel](#projectcarousel)
+      - [ProjectCode](#projectcode)
+      - [ProjectPDF](#projectpdf)
+      - [ProjectVideo](#projectvideo)
+      - [ProjectContainer](#projectcontainer)
+      - [EventContainer](#eventcontainer)
+      - [AllProjects](#allprojects)
+      - [AllEvents](#allevents)
+      - [Project Inner page](#project-inner-page-→-pagesprojectslugtsx)
+      - [Event Inner page](#event-inner-page-→-pageseventslugtsx)
 
 
-## I. Deploy on VUW Server with Nginx
+## I. Hosting with VUW Server and Nginx
 The current site is being deployed over VUW Server. There are currently two directories inside the folder has my name on it `vincent`
 
   * `vuw-frontend` - This folder linked to the [frontend repo](https://github.com/psychoactive-studios/vuw-frontend) on Psychoactive Github
@@ -36,9 +56,19 @@ The current site is being deployed over VUW Server. There are currently two dire
   * AWARE: both of these 2 folders have their own branch for deployment which is `vuw`
 
 ### To connect to VUW server:
-`ssh vincent@vuwunicodesjav1.vuw.ac.nz`
-Password please consult with Psychoactive Account manager
+  * `ssh vincent@vuwunicodesjav1.vuw.ac.nz`
+  * Password: Please consult with Psychoactive Account manager
 Note: Contact VUW later in the future if require to create a new connection account / password to server
+
+### Development and Deployment environment
+  * Ensure the Node JS version USED is v14.18.2
+  * There is also [PM2](https://pm2.keymetrics.io/) installed that will help managing and keep application online 24/7)
+    - Check the list of app that currently running by `pm2 list`, you will find 2 apps that currently running in the list:
+      - `vuw-frontend`
+      - `vuw-backend`
+    - To STOP the app `pm2 stop <app-name>`
+    - To RESTART the app `pm2 restart <app-name>`
+    - There are also DELETE, START
 
 ### `/etc/nginx/sites-available/vuwunicodesjav1.vuw.ac.nz`
 
@@ -637,6 +667,7 @@ This component used for render next/head meta data format to all NextPage for SE
 
 #### NavBar
 This component creates the Navigation on the top of the webpage and responsive on mobile.
+
 Create a set of links to different page on the site:
   * Student Works (Homepage)
   * About
@@ -645,11 +676,24 @@ Create a set of links to different page on the site:
   * Enrol
   * Facebook
   * Instagram
+
 Toggle class name when people click on the HAMBURGER menu
 
 #### Footer
-This component creates the Footer information at the bottom of the webpage and responsive on mobile.
+The Footer information at the bottom of the webpage and responsive on mobile.
+
 It is also included a set of links similarly to Navbar.
+
+#### StickySocial
+Small container for people to click and link to WFADI's Facebook and Instagram.
+
+#### ShareContainer
+Side Facebook, LinkedIn, Twitter and Copy container for Project / Event inner page
+
+#### TextDivider
+'Teal' line divider underneath each of the heading. There is a prop you can pass to this component which is `prime` and it is boolean:
+  * `prime={true}` - the divider is longer than the normal one
+  * `prime={false}` - the divider is shorter than the prime one
 
 #### ImgCaption
 This component renders the caption for Image and the data came from the CMS.
@@ -661,8 +705,120 @@ function urlify(text:string) {
   })
 }
 ```
-This `function urlify(text: string)` find the HTTP or HTTPS within the string and turn it into a clickable URL.
+This `function urlify(text: string)` find the HTTP or HTTPS within the string and turn it into a clickable URL. 
 
+#### VicButton
+The special button for WFADI came with SVG lottie animation for PREV / NEXT arrow.
 
+The component came with optional props:
+  * `ClickFunc?: () => void;` → To pass the onClick function to this component
+  * `className?: string;` → Extra class name for this component, styling purpose
+  * `variant?: string;` → This need to add `vic` to be able to get the `btn-vic` styling  
+  * `btnType?: string;` → Value are only `prev` or `next`, in order to add the NEXT / PREV arrow hover effect to the button
+  * `btnText?: string;` → Add the TEXT for the button
+  * `disable?: boolean;` → DISABLE the button to avoid people to click on
+
+#### PageHeroBanner
+The top of page hero banner and text for Homepage, About, Event, Privacy, 404 and 500 page.
+
+The component came with some props:
+  * `className?: string;` → OPTIONAL: pass another class name to this component for styling purpose
+  * `OtherSide?: boolean;` → OPTIONAL: Switch side of the BLACK text box
+  * `HomepageSubtitle?: boolean;` → OPTIONAL: Subtitle top and bottom of the <H1> heading on Homepage
+  * `HeroBanner: string;` → URL to the background image of the banner
+  * `HeroTitle: string;` → <H1> text for the blackbox
+  * `HideScrollIndicator?: boolean;` → OPTIONAL: set to `true` to hide the SCROLL INDICATOR
+
+#### ScrollDownIndicator
+The scrolling down indicator with an ARROW DOWN.
+
+#### OtherProjects
+The container to store 3 extra random projects display on Event / Project inner page.
+
+#### Project3D
+The <iframe> container use for display SketchFab 3D render on the website.
+
+#### ProjectCarousel
+The container for images slider. This component is using `react-slick`.
+
+#### ProjectCode
+The <iframe> container use for display Codepen project render on the website.
+
+#### ProjectPDF
+The container for displaying the PDF on the website. This component is using `react-pdf-viewer`.
+
+#### ProjectVideo
+The <iframe> container use for display Vimeo video render on the website.
+
+#### ProjectContainer
+This component is very important for displaying, filtering and searching for projects.
+
+```tsx
+type ProjectsProps = {
+  projects: Projects;
+  schoolData: Schools;
+  levelData: Levels;
+  awardData: Awards;
+};
+// This function attached to each click on the category block to function the filter system
+const handleFilter = (event: MouseEvent<HTMLDivElement>)
+
+// This function to return project that match with FilterArray, it compared between the ProjectFilterElement array which stored all the filter keys of the project.
+const filterOnSelectedFilter = (filterProjects: Projects, selectedFilters: string[])
+
+// This function attached to the search input, currently search for: Tags, StudentName and Title
+const handleSearch = async (event: ChangeEvent<HTMLInputElement>)
+
+// This function filter the projects for any project's Tags, StudentName and Title that includes the search term
+const filterOnTextQuery = (projects: Projects, searchTerm: string): Projects
+
+// Logic for paginated projects.
+// This to set amount of projects display per page when user click NEXT / PREV
+useEffect(() => {
+  if (projects && projects.length) {
+    switch (currentPage) {
+      case 1:
+        setPaginatedProjects(projects.slice(0, 12));
+        break;
+      case 2:
+        setPaginatedProjects(projects.slice(12, 24));
+        break;
+      default:
+        setPaginatedProjects(
+          projects.slice(currentPage * 12, currentPage * 12 + 12)
+        );
+        break;
+    }
+  }
+}, [currentPage, projects]);
+```
+
+#### EventContainer
+This component is very important for displaying, filtering and searching for events.
+
+This component shared a few functions that similarly logic with the [ProjectContainer](#projectcontainer)
+
+#### AllProjects
+This component is displaying all project card with all the class name for styling the card.
+
+#### AllEvents
+This component is displaying all event card with all the class name for styling the card.
+
+#### Project Inner page → `/pages/project/[slug].tsx`
+This component is DYNAMIC and also the PROJECT inner page.
+  * Displaying Project's information from CMS
+    - Student details
+    - Main featured project
+    - Sub projects
+    - ShareContainer
+    - OtherProjects (3 randomise from the CMS)
+
+#### Event Inner page → `/pages/event/[slug].tsx`
+This component is DYNAMIC and also the Event inner page.
+  * Displaying Event's information from CMS
+    - Event details
+    - Event rich text description
+    - ShareContainer
+    - 3 randomise events from the CMS
 
 
