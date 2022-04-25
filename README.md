@@ -3,7 +3,7 @@
 VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [Strapi CMS](https://strapi.io/).
 
 ## Table of Content
-* [I. Deploy on VUW Server with Nginx](i-deploy-on-vuw-server-with-nginx)
+* [I. Deploy on VUW Server with Nginx](#i-deploy-on-vuw-server-with-nginx)
 * [II. Development environment overview](#ii-development-environment-overview)
   - [1. First step](#1-first-step)
   - [2. Second step](#2-second-step)
