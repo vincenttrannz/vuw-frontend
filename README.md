@@ -14,7 +14,8 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [`/lib/api.ts`](#libapits)
       - [`/lib/fetchData.ts`](#libfetchdatats)
     - [3.2 - Compiler](#32---compiler--compilerstypetsx)
-    - [3.3 - React Pages](#33---react-pages--pages)
+    - [3.3 - Next Config](#33---next-config--nextconfigjs)
+    - [3.4 - React Pages](#34---react-pages--pages)
       - [App](#app--pages_apptsx)
       - [Homepage](#homepage--pagesindextsx)
       - [About page](#about-page--pagesabouttsx)
@@ -23,7 +24,7 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [Error Pages](#error-pages--pages_errortsx)
         - [404 Page](#404-page--pagescustom404tsx)
         - [500 Page](#500-page--pagescustom500tsx)
-    - [3.4 - React Components](#34---react-components--pagescomponents)
+    - [3.5 - React Components](#35---react-components--pagescomponents)
       - [HeadData](#headdata)
       - [NavBar](#navbar)
       - [Footer](#footer)
@@ -44,8 +45,9 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [EventContainer](#eventcontainer)
       - [AllProjects](#allprojects)
       - [AllEvents](#allevents)
-      - [Project Inner page](#project-inner-page-→-pagesprojectslugtsx)
-      - [Event Inner page](#event-inner-page-→-pageseventslugtsx)
+      - [Project Inner page](#project-inner-page--pagesprojectslugtsx)
+      - [Event Inner page](#event-inner-page--pageseventslugtsx)
+    - [4 - Stylesheet](#4---stylesheet-→-stylesheet)
 
 
 ## I. Hosting with VUW Server and Nginx
@@ -262,7 +264,45 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 #### 3.2 - Compiler → `/compilers/type.tsx`
 This file declared all the types of the dependancies (Fields/Variables) fetch from Strapi database.
 
-#### 3.3 - React pages → `/pages/`
+#### 3.3 - Next Config → `/next.config.js`
+This is the configuration file for the site to accept the server side settings.
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async headers() {
+    return [{
+      source: '/(.*)?', // Matches all pages
+      headers: [{
+        key: 'X-Frame-Options',
+        value: 'ALLOWALL',
+      }]
+    }]
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
+  reactStrictMode: true,
+  images: {
+    loader: "default",
+    domains: ["localhost", "vuwunicodesjav1.vuw.ac.nz", "eoye.nz"],
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    });
+    return config;
+  }
+}
+
+module.exports = nextConfig
+```
+
+* Please add different domain to `domains` array as loading other than current 3 image sources.
+
+#### 3.4 - React pages → `/pages/`
 
 #### App → `/pages/_app.tsx`
 
@@ -654,7 +694,7 @@ This file declared all the types of the dependancies (Fields/Variables) fetch fr
   }
   ```
 
-#### 3.4 - React Components → `/pages/components/`
+#### 3.5 - React Components → `/pages/components/`
 
 #### HeadData
 This component used for render next/head meta data format to all NextPage for SEO purposes.
@@ -820,5 +860,48 @@ This component is DYNAMIC and also the Event inner page.
     - Event rich text description
     - ShareContainer
     - 3 randomise events from the CMS
+
+#### 4 - Stylesheet → `/stylesheet`
+The directory is storing all the scss files for the project. The `master.scss` is the main scss that mount to `_app.tsx`.
+
+There are 2 main required dependancies stylesheets for the site:
+  * Hamburger library `hamburgers.css`
+  * React PDF Viewer
+    - `@react-pdf-viewer/core/lib/styles/index.css`
+    - `@react-pdf-viewer/default-layout/lib/styles/index.css'`
+
+In order to apply new style to the site:
+  * First - create a new scss stylesheet `_filename.scss` inside the stylesheet folder.
+    - If it is for a whole new PAGE, create it inside the `stylehsheet`
+    - If it is for components, create it inside the `components`
+    - If it is for layout, create it inside the `layout`
+  * Second - Import the stylesheet file `_filename.scss` you just create into `master.scss`
+
+  ```scss
+  @import 
+  // HAMBURGER LIBRARY
+  "./hamburgers.css",
+  "./variables",
+  "./mixin",
+  "./homepage",
+  "./about",
+  "./privacy",
+  "./base",
+  "./filename" // -> the new file you just created
+  "./components/navBar",
+  "./components/footer",
+  "./components/projectContainer",
+  "./components/projectInner",
+  "./components/views/ProjectWrapper",
+  "./components/views/ShareContainer",
+  "./components/views/StudentDetailsContainer",
+  "./components/views/Lotties",
+  "./layout/twoColumnsBlock",
+  "./layout/threeColumnsBlock",
+  "./layout/VicWorkInnerPage"
+  ;
+  ```
+
+  * Third - Then start styling normallly
 
 
