@@ -12,7 +12,7 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [`/lib/api.ts`](#libapits)
       - [`/lib/fetchData.ts`](#libfetchdatats)
     - [3.2 - Compiler](#32---compiler--compilerstypetsx)
-    - [3.3 - React pages](#33---react-pages--pages)
+    - [3.3 - React Pages](#33---react-pages--pages)
       - [App](#app--pages_apptsx)
       - [Homepage](#homepage--pagesindextsx)
       - [About page](#about-page--pagesabouttsx)
@@ -21,6 +21,11 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [Error Pages](#error-pages--pages_errortsx)
         - [404 Page](#404-page--pagescustom404tsx)
         - [500 Page](#500-page--pagescustom500tsx)
+    - [3.4 - React Components](#34---react-components--pagescomponents)
+      - [HeadData](#headdata)
+      - [NavBar](#navbar)
+      - [Footer](#footer)
+      - [ImgCaption](#imgcaption)
 
 
 ## I. Deploy on VUW Server with Nginx
@@ -29,6 +34,11 @@ The current site is being deployed over VUW Server. There are currently two dire
   * `vuw-frontend` - This folder linked to the [frontend repo](https://github.com/psychoactive-studios/vuw-frontend) on Psychoactive Github
   * `vuw-backend` - This folder linked to the [backend repo](https://github.com/psychoactive-studios/vuw-backend) on Psychoactive Github
   * AWARE: both of these 2 folders have their own branch for deployment which is `vuw`
+
+### To connect to VUW server:
+`ssh vincent@vuwunicodesjav1.vuw.ac.nz`
+Password please consult with Psychoactive Account manager
+Note: Contact VUW later in the future if require to create a new connection account / password to server
 
 ### `/etc/nginx/sites-available/vuwunicodesjav1.vuw.ac.nz`
 
@@ -614,7 +624,44 @@ This file declared all the types of the dependancies (Fields/Variables) fetch fr
   }
   ```
 
+#### 3.4 - React Components → `/pages/components/`
 
+#### HeadData
+This component used for render next/head meta data format to all NextPage for SEO purposes.
+  * OG: locale, type, title, quote, hashtag, image, url, site_name, description
+  * robots
+  * _token
+  * website: favicon, title, url, quote, description, image
+  * CDN: React slick-carousel
+  * Google font: Inter
+
+#### NavBar
+This component creates the Navigation on the top of the webpage and responsive on mobile.
+Create a set of links to different page on the site:
+  * Student Works (Homepage)
+  * About
+  * Events
+  * Contact
+  * Enrol
+  * Facebook
+  * Instagram
+Toggle class name when people click on the HAMBURGER menu
+
+#### Footer
+This component creates the Footer information at the bottom of the webpage and responsive on mobile.
+It is also included a set of links similarly to Navbar.
+
+#### ImgCaption
+This component renders the caption for Image and the data came from the CMS.
+```ts
+function urlify(text:string) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function(url:string) {
+    return `<a target="_blank" href="${url}">${url}</a>`;
+  })
+}
+```
+This `function urlify(text: string)` find the HTTP or HTTPS within the string and turn it into a clickable URL.
 
 
 
