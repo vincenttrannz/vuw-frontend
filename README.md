@@ -2,7 +2,28 @@
 
 VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [Strapi CMS](https://strapi.io/).
 
-## Deploy on VUW Server with Nginx
+## Table of Content
+* [I. Deploy on VUW Server with Nginx](#deploy-on-vuw-server-with-nginx)
+* [II. Development environment overview](#development-environment-overview)
+  - [1. First step](#1-first-step)
+  - [2. Second step](#2-second-step)
+  - [3. Development step](#3-development-step)
+    - [3.1 - Setting up API and fetching data](#31---setting-up-api-and-fetching-data)
+      - [`/lib/api.ts`](#libapits)
+      - [`/lib/fetchData.ts`](#libfetchdatats)
+    - [3.2 - Compiler](#32---compiler--compilerstypetsx)
+    - [3.3 - React pages](#33---react-pages--pages)
+      - [App](#app--pages_apptsx)
+      - [Homepage](#homepage--pagesindextsx)
+      - [About page](#about-page--pagesabouttsx)
+      - [Event page](#event-page--pageseventstsx)
+      - [Privacy page](#privacy-page--pagesprivacytsx)
+      - [Error Pages](#error-pages--pages_errortsx)
+        - [404 Page](#404-page--pagescustom404tsx)
+        - [500 Page](#500-page--pagescustom500tsx)
+
+
+## I. Deploy on VUW Server with Nginx
 The current site is being deployed over VUW Server. There are currently two directories inside the folder has my name on it `vincent`
 
   * `vuw-frontend` - This folder linked to the [frontend repo](https://github.com/psychoactive-studios/vuw-frontend) on Psychoactive Github
@@ -59,7 +80,7 @@ The current site is being deployed over VUW Server. There are currently two dire
   * `location /backend` proxy_pass to the localhost port 1337 which is the Backend of the VUW Site
   * Make sure you check the nginx status that it run successfully
 
-## Development environment overview:
+## II. Development environment overview
   * Frontend - [Next.js](https://nextjs.org/) (Awareness: Node JS required version 14.18.2)
   * Backend - [Strapi CMS](https://strapi.io/)
   * React Bootstrap and SCSS Stylesheet
