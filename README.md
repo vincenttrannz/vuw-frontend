@@ -2,6 +2,73 @@
 
 VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and [Strapi CMS](https://strapi.io/).
 
+## Deploy on VUW Server with Nginx
+The current site is being deployed over VUW Server. There are currently two directories inside the folder has my name on it `vincent`
+
+  * `vuw-frontend` - This folder linked to the [frontend repo](https://github.com/psychoactive-studios/vuw-frontend) on Psychoactive Github
+  * `vuw-backend` - This folder linked to the [backend repo](https://github.com/psychoactive-studios/vuw-backend) on Psychoactive Github
+  * AWARE: both of these 2 folders have their own branch for deployment which is `vuw`
+
+### `/etc/nginx/sites-available/vuwunicodesjav1.vuw.ac.nz`
+
+  ```conf
+  #server {
+  #        # Listen HTTP
+  #        listen 80;
+  #	listen [::]:80;
+  #        server_name astro-test.co.nz;
+  #
+  #        # Redirect HTTP to HTTPS
+  #        return 301 https://$host$request_uri;
+  #}
+
+  server {
+          # Listen HTTP
+          listen 80;
+          listen [::]:80;
+          server_name vuwunicodesjav1.vuw.ac.nz;
+
+          #access_log /var/log/nginx/nginx.vhost.access.log;
+          #error_log /var/log/nginx/nginx.vhost.error.log;
+    
+          # Static Root
+          location / {
+                  add_header 'Access-Control-Allow-Origin' '*';
+                  proxy_pass http://localhost:3000;
+                  proxy_http_version 1.1;
+                  proxy_set_header X-Forwarded-Host $host;
+                  proxy_set_header X-Forwarded-Server $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_set_header Host $http_host;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "Upgrade";
+                  proxy_pass_request_headers on;
+          }
+
+          location /backend {
+                  rewrite ^/backend/?(.*)$ /$1 break;
+                  add_header 'Access-Control-Allow-Origin' '*';
+                  proxy_pass http://localhost:1337;
+                  #proxy_http_version 1.1;
+                  #proxy_set_header X-Forwarded-Host $host;
+                  #proxy_set_header X-Forwarded-Server $host;
+                  #proxy_set_header X-Real-IP $remote_addr;
+                  #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  #proxy_set_header X-Forwarded-Proto $scheme;
+                  #proxy_set_header Host $http_host;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_cache_bypass $http_upgrade;
+                  #proxy_set_header Connection "Upgrade";
+                  #proxy_pass_request_headers on;
+          }
+  }
+  ```
+  * `location /` proxy_pass to the localhost port 3000 which is the Frontend of the VUW Site
+  * `location /backend` proxy_pass to the localhost port 1337 which is the Backend of the VUW Site
+  * Make sure you check the nginx status that it run successfully
+
 ## Development environment overview:
   * Frontend - [Next.js](https://nextjs.org/) (Awareness: Node JS required version 14.18.2)
   * Backend - [Strapi CMS](https://strapi.io/)
@@ -140,6 +207,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
   * ``getStrapiMedia`` is function to return URL of upload files from Strapi CMS database
   * ``getStrapiData`` is function to read data from Strapi CMS database (other fields: Text, RichText, Boolean, etc)
-
-## Deploy on VUW Server with Nginx
-
