@@ -236,7 +236,7 @@ a {
         width: 70%;
         a {
           width: fit-content;
-          color: $blue;
+          text-decoration: underline;
           &:hover {
             color: $vic-teal;
           }
@@ -244,7 +244,7 @@ a {
       }
       &__a {
         width: fit-content;
-        color: $blue;
+        text-decoration: underline;
         &:hover {
           color: $vic-teal;
         }
