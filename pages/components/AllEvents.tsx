@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Events, Event } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
-import { getStrapiMedia, getStrapiSmallMedia } from "../../lib/fetchData";
+import { getStrapiSmallMedia } from "../../lib/fetchData";
 
 type EventsProps = {
   events: Events;

@@ -245,6 +245,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     return imageUrl;
   }
 
+  export function getStrapiSmallMedia(media:any | {}){
+    const { url } = media.formats.small;
+    const imageUrl = url.startsWith("/") ? getStrapiURL(url) : url;
+    return imageUrl;
+  }
+
   export function getSingleStrapiMedia(media:any | {}) {
     const imageUrl = media.attributes.url.startsWith("/")
       ? getStrapiURL(media.attributes.url)
@@ -259,6 +265,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   ```
 
   * ``getStrapiMedia`` is function to return URL of upload files from Strapi CMS database
+  * ``getStrapiSmallMedia`` is function to return the small format of IMAGES that user uploads from the CMS to optimize the loading speed of Project/Event card.
   * ``getStrapiData`` is function to read data from Strapi CMS database (other fields: Text, RichText, Boolean, etc)
 
 #### 3.2 - Compiler → `/compilers/type.tsx`
