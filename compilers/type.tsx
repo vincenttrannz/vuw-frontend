@@ -383,17 +383,6 @@ export type ImagesDataType = {
           path: string;
           url: string;
         };
-        large: {
-          name: string;
-          hash: string;
-          ext: string;
-          mime: string;
-          width: number;
-          height: number;
-          size: number;
-          path: string;
-          url: string;
-        };
         medium: {
           name: string;
           hash: string;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Events, Event } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
-import { getStrapiMedia, getStrapiSmallMedia } from "../../lib/fetchData";
+import { getStrapiSmallMedia } from "../../lib/fetchData";
 
 type EventsProps = {
   events: Events;
@@ -55,7 +55,6 @@ export default function AllEvents({ events }: EventsProps) {
           const EventLocation = event.attributes.EventLocation;
           const EventPriceType = event.attributes.EventPriceType;
           const EventPrice = event.attributes.EventPrice;
-          console.log("Check thumbnail size:", EventThumbnailSmall);
 
           return (
             <Link href={`/event/${EventSlug}`} key={i}>

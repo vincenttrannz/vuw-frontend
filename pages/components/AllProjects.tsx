@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Projects, Project } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
 import AwardRibbon from '../../public/award-ribbon.svg';
-import { getStrapiMedia, getStrapiSmallMedia } from "../../lib/fetchData";
+import { getStrapiSmallMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
   projects: Projects;
