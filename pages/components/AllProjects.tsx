@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Projects, Project } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
 import AwardRibbon from '../../public/award-ribbon.svg';
-import { getStrapiMedia } from "../../lib/fetchData";
+import { getStrapiMedia, getStrapiSmallMedia } from "../../lib/fetchData";
 
 type ProjectsProps = {
   projects: Projects;
@@ -22,9 +22,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
   return (
     <>
       {projects.map((project:Project, i:number) => {
-        const ProjectThumbnail = getStrapiMedia(
-          project.attributes.ProjectThumbnail
-        );
+        const ProjectThumbnailSmall = getStrapiSmallMedia(project.attributes.ProjectThumbnail.data.attributes); 
         const ProjectTitle = project.attributes.ProjectTitle;
         const ProjectSlug = project.attributes.Slug;
         const ProjectStudent = project.attributes.student.data?.attributes?.StudentName;
@@ -41,7 +39,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
             <a className="projectContainer__portfolio shadow-sm">
               <div className="thumbnail-container">
                 <Image 
-                  src={ProjectThumbnail} 
+                  src={ProjectThumbnailSmall} 
                   priority={true} 
                   layout="fill"
                   alt={`${ProjectTitle} thumbnail`}/>
