@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Events, Event } from "../../compilers/type";
 import TextDivider from './views/TextDivider';
-import { getStrapiMedia } from "../../lib/fetchData";
+import { getStrapiMedia, getStrapiSmallMedia } from "../../lib/fetchData";
 
 type EventsProps = {
   events: Events;
@@ -43,7 +43,7 @@ export default function AllEvents({ events }: EventsProps) {
     <>
       {
         events.map((event: Event, i: number) => {
-          const EventThumbnail = getStrapiMedia(event.attributes.EventImageThumbnail);
+          const EventThumbnailSmall = getStrapiSmallMedia(event.attributes.EventImageThumbnail.data.attributes);
           const EventName = event.attributes.EventName;
           const EventSlug = event.attributes.Slug;
           const EventType = event.attributes.event_type.data.attributes.EventTypeName;
@@ -55,12 +55,17 @@ export default function AllEvents({ events }: EventsProps) {
           const EventLocation = event.attributes.EventLocation;
           const EventPriceType = event.attributes.EventPriceType;
           const EventPrice = event.attributes.EventPrice;
+          console.log("Check thumbnail size:", EventThumbnailSmall);
 
           return (
             <Link href={`/event/${EventSlug}`} key={i}>
               <a className="projectContainer__event shadow-sm">
                 <div className='projectContainer__event__img-container h-100'>
-                  <Image priority={true} layout='fill' src={EventThumbnail} alt={`${EventName} thumbnail`}/>
+                  <Image 
+                    priority={true} 
+                    layout='fill' 
+                    src={EventThumbnailSmall}
+                    alt={`${EventName} thumbnail`}/>
                   <div className='projectContainer__event__event-timestamp'>
                     {eventGetTimestamp(event.attributes.EventStartDate)}
                   </div>

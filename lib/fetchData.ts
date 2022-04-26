@@ -6,6 +6,12 @@ export function getStrapiMedia(media:any | {}) {
   return imageUrl;
 }
 
+export function getStrapiSmallMedia(media:any | {}){
+  const { url } = media.formats.small;
+  const imageUrl = url.startsWith("/") ? getStrapiURL(url) : url;
+  return imageUrl;
+}
+
 export function getSingleStrapiMedia(media:any | {}) {
   const imageUrl = media.attributes.url.startsWith("/")
     ? getStrapiURL(media.attributes.url)
