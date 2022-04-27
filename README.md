@@ -47,8 +47,7 @@ VUW Project is based on [Next.js](https://nextjs.org/) project bootstrapped with
       - [AllEvents](#allevents)
       - [Project Inner page](#project-inner-page--pagesprojectslugtsx)
       - [Event Inner page](#event-inner-page--pageseventslugtsx)
-    - [4 - Stylesheet](#4---stylesheet-→-stylesheet)
-
+    - [4 - Stylesheet](#4---stylesheet--stylesheet)
 
 ## I. Hosting with VUW Server and Nginx
 The current site is being deployed over VUW Server. There are currently two directories inside the folder has my name on it `vincent`
@@ -71,6 +70,21 @@ Note: Contact VUW later in the future if require to create a new connection acco
     - To STOP the app `pm2 stop <app-name>`
     - To RESTART the app `pm2 restart <app-name>`
     - There are also DELETE, START
+  * Step to follow when you start developing new features (page, components, adding stylesheet, functionalities, etc)
+    - Ensure you are working with `main` branch locally from your computer
+    - After make sure `npm run build` locally successfully
+    - PUSH your `main` branch to Github
+    - Connect to VUW server and PULL down the changed from origin `main`
+    - Make sure you run `git branch checkout vuw` to switch to `vuw` branch
+    - MERGE all the changed from `main`
+    - Ensure branch is free of CONFLICT
+    - STOP the frontend app `pm2 stop vuw-frontend`
+    - Now, build the app with `npm run build`
+    - START the frontend app with `pm2 start vuw-frontend`
+    - Check the site to ensure it back to live
+  * AWARE: In case the VUW server went DOWN, the PM2 system will auto stop both apps. Please ensure you are able to RESTART the app when this happened.
+    - Login back to VUW server with credentials
+    - run command `pm2 start vuw-frontend vuw-backend` in the terminal
 
 ### `/etc/nginx/sites-available/vuwunicodesjav1.vuw.ac.nz`
 
