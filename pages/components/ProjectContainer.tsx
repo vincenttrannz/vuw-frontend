@@ -265,7 +265,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
 
   useEffect(() => {
     // 1. Logic for NextBtn
-    paginatedProjects.length < 12
+    paginatedProjects.length <= 12
       ? setDisableNextBtn(true)
       : setDisableNextBtn(false);
 
