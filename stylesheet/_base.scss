@@ -69,7 +69,7 @@ h6, .h6 {
   font-weight: 500;
 }
 
-p {
+p, li, ol {
   font-size: 16px;
   font-weight: normal;
   &.bold {
@@ -223,6 +223,10 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   gap: 15px 0;
+  ul, li , dl, p {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
   img {
     width: 100%;
     object-fit: contain;

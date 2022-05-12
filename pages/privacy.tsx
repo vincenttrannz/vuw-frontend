@@ -33,7 +33,7 @@ const privacy: NextPage<PrivacyPageProps> = ({privacy}) => {
       <PageHeroBanner
         OtherSide={true}
         HeroBanner={PrivacyHeroBanner}
-        HeroTitle="Privacy Policies"
+        HeroTitle="Privacy Policy"
       />
       <ImgCaption id="caption-hero" className="mx-2 mx-lg-3" caption={PrivacyHeroCaption} />
       <Container>

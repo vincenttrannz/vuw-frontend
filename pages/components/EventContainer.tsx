@@ -236,7 +236,7 @@ const EventContainer: React.FC<EventsProps> = ({events, eventCategories, eventTy
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
         <div className="projectContainer__categories-mobile">
-          <Accordion className="categories-wrapper" defaultActiveKey={['0']} alwaysOpen>
+          <Accordion className="categories-wrapper">
             {/* EVENT CATEGORIES */}
             <Accordion.Item eventKey="0">
               <Accordion.Header>

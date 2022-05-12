@@ -72,7 +72,7 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
 
   useEffect(() => {
     RandomThreeProjects(event.attributes.projects.data.sort(() => 0.5 - Math.random()).slice(0, 3));
-  }, [])
+  }, [event.attributes.projects.data])
 
   const CustomEventParagraph = ({children}:any) => {
     if(children[0].type !== undefined && children[0].type == "img"){
@@ -115,8 +115,8 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
     <>
       <HeadData
         title={eventData.EventName}
-        description={eventData.SeoData.MetaDescription}
-        image={(eventData.SeoData.ShareImage) ? getStrapiMedia(eventData.SeoData.ShareImage) : ""}
+        description={eventData.EventShortDescription}
+        image={getStrapiMedia(eventData.EventImageThumbnail)}
       />
       <div id='eventPageWrapper' className='vic-work__wrapper'>
         <Container className='pt-3 pb-2 d-block d-lg-none'>
@@ -343,7 +343,7 @@ export async function getStaticProps({params}:any) {
   return {
     props: { 
       event: eventRes.data[0],
-      randomThreeEvents: randomThreeEventsRes.data.sort(() => 0.5 - Math.random()).slice(0, 3)
+      randomThreeEvents: randomThreeEventsRes.data.sort(() => 0.5 - Math.random()).slice(0, 4)
     },
     revalidate: 1,
   }
