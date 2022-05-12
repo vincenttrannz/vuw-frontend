@@ -9,6 +9,7 @@ type FooterProps = {
 };
 
 export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
+  const currentYear = new Date().getFullYear().toString();  
   return (
     <Container role="contentinfo" fluid className="footer">
       <div className="footer__column">
@@ -17,13 +18,13 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
             <VicLogo className="vic-logo" />
           </a>
         </Link>
-        <p tabIndex={0}>Te Herenga Waka-Victoria University of Wellington</p>
+        <p tabIndex={0}>Te Herenga Waka—Victoria University of Wellington</p>
       </div>
       <address className="footer__column">
         <p tabIndex={0} className="p2 bold">Contact</p>
         <p tabIndex={0}>
           Wellington Faculty of Architecture and Design Innovation,<br/>
-          Te Herenga Waka-Victoria University of Wellington<br/>
+          Te Herenga Waka—Victoria University of Wellington<br/>
           139 Vivian Street, Te Aro Wellington 6011
         </p>
         {
@@ -70,7 +71,7 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
         </ul>
       </div>
       <div className="footer__copyright">
-        <span tabIndex={0}>All rights reserved. © 2022 VUW</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
+        <span tabIndex={0}>All rights reserved. © {currentYear} VUW</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
       </div>
     </Container>
   );

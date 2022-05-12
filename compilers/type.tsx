@@ -39,7 +39,6 @@ export type Project = {
     DownloadLinkTwoNameDisplay: string;
     LicensingLink: string;
     LicensingNameDisplay: string;
-    SeoData: SeoDataType;
     level: {
       data: Level;
     };

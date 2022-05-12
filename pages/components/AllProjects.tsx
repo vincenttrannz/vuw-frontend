@@ -74,7 +74,7 @@ export default function AllProjects({ projects }: ProjectsProps) {
                       :
                       <p>By {ProjectStudent}</p>
                     }
-                  <p className="p2">{ProjectMajor} - {ProjectMajorTeReo}</p>
+                  <p className="p2">{ProjectMajor} {(ProjectMajorTeReo && ProjectMajorTeReo !== "") && `- ${ProjectMajorTeReo}`}</p>
                 </div>
                 <div className="details-container__categories">
                   <div className="p2 details-container__multiple">

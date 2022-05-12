@@ -69,8 +69,8 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
     <>
       <HeadData
         title={projectData.ProjectTitle}
-        description={projectData.SeoData.MetaDescription}
-        image={(projectData.SeoData.ShareImage) ? getStrapiMedia(projectData.SeoData.ShareImage) : ""}
+        description={projectData.ProjectDescription}
+        image={getStrapiMedia(projectData.ProjectThumbnail)}
       />
       <div className='vic-work__wrapper'>
         <Container className='vic-work__left-container'>
@@ -183,7 +183,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                 <div className='project-info-container__details__left'>
                   {
                     [projectData.ProjectDescription, projectData.student.data.attributes?.StudentName, projectData.LecturerName, projectData.CourseName, new Date(projectData.ProjectDate).getFullYear().toString()].map((el:any, i: number) => {
-                      if(el !== null || el !== ""){
+                      if(el !== null && el !== ""){
                         return (
                           <div tabIndex={0} key={i} className={`project-info-container__details__text-wrapper-row ${(i == 1) ? "student" : ""}`}>
                             <h6>

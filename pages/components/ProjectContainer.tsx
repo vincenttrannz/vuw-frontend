@@ -349,7 +349,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         </div>
         {/* Categories wrapper - Display accordion style on mobile */}
         <div className="projectContainer__categories-mobile">
-          <Accordion className="categories-wrapper" defaultActiveKey={['0']} alwaysOpen>
+          <Accordion className="categories-wrapper">
             {/* SCHOOL */}
             <Accordion.Item eventKey="0">
               <Accordion.Header>
