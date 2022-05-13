@@ -321,7 +321,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                   ProjectVideoCaption={projectData.ProjectCaption}
                 />
               }
-              <div className='sub-project-container my-3'>
+              <div className='sub-project-container py-3'>
                 {
                   /**
                    * SUB PROJECT CAROUSEL

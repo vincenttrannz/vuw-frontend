@@ -304,7 +304,6 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
         <div className="bg-white rounded">
           <InputGroup>
             <FormControl
-              tabIndex={0}
               ref={SearchField}
               placeholder="Search"
               aria-label="search"

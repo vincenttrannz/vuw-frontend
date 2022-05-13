@@ -71,7 +71,7 @@ export default function Footer({ DisplayPhone, PhoneNumber }: FooterProps) {
         </ul>
       </div>
       <div className="footer__copyright">
-        <span tabIndex={0}>All rights reserved. © {currentYear} VUW</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
+        <span tabIndex={0}>All rights reserved. © {currentYear} Wgtn</span> <span><Link href="/privacy"><a>Privacy Policy</a></Link></span>
       </div>
     </Container>
   );
