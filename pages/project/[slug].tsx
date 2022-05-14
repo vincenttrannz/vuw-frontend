@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import $ from 'jquery';
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { fetchAPI } from "../../lib/api";
 import { Project, Projects } from '../../compilers/type';
-import { getStrapiMedia, getSingleStrapiMedia } from "../../lib/fetchData";
+import { getStrapiMedia } from "../../lib/fetchData";
+import { convertImage, toBase64 } from '../functions/blurDataPlaceholder';
 import HeadData from "../components/HeadData";
 import TextDivider from '../components/views/TextDivider';
 import VicButton from '../components/views/VicButton';
@@ -172,6 +173,10 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     layout='fill'
                     objectFit='cover'
                     priority={true}
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                      convertImage(1920, 1080)
+                    )}`}
                   />
                 </div>
               }
@@ -264,7 +269,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     </div>
                   }                     
                   {
-                    (projectData.LicensingLink !== null) &&
+                    (projectData.LicensingLink !== null && projectData.LicensingLink !== "") &&
                     <div className='project-info-container__details__text-wrapper-column'>
                       <h6>Licensing:</h6>
                       {ProjectLink(projectData.LicensingNameDisplay, projectData.LicensingLink)}
