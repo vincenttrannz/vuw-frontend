@@ -8,7 +8,6 @@ import { Event, Events } from '../../compilers/type';
 import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia } from "../../lib/fetchData";
 import { Container } from "react-bootstrap";
-import { convertImage, toBase64 } from '../functions/blurDataPlaceholder';
 import ReactMarkdown from 'react-markdown';
 import Calendar from '/public/calendar.svg';
 import HeadData from "../components/HeadData";
@@ -35,6 +34,25 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
   const EndTimeCalendar = (eventData.EventFinishDate && eventData.EventEndTime) ? new Date(String(`${eventData.EventFinishDate}T${eventData.EventEndTime}Z`)).toISOString() : (eventData.EventFinishDate) ? new Date(String(eventData.EventFinishDate)).toISOString() : ""
   
   const DateFormat = (date:string) => new Date(Date.parse(String(date))).toUTCString().split(' ').slice(0, 4).join(' ');
+
+  const convertImage = (w: number, h: number) => `
+  <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <linearGradient id="g">
+        <stop stop-color="#333" offset="20%" />
+        <stop stop-color="#222" offset="50%" />
+        <stop stop-color="#333" offset="70%" />
+      </linearGradient>
+    </defs>
+    <rect width="${w}" height="${h}" fill="#333" />
+    <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+    <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+  </svg>`;
+
+  const toBase64 = (str: string) =>
+    typeof window === 'undefined'
+      ? Buffer.from(str).toString('base64')
+      : window.btoa(str);
   
   function tConvert (time:any) {
     // Check correct time format and split into components
