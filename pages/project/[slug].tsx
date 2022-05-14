@@ -38,9 +38,9 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
         <stop stop-color="#333" offset="70%" />
       </linearGradient>
     </defs>
-    <rect width="${w}" height="${h}" fill="#333" />
-    <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-    <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+    <rect width="${w}" height="${h}" fill="#333" fillOpacity="0.25" />
+    <rect id="r" width="${w}" height="${h}" fill="url(#g)" fillOpacity="0.25" />
+    <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite" />
   </svg>`;
 
   const toBase64 = (str: string) =>
