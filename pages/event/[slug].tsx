@@ -3,12 +3,12 @@ import ICalendarLink from "react-icalendar-link";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import $ from 'jquery';
 import { useRouter } from 'next/router';
 import { Event, Events } from '../../compilers/type';
 import { fetchAPI } from "../../lib/api";
 import { getStrapiMedia } from "../../lib/fetchData";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import { convertImage, toBase64 } from '../functions/blurDataPlaceholder';
 import ReactMarkdown from 'react-markdown';
 import Calendar from '/public/calendar.svg';
 import HeadData from "../components/HeadData";
@@ -141,6 +141,10 @@ const EventPage: NextPage<EventPageProps> = ({event, randomThreeEvents}) => {
                 layout="fill"
                 objectFit='cover'
                 priority={true}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  convertImage(1920, 1080)
+                )}`}
               />
             </div>
             <figcaption>
