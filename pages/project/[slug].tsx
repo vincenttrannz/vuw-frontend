@@ -97,7 +97,7 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
             variant='vic'
             btnType='prev'
             btnText='Back'
-            className='prev-btn mb-3'
+            className='prev-btn mb-3 d-none d-lg-flex'
             ClickFunc={GoBack}
           />
           <div className='work-details-container'>
@@ -305,7 +305,14 @@ const ProjectPage: NextPage<ProjectProps> = ({project, randomThreeProjects}) => 
                     </div>
                   }
                 </div>
-                <ShareContainer className='d-flex d-lg-none mt-2'/>
+                <ShareContainer className='d-flex d-lg-none my-2'/>
+                <VicButton
+                  variant='vic'
+                  btnType='prev'
+                  btnText='Back'
+                  className='prev-btn mb-3 d-flex d-lg-none'
+                  ClickFunc={GoBack}
+                />
               </div>
               {
                 // If the project is 3D project
