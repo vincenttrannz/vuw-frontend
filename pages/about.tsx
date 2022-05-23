@@ -123,11 +123,18 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
         </div>
         <div tabIndex={0}>
           <ReactMarkdown>{FirstContentGreyBlockParagraph}</ReactMarkdown>
-          <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()) } }}>
-            <a target="_self" className="btn btn-vic mt-3 mt-md-4">
-              See this year’s projects
-            </a>
-          </Link>
+          <div className="d-flex flex-wrap">
+            <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()),award: 'Industry_Award' } }}>
+              <a target="_self" className="btn btn-vic d-inline-block mt-3 me-4">
+                Industry Award
+              </a>
+            </Link>
+            <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()), award: 'Excellence_Award' } }}>
+              <a target="_self" className="btn btn-vic d-inline-block mt-3">
+                Excellence Award
+              </a>
+            </Link>
+          </div>
         </div>
       </TwoColumnsBlock>
       {/* School of Architecture section */}

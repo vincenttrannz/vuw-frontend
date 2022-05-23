@@ -34,7 +34,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   // Collection of reference for button, input
   const SearchField = useRef<HTMLInputElement>(null);
   const ProjectContainerDiv = useRef<HTMLDivElement>(null);
-  const HomeURLYearQuery = useRouter().query.year;
+  const YearURLQuery = useRouter().query.year;
+  const AwardURLQuery = useRouter().query.award;  
 
   const ProjectYearCollection = Array.from(
     new Set(
@@ -269,16 +270,18 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   useEffect(() => {
     $(".categories-container__category").each((i, el) => {
       if(window !== undefined && window.innerWidth > 767){
-        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "desktopFilter"){
-          $(el).trigger("click")
+        if($(el).attr("data-responsive") == "desktopFilter"){
+          if ($(el).attr("data-filter") == YearURLQuery) $(el).trigger("click");
+          if ($(el).attr("data-filter") == AwardURLQuery) $(el).trigger("click")
         }
       } else if (window !== undefined && window.innerWidth < 767) {
-        if($(el).attr("data-filter") == HomeURLYearQuery && $(el).attr("data-responsive") == "mobileFilter"){
-          $(el).trigger("click")
+        if($(el).attr("data-responsive") == "mobileFilter"){
+          if ($(el).attr("data-filter") == YearURLQuery) $(el).trigger("click");
+          if ($(el).attr("data-filter") == AwardURLQuery) $(el).trigger("click")
         }
       }
     })
-  }, [HomeURLYearQuery])
+  }, [YearURLQuery])
 
   // Stacking the Filtering and Search with UseEffect hook
   useEffect(() => {
