@@ -101,6 +101,11 @@ const About: NextPage<AboutpageProps> = ({ about }) => {
             <TextDivider prime />
           </div>
           <p className="mt-3">{AboutPageInfoBlockParagraph}</p>
+          <Link href={{ pathname: '/', query: { year: String(new Date().getFullYear()) } }}>
+            <a target="_self" className="btn btn-vic d-inline-block ms-0 ms-lg-5 mt-3">
+              {String(new Date().getFullYear())}'s Award
+            </a>
+          </Link>
         </div>
         <div className="img-container">
           <figure>
