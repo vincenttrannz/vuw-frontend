@@ -27,6 +27,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   // Collection of set state for the components
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginatedProjects, setPaginatedProjects] = useState<Projects>(projects);
+  const [totalPage, setTotalPage] = useState<number>(Math.ceil(projects.length / 12));
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentSelectedFilters, setCurrentSelectedFilters] = useState<string[]>([]);
   const [disableNextBtn, setDisableNextBtn] = useState(false);
@@ -239,25 +240,15 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
   // Logic for paginated projects
   useEffect(() => {
     if (projects && projects.length) {
-      switch (currentPage) {
-        case 1:
-          setPaginatedProjects(projects.slice(0, 12));
-          break;
-        case 2:
-          setPaginatedProjects(projects.slice(12, 24));
-          break;
-        default:
-          setPaginatedProjects(
-            projects.slice(currentPage * 12, currentPage * 12 + 12)
-          );
-          break;
-      }
+      setPaginatedProjects(
+        projects.slice((currentPage - 1) * 12, (currentPage * 12))
+      );
     }
   }, [currentPage, projects]);
 
   useEffect(() => {
     // 1. Logic for NextBtn
-    paginatedProjects.length <= 12
+    totalPage <= 1 || paginatedProjects.length < 12
       ? setDisableNextBtn(true)
       : setDisableNextBtn(false);
 
@@ -265,7 +256,7 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     currentPage == 1
       ? setDisablePrevBtn(true)
       : setDisablePrevBtn(false);
-  }, [paginatedProjects, currentPage, disableNextBtn, disablePrevBtn]);
+  }, [totalPage, paginatedProjects, currentPage, disableNextBtn, disablePrevBtn]);
 
   useEffect(() => {
     $(".categories-container__category").each((i, el) => {
@@ -289,7 +280,8 @@ const ProjectContainer: React.FC<ProjectsProps> = ({
     preFilteredProjects = filterOnSelectedFilter(preFilteredProjects, currentSelectedFilters)
     preFilteredProjects = filterOnTextQuery(preFilteredProjects, searchQuery)
     setPaginatedProjects(preFilteredProjects.slice(0, 12));
-  }, [searchQuery, currentSelectedFilters]);
+    setTotalPage(Math.ceil(preFilteredProjects.length / 12))
+  }, [totalPage, searchQuery, currentSelectedFilters]);
 
   return (
     <Container ref={ProjectContainerDiv} className="projectContainer">
